@@ -1,0 +1,155 @@
+paths:
+  # 게시판 검색 
+  /search/board:
+    post:
+      tags:
+        - Search
+      summary: 검색 - 게시판
+      parameters:
+      - name: SearchBoard
+        in: body
+        required: true
+        schema:
+          properties: 
+            search: 
+              type: string
+              description: 검색어
+              example: "세 번째"
+      responses:
+        200:
+          description: 검색 성공
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "success to connect"
+              result:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_nickname:
+                        type: string
+                      board_id:
+                        type: integer
+                      board_type:
+                        type: string
+                      user_id:
+                        type: integer
+                      title:
+                        type: string
+                      content:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type:string
+                  example: {
+                    "user_nickname": "지은이",
+                    "board_id": 3,
+                    "board_type": "유방암",
+                    "user_id": 13,
+                    "title": "세 번째 게시물",
+                    "content": "이것은 세 번째 게시물입니다.",
+                    "created_at": "2024-01-23T16:54:15.000Z",
+                    "updated_at": "2024-01-24 01:54:15.000Z",
+                  }
+        404:
+          description: 검색 결과 없음
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: string
+                example: "ARTICLE4001"
+              message:
+                type: string
+                example: "게시글이 없습니다."
+        
+# 일기장 검색 
+  /search/diary:
+    post:
+      tags:
+        - Search
+      summary: 검색 - 다이어리
+      parameters:
+      - name: SearchDiary
+        in: body
+        required: true
+        schema:
+          properties: 
+            search: 
+              type: string
+              description: 검색어
+              example: "피곤"
+      responses:
+        200:
+          description: 검색 성공
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "success to connect"
+              result:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      user_nickname:
+                        type: string
+                      diary_id:
+                        type: integer
+                      user_id:
+                        type: integer
+                      is_private:
+                        type: integer
+                      title:
+                        type: string
+                      content:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type:string
+                  example: {
+                    "user_nickname": "하늘강",
+                    "diary_id": 9,
+                    "user_id": 12,
+                    "is_private": 0,
+                    "title": "두 번째 일기",
+                    "content": "하루가 너무 피곤하네요.",
+                    "created_at": "2024-01-22T01:32:26.000Z",
+                    "updated_at": "2024-01-22T01:32:26.000Z",
+                  }
+        404:
+          description: 검색 결과 없음
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: string
+                example: "ARTICLE4001"
+              message:
+                type: string
+                example: "게시글이 없습니다."
+        
