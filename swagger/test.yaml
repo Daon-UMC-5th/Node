@@ -1,0 +1,50 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Sample API"
+  description: "예제 API 문서"
+  contact:
+    name: "John Doe"
+    email: "johndoe@example.com"
+
+host: "localhost:3000"
+basePath: "/"
+schemes:
+  - "http"
+
+paths:
+  /users:
+    get:
+      summary: "사용자 목록 가져오기"
+      responses:
+        200:
+          description: "성공적으로 사용자 목록을 가져옴"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                username:
+                  type: "string"
+  /users/{id}:
+    get:
+      summary: "특정 사용자 가져오기"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "성공적으로 사용자를 가져옴"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+              username:
+                type: "string"
+        404:
+          description: "사용자를 찾을 수 없음"
