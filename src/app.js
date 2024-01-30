@@ -51,8 +51,9 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
 app.use("/temp", tempRouter);
-
+app.use("/search", searchRouter);
 //# 라우트
+
 
 //@ 서버 실행
 const port = process.env.PORT || 3000;
