@@ -1,0 +1,141 @@
+paths:
+  # 이메일로 인증코드 전송
+  /auth/email/code:
+    post:
+      tags:
+        - Authorization 
+      summary: 이메일 - 인증코드 전송
+      parameters:
+      - name: AuthroziationByEmail
+        in: body
+        required: true
+        schema:
+          properties: 
+            inputEmail: 
+              type: string
+              description: 이메일
+              example: "happyeunnn11@gmail.com"
+      responses:
+        200:
+          description: 이메일 전송 성공
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "접근에 성공했습니다."
+              result:
+                  type: object
+                  properties:
+                    accepted:
+                      type: array
+                      example: ["happyeunnn11@gmail.com"]
+                    rejected:
+                      type: array
+                    elho:
+                      type: array
+                      example: ["SIZE 35882577","8BITMIME","AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH","ENHANCEDSTATUSCODES","PIPELINING","CHUNKING","SMTPUTF8"]
+                    envelopeTime:
+                      type: integer
+                      example: 775
+                    messageTime:
+                      type: integer
+                      example: 316
+                    response:
+                      type: string
+                      example: "250 2.0.0 OK  1706688073 z15-20020aa785cf000000b006daa809584csm9231542pfn.182 - gsmtp"
+                    envelope:
+                      type: object
+                      properties:
+                        from:
+                          type: string
+                          example: "daon20231227@gmail.com"
+                        to:
+                          type: object
+                          example: ["happyeunnn11@gmail.com"]
+                        messageId:
+                          type: string
+                          example: "<860f6ae7-0e4e-21f8-229b-19d498b87746@gmail.com>"
+                 
+        400:
+          description: 이메일 전송 실패 
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: string
+                example: "COMMON001"
+              message:
+                type: string
+                example: "잘못된 요청입니다."
+  
+  # 이메일 인증 확인
+  /auth/email/code/check:
+    post:
+      tags:
+        - Authorization 
+      summary: 이메일 - 인증코드 확인
+      parameters:
+      - name: AuthroziationByEmail
+        in: body
+        required: true
+        schema:
+          properties: 
+            inputCode: 
+              type: string
+              description: 인증코드 
+              example: "OnrqEs"
+      responses:  
+        200:
+          description: 이메일 전송 성공
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: "접근에 성공했습니다."
+        400:
+          description: 사용자 인증코드 형식 오류
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: false
+              code:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: "잘못된 요청입니다."
+        406:
+          description: 인증코드 불일치 오류
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: false
+              code: 
+                type: integer
+                example: 406
+              message:
+                type: string
+                example: "인증코드가 일치하지 않습니다."
+
+        
