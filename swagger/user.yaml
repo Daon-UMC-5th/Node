@@ -40,9 +40,10 @@ paths:
                 format: varchar
                 description: 생년월일
               gender:
-                type: string
+                type: int 
                 format: int
                 description: 성별
+                example: 1
               user_nickname:
                 type: string
                 description: 사용자 닉네임
