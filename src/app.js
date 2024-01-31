@@ -7,6 +7,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
+const expressSession = require("express-session");
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -15,6 +16,7 @@ const { specs } = require("./config/swaggerConfig.js");
 
 //@ 라우터
 const tempRouter = require("./routes/tempRoute");
+const searchRouter = require("./routes/searchRoute.js");
 
 //# 라우터
 
@@ -49,8 +51,9 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
 app.use("/temp", tempRouter);
-
+app.use("/search", searchRouter);
 //# 라우트
+
 
 //@ 서버 실행
 const port = process.env.PORT || 3000;
