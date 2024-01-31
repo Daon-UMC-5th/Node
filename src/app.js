@@ -9,10 +9,6 @@ const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
 const memoryStore = require("memorystore")(expressSession);
-<<<<<<< HEAD
-
-=======
->>>>>>> 79478680b63a83af280876de62de0461accb8995
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -21,11 +17,10 @@ const { specs } = require("./config/swaggerConfig.js");
 
 //@ 라우터
 const tempRouter = require("./routes/tempRoute");
-<<<<<<< HEAD
 const searchRouter = require("./routes/searchRoute.js");
-=======
->>>>>>> 79478680b63a83af280876de62de0461accb8995
 const authRouter = require("./routes/authRoute.js");
+const userRouter = require("./routes/userRoute");
+
 //# 라우터
 
 //@ app 설정 공간
@@ -71,7 +66,9 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 app.use("/temp", tempRouter);
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
-//# 라우트
+app.use("/user", userRouter);
+
+//#
 
 
 //@ 서버 실행

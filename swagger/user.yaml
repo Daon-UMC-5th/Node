@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  title: user API
+  version: 1.0.0
+tags:
+  - name: user
+    description: 사용자 관련
+paths:
+  # 회원가입
+  /user/signUp:
+    post:
+      summary: 회원가입
+      tags:
+        - user
+      description: 사용자 정보를 받아 회원으로 가입합니다.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: 회원가입 요청 바디
+          schema:
+            type: object
+            properties:
+              user_name:
+                type: string
+                description: 사용자명
+              email:
+                type: string
+                format: email
+                description: 이메일 주소
+              password:
+                type: string
+                format: password
+                description: 비밀번호
+              phone_number:
+                type: string
+                description: 전화번호
+              birth_date:
+                type: string
+                format: varchar
+                description: 생년월일
+              gender:
+                type: int 
+                format: int
+                description: 성별
+                example: 1
+              user_nickname:
+                type: string
+                description: 사용자 닉네임
+              introduction:
+                type: string
+                description: 자기소개
+              role:
+                type: string
+                description: 유저 역할
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+  # 모든 유저 조회
+  /user/getAllUser:
+    get:
+      summary: 모든 유저 조회
+      tags:
+        - user
+      description: 모든 사용자 정보를 받아옵니다.
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청
+
+  # 아이디 찾기
+  /user/findId:
+    get:
+      summary: 아이디 찾기
+      tags:
+        - user
+      description: 사용자 정보를 받아 유저 아이디를 반환합니다.
+      parameters:
+        - name: user_name
+          in: query
+          required: true
+          description: 사용자명
+          schema:
+            type: string
+        - name: birth_date
+          in: query
+          required: true
+          description: 생년월일
+          schema:
+            type: string
+            format: date
+        - name: phone_number
+          in: query
+          required: true
+          description: 전화번호
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+  # 비밀번호 변경
+  /user/findPw:
+    put:
+      summary: 비밀번호 변경
+      tags:
+        - user
+      description: 회원정보를 받아 비밀번호를 변경합니다.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: 비밀번호 조회 및 변경
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: 이메일 주소
+              password:
+                type: string
+                format: password
+                description: 비밀번호
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+  # 닉네임 중복
+  /user/overlapNickname:
+    get:
+      summary: 닉네임 중복 확인
+      tags:
+        - user
+      description: 중복된 닉네임인지 확인합니다.
+      parameters:
+        - name: user_nickname
+          in: query
+          required: true
+          description: 닉네임
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+    # jwt
+  /user/login:
+    post:
+      summary: 로그인 jwt 생성
+      tags:
+        - user
+      description: 로그인 jwt access token 생성합니다.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          description: 로그인 jwt access token 생성합니다.
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+                description: 이메일 주소
+              password:
+                type: string
+                format: password
+                description: 비밀번호
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+  # email 존재 확인
+  /user/emailCheck:
+    get:
+      summary: email 중복 확인
+      tags:
+        - user
+      description: 이미 존재하는 email인지 확인합니다.
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: email
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등
+
+  # 전화번호 중복 확인
+  /user/phoneNumCheck:
+    get:
+      summary: 전화번호 중복 확인
+      tags:
+        - user
+      description: 이미 존재하는 전화번호인지 확인합니다.
+      parameters:
+        - name: phone_number
+          in: query
+          required: true
+          description: phone_number
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: 성공
+        "400":
+          description: 잘못된 요청, 필수 정보 누락 등

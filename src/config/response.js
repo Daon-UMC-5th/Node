@@ -6,5 +6,13 @@ const response = ({ isSuccess, code, message }, result) => {
     result: result,
   };
 };
+// 추가함
+class BaseError extends Error {
+  constructor(data) {
+    super(data.message);
+    this.data = data;
+  }
+}
 
+module.exports = BaseError;
 module.exports = response;
