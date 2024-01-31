@@ -83,6 +83,7 @@ const status = {
     isSuccess:false,
     code: "MAMBER4003",
     message: "인증코드가 일치하지 않습니다.",
+  },
   NICKNAME_REPEAT: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
