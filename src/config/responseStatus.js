@@ -78,13 +78,11 @@ const status = {
     code: "ARTICLE4001",
     message: "게시글이 없습니다.",
   },
-
   CODE_NOT_MATCH: {
     status: StatusCodes.NOT_ACCEPTABLE,
     isSuccess:false,
     code: "MAMBER4003",
     message: "인증코드가 일치하지 않습니다.",
-
   NICKNAME_REPEAT: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
