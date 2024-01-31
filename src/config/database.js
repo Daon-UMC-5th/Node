@@ -1,8 +1,8 @@
 const mysql = require("mysql2/promise"); // mysql2/promise를 사용하여 비동기 처리 지원
 const dotenv = require("dotenv");
-
+const path = require("path");
 // 루트에서 환경변수 불러옴
-dotenv.config({ path: "./config.env" });
+dotenv.config({path:path.join(__dirname, './config.env')});
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST, // mysql의 hostname
