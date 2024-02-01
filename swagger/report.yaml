@@ -76,8 +76,14 @@ paths:
       summary: "게시판 글 신고"
       tags:
         - Report
-      description: "사용자가 게시판 글을 신고할 수 있습니다."
+      description: "사용자가 게시판 글을 신고할 수 있습니다. (header: authorization 에 유저 jwt 토큰 필요)"
       parameters:
+        # - name: "Authorization"
+        #   in: "header"
+        #   required: true
+        #   schema:
+        #     type: "string"
+        #   description: "JWT 토큰이 필요합니다"
         - name: "boardId"
           in: "path"
           required: true
@@ -95,6 +101,64 @@ paths:
               properties:
                 reason:
                   type: "string"
+                  example: 낚시/도배
+      responses:
+        "200":
+          description: "신고가 성공적으로 생성됨"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "신고 처리가 완료되었습니다."
+                  result:
+                    type: "object"
+        "404":
+          description: "게시판 글을 찾을 수 없음"
+        "409":
+          description: "게시판 글이 이미 신고됨"
+        "500":
+          description: "내부 서버 오류"
+
+  # 댓글 신고
+  /report/comment/{commentId}:
+    post:
+      summary: "댓글 신고"
+      tags:
+        - Report
+      description: "사용자가 댓글을 신고할 수 있습니다. (header: authorization 에 유저 jwt 토큰 필요)"
+      parameters:
+        # - name: "Authorization"
+        #   in: "header"
+        #   required: true
+        #   schema:
+        #     type: "string"
+        #   description: "JWT 토큰이 필요합니다"
+        - name: "boardId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+          description: "신고할 게시판 글의 ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "reason"
+              properties:
+                reason:
+                  type: "string"
+                  example: 낚시/도배
       responses:
         "200":
           description: "신고가 성공적으로 생성됨"
