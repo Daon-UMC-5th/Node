@@ -5,7 +5,7 @@ const status = {
     status: StatusCodes.OK,
     isSuccess: true,
     code: 200,
-    message: "success to connect",
+    message: "접근에 성공했습니다.",
   },
 
   //서버 측 에러
@@ -72,6 +72,12 @@ const status = {
     isSuccess: false,
     code: "ARTICLE4001",
     message: "게시글이 없습니다.",
+  },
+  CODE_NOT_MATCH: {
+    status: StatusCodes.NOT_ACCEPTABLE,
+    isSuccess: false,
+    code: "MEMBER4003",
+    message: "인증코드가 일치하지 않습니다.",
   },
 };
 module.exports = status;
