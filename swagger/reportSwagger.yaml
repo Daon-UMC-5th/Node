@@ -6,11 +6,11 @@
 # servers:
 #   - url: "http://15.164.2.250"
 
-securitySchemes:
-  BearerAuth:
-    type: "http"
-    scheme: "bearer"
-    bearerFormat: "JWT"
+# securitySchemes:
+#   BearerAuth:
+#     type: "http"
+#     scheme: "bearer"
+#     bearerFormat: "JWT"
 
 paths:
   # 일기 신고
