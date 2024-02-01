@@ -7,6 +7,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
+const expressSession = require("express-session");
+const memoryStore = require("memorystore")(expressSession);
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -15,6 +17,7 @@ const { specs } = require("./config/swaggerConfig.js");
 
 //@ 라우터
 const tempRouter = require("./routes/tempRoute");
+const authRouter = require("./routes/authRoute.js");
 
 //# 라우터
 
@@ -34,7 +37,16 @@ app.use(
     extended: false,
   })
 );
-app.use(cookieParser());
+app.use(cookieParser("secret_password"));
+app.use(expressSession({
+  secret: "secret_password",
+  cookie:{
+    maxAge: 4000000
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new memoryStore()
+}));
 
 //# app 설정 공간
 
@@ -49,7 +61,7 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
 app.use("/temp", tempRouter);
-
+app.use("/auth", authRouter);
 //# 라우트
 
 //@ 서버 실행
