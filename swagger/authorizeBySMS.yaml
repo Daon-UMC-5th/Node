@@ -1,0 +1,149 @@
+openapi: 3.0.0
+paths:
+  # 문자로 인증코드 전송
+  /auth/sms/code:
+    post:
+      tags:
+        - Authorization
+      summary: 문자 - 인증코드 전송
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inputPhone:
+                  type: string
+                  description: 전화번호
+                  example: "01012345678"
+      responses:
+        '200':
+          description: 문자 전송 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+                    properties:
+                      groupId: 
+                        type: string
+                        example: "G4V20240201223802PFS8VQZOVANNM0B"
+                      to:
+                        type: string
+                        example: "01089064491"
+                      from:
+                        type: string
+                        example: "01089064491"
+                      type:
+                        type: string
+                        example: "SMS"
+                      statusMessage:
+                        type: string
+                        example: "정상 접수(이통사로 접수 예정) "
+                      country:
+                        type: string
+                        example: "82"
+                      messageId:
+                        type: string
+                        example: "M4V20240201223802UIPOEHKKOHSK7DF"
+                      statusCode: 
+                        type: string
+                        example: "2000"
+                      accountId:
+                        type: string
+                        example: "24012451987788"
+        '500':
+          description: 서버 측 에러 - 문자 전송 실패
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+  
+  # 문자 인증 확인
+  /auth/sms/code/check:
+    post:
+      tags:
+        - Authorization
+      summary: 문자 - 인증코드 확인
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inputCode:
+                  type: string
+                  description: 인증코드 
+                  example: "961881"
+      responses:
+        '200':
+          description: 문자 인증 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        '400':
+          description: 사용자 인증코드 형식 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: "잘못된 요청입니다."
+        '406':
+          description: 인증코드 불일치 오류
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 406
+                  message:
+                    type: string
+                    example: "인증코드가 일치하지 않습니다."
