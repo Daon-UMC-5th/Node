@@ -28,7 +28,6 @@ class userService {
         created_at: date,
         updated_at: date,
       });
-      console.log("회원가입요청" + JSON.stringify(joinUserData));
       return joinUserData;
     } catch (error) {
       throw error;
@@ -43,7 +42,6 @@ class userService {
       .createHash("sha256")
       .update(body.password)
       .digest("hex");
-    console.log("비밀번호 암호화" + hashedPassword);
     try {
       const result = await userDAO.modPw({
         email: body.email,
@@ -59,9 +57,6 @@ class userService {
   // 로그인 인증 방법 (jwt)
   static async signIn(user_id, body) {
     try {
-      console.log("user_id", user_id);
-      console.log("body", body);
-      console.log("비밀키", jwtsecret);
       //토큰 생성 Service
       let token = await jwt.sign(
         {
