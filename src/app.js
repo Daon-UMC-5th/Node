@@ -24,6 +24,7 @@ const mypageRouter = require("./routes/mypageRoute.js");
 const boardRouter = require("./routes/boardRoute.js");
 const reportRouter = require("./routes/reportRoute");
 const calendarRouter = require("./routes/calendarRoute.js");
+const diaryRouter = require("./routes/diaryRoute.js");
 //# 라우터
 
 //@ app 설정 공간
@@ -76,6 +77,7 @@ app.use("/mypage", mypageRouter);
 app.use("/board", boardRouter);
 app.use("/report", reportRouter);
 app.use("/calendar",calendarRouter);
+app.use("/diary", diaryRouter);
 //# 라우트
 
 //@ 서버 실행
