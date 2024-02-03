@@ -48,7 +48,7 @@ const userController = {
   findId: async (req, res, next) => {
     try {
       // 회원정보 없을 때
-      const result = await userProvider.findid(req.query);
+      const result = await userProvider.findid(req.body);
       if (result == undefined) {
         return res.send(response(status.NO_USER, result));
       } else {
@@ -77,7 +77,7 @@ const userController = {
   // 닉네임 중복 확인
   overlapNickname: async (req, res, next) => {
     try {
-      const result = await userProvider.checkNickname(req.query);
+      const result = await userProvider.checkNickname(req.body);
       if (result != undefined) {
         return res.send(response(status.NICKNAME_REPEAT, result));
       } else {
@@ -124,7 +124,7 @@ const userController = {
   // 이메일 중복 확인
   emailCheck: async (req, res, next) => {
     try {
-      const result = await userProvider.user_id_check(req.query);
+      const result = await userProvider.user_id_check(req.body);
 
       if (result == undefined) {
         return res.send(response(status.SUCCESS, result));
@@ -138,7 +138,7 @@ const userController = {
   // 전화번호 중복 확인
   phoneNumCheck: async (req, res, next) => {
     try {
-      const result = await userProvider.numCheck(req.query);
+      const result = await userProvider.numCheck(req.body);
 
       if (result == undefined) {
         return res.send(response(status.SUCCESS, result));

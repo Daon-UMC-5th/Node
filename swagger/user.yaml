@@ -7,46 +7,12 @@ tags:
     description: 사용자 관련
 paths:
   # 회원가입
-  /user/signUp:
+  /user/sign-up:
     post:
       summary: 회원가입
       tags:
         - user
       description: 사용자 정보를 받아 회원으로 가입합니다.
-      parameters:
-        - name: signup
-          in: body
-          required: true
-          schema:
-            properties:
-              user_name:
-                type: string
-                description: 사용자명
-              email:
-                type: string
-                description: 이메일 주소
-              password:
-                type: string
-                description: 비밀번호
-              phone_number:
-                type: string
-                description: 전화번호
-              birth_date:
-                type: string
-                description: 생년월일
-              gender:
-                type: int
-                description: 성별
-                example: 1
-              user_nickname:
-                type: string
-                description: 사용자 닉네임
-              introduction:
-                type: string
-                description: 자기소개
-              role:
-                type: string
-                description: 유저 역할
       requestBody:
         required: true
         content:
@@ -160,14 +126,14 @@ paths:
                     example: "길동"
 
   # 모든 유저 조회
-  /user/getAllUser:
+  /user/users:
     get:
       summary: 모든 유저 조회
       tags:
         - user
-      description: 모든 사용자 정보를 받아옵니다. jwt token 필요.
       security:
         - api_key: []
+      description: 모든 사용자 정보를 받아옵니다. jwt token 필요.
       responses:
         "200":
           description: 모든 유저 조회 성공
@@ -244,38 +210,35 @@ paths:
                     example: "jwt token을 입력해주세요"
 
   # 아이디 찾기
-  /user/findId:
-    get:
+  /user/find-id:
+    post:
       summary: 아이디 찾기
       tags:
         - user
-      description: 사용자 정보를 받아 유저 아이디를 반환합니다. jwt token 필요.
-      parameters:
-        - name: user_name
-          in: query
-          required: true
-          description: 사용자명
-          schema:
-            type: string
-            example: "홍길동"
-        - name: birth_date
-          in: query
-          required: true
-          description: 생년월일
-          schema:
-            type: string
-            format: date
-            example: "010606"
-        - name: phone_number
-          in: query
-          required: true
-          description: 전화번호
-          schema:
-            type: string
-            example: "010-1111-1111"
-      security:
-        - api_key: []
-
+      description: 사용자 정보를 받아 유저 아이디를 반환합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  example: "홍길동"
+                  description: "사용자명"
+                birth_date:
+                  type: string
+                  format: date
+                  example: "010606"
+                  description: "생년월일"
+                gender:
+                  type: integer
+                  example: 3
+                phone_number:
+                  type: string
+                  example: "010-1111-1111"
+                  description: "전화번호"
       responses:
         "200":
           description: id 찾기 성공
@@ -319,45 +282,15 @@ paths:
                     example: "ARTICLE0005"
                   message:
                     type: string
-                    example: "맞는 유저가 존재하지 않습니다."
-        "ARTICLE0008":
-          description: jwt token 입력 X
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: string
-                    example: "ARTICLE0008"
-                  message:
-                    type: string
-                    example: "jwt token을 입력해주세요"
+                    example: "일치하는 유저가 존재하지 않습니다."
 
   # 비밀번호 변경
-  /user/findPw:
+  /user/find-pw:
     put:
       summary: 비밀번호 변경
       tags:
         - user
-      description: 회원정보를 받아 비밀번호를 변경합니다. jwt token 필요.
-      parameters:
-        - name: 비밀번호 변경
-          in: body
-          required: true
-          description: 비밀번호 조회 및 변경
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                description: 이메일 주소
-              password:
-                type: string
-                description: 비밀번호
+      description: 회원정보를 받아 비밀번호를 변경합니다.
       requestBody:
         required: true
         content:
@@ -367,12 +300,12 @@ paths:
               properties:
                 email:
                   type: string
+                  description: 이메일 주소
                   example: "user@naver.com"
                 password:
                   type: string
+                  description: 비밀번호
                   example: "abc123"
-      security:
-        - api_key: []
       responses:
         "200":
           description: 비밀번호 변경 성공
@@ -405,30 +338,14 @@ paths:
                   message:
                     type: "string"
                     example: "존재하지 않는 email입니다."
-        "ARTICLE0008":
-          description: jwt token 입력 X
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: string
-                    example: "ARTICLE0008"
-                  message:
-                    type: string
-                    example: "jwt token을 입력해주세요"
 
   # 닉네임 중복
-  /user/overlapNickname:
-    get:
+  /user/overlap-nickname:
+    post:
       summary: 닉네임 중복 확인
       tags:
         - user
-      description: 중복된 닉네임인지 확인합니다. jwt token 필요.
+      description: 중복된 닉네임인지 확인합니다.
       parameters:
         - name: user_nickname
           in: query
@@ -437,8 +354,17 @@ paths:
           schema:
             type: string
             example: "길동"
-      security:
-        - api_key: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_nickname:
+                  type: string
+                  example: "길동"
+                  description: "닉네임"
       responses:
         "200":
           description: 닉네임 중복 아님
@@ -473,22 +399,6 @@ paths:
                   result:
                     type: string
                     example: "길동"
-        "ARTICLE0008":
-          description: jwt token 입력 X
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: string
-                    example: "ARTICLE0008"
-                  message:
-                    type: string
-                    example: "jwt token을 입력해주세요"
 
     # jwt
   /user/login:
@@ -497,19 +407,6 @@ paths:
       tags:
         - user
       description: 로그인 jwt access token 생성합니다.
-      parameters:
-        - name: jwt
-          in: body
-          description: 로그인 jwt access token 생성합니다.
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                description: 이메일 주소
-              password:
-                type: string
-                description: 비밀번호
       requestBody:
         required: true
         content:
@@ -580,22 +477,23 @@ paths:
                     example: "password null"
 
   # email 존재 확인
-  /user/emailCheck:
-    get:
+  /user/email-check:
+    post:
       summary: email 중복 확인
       tags:
         - user
-      description: 이미 존재하는 email인지 확인합니다. jwt token 필요.
-      parameters:
-        - name: 중복 email 확인
-          in: query
-          required: true
-          description: email
-          schema:
-            type: string
-            example: "abc123@naver.com"
-      security:
-        - api_key: []
+      description: 이미 존재하는 email인지 확인합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                  example: "abc123@naver.com"
       responses:
         "200":
           description: email 중복 X
@@ -633,40 +531,25 @@ paths:
                   result:
                     type: string
                     example: "abc123@naver.com"
-        "ARTICLE0008":
-          description: jwt token 입력 X
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: string
-                    example: "ARTICLE0008"
-                  message:
-                    type: string
-                    example: "jwt token을 입력해주세요"
 
   # 전화번호 중복 확인
-  /user/phoneNumCheck:
-    get:
+  /user/phone-num-check:
+    post:
       summary: 전화번호 중복 확인
       tags:
         - user
-      description: 이미 존재하는 전화번호인지 확인합니다. jwt token 필요.
-      parameters:
-        - name: 전화번호 중복
-          in: query
-          required: true
-          description: phone_number
-          schema:
-            type: string
-            example: "010-1111-1111"
-      security:
-        - api_key: []
+      description: 이미 존재하는 전화번호인지 확인합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_number:
+                  type: string
+                  description: 전화번호
+                  example: "010-1111-1111"
       responses:
         "200":
           description: 전화번호 중복 X
@@ -703,19 +586,3 @@ paths:
                   result:
                     type: string
                     example: "010-1111-1111"
-        "ARTICLE0008":
-          description: jwt token 입력 X
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: string
-                    example: "ARTICLE0008"
-                  message:
-                    type: string
-                    example: "jwt token을 입력해주세요"

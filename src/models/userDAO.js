@@ -59,9 +59,9 @@ class userDAO {
         `
       select email,DATE_FORMAT(created_at, '%Y.%m.%d') AS created_at
       from user
-      where user_name=? and birth_date=? and phone_number=?
+      where user_name=? and birth_date=? and gender=? and phone_number=?
       `,
-        [query.user_name, query.birth_date, query.phone_number]
+        [query.user_name, query.birth_date, query.gender, query.phone_number]
       );
       conn.release();
       return result[0];
