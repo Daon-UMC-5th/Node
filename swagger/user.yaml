@@ -66,7 +66,7 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
-        "ARTICLE0001":
+        "409_1":
           description: 이미 존재하는 이메일
           content:
             application/json:
@@ -77,8 +77,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0001"
+                    type: integer
+                    example: 409
                   message:
                     type: string
                     example: "이미 존재하는 이메일입니다."
@@ -86,7 +86,7 @@ paths:
                     type: string
                     example: "abc123@naver.com"
 
-        "ARTICLE0002":
+        "409_2":
           description: 이미 존재하는 전화번호
           content:
             application/json:
@@ -97,15 +97,15 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0002"
+                    type: integer
+                    example: 409
                   message:
                     type: string
                     example: "이미 존재하는 전화번호입니다."
                   result:
                     type: string
                     example: "010-1234-5678"
-        "ARTICLE0004":
+        "409_3":
           description: 이미 존재하는 닉네임
           content:
             application/json:
@@ -116,8 +116,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0004"
+                    type: integer
+                    example: 409
                   message:
                     type: string
                     example: "닉네임 중복"
@@ -192,7 +192,7 @@ paths:
                         updated_at:
                           type: timestamp
                           example: "2024-01-30T14:49:51.000Z"
-        "ARTICLE0008":
+        "401":
           description: jwt token 입력 X
           content:
             application/json:
@@ -203,8 +203,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0008"
+                    type: integer
+                    example: 401
                   message:
                     type: string
                     example: "jwt token을 입력해주세요"
@@ -267,8 +267,8 @@ paths:
                           type: datetime
                           example: "2024.02.02"
 
-        "ARTICLE0005":
-          description: 맞는 유저 존재하지 않는다.
+        "404":
+          description: 일치하는 유저 존재하지 않는다.
           content:
             application/json:
               schema:
@@ -278,8 +278,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0005"
+                    type: integer
+                    example: 404
                   message:
                     type: string
                     example: "일치하는 유저가 존재하지 않습니다."
@@ -322,7 +322,7 @@ paths:
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
-        "ARTICLE0003":
+        "404":
           description: 존재하지 않는 이메일
           content:
             application/json:
@@ -333,8 +333,8 @@ paths:
                     type: "boolean"
                     example: false
                   code:
-                    type: "integer"
-                    example: "ARTICLE0003"
+                    type: integer
+                    example: 404
                   message:
                     type: "string"
                     example: "존재하지 않는 email입니다."
@@ -381,7 +381,7 @@ paths:
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
-        "ARTICLE0004":
+        "409":
           description: 닉네임 중복
           content:
             application/json:
@@ -391,8 +391,8 @@ paths:
                   isSuccess:
                     type: "boolean"
                   code:
-                    type: "integer"
-                    example: "ARTICLE0004"
+                    type: integer
+                    example: 409
                   message:
                     type: "string"
                     example: "닉네임 중복."
@@ -443,7 +443,7 @@ paths:
                   result:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiaWF0IjoxNzA2ODgyMDc0LCJleHAiOjE3MDY4ODU2NzQsInN1YiI6InVzZXJJbmZvIn0.Z9RK_jxcbPD6XcAlGI5Y0s8UEK_xWFAHtrad57Mu9rM"
-        "ARTICLE0006":
+        "404_1":
           description: id 틀림
           content:
             application/json:
@@ -455,11 +455,11 @@ paths:
                     example: false
                   code:
                     type: integer
-                    example: "ARTICLE0006"
+                    example: 404
                   message:
                     type: string
                     example: "user_id null"
-        "ARTICLE0007":
+        "404_2":
           description: password 틀림
           content:
             application/json:
@@ -471,7 +471,7 @@ paths:
                     example: false
                   code:
                     type: integer
-                    example: "ARTICLE0007"
+                    example: 404
                   message:
                     type: string
                     example: "password null"
@@ -512,7 +512,7 @@ paths:
                     type: string
                     example: "접근에 성공했습니다."
 
-        "ARTICLE0001":
+        "409":
           description: 이미 존재하는 이메일
           content:
             application/json:
@@ -523,8 +523,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0001"
+                    type: integer
+                    example: 409
                   message:
                     type: string
                     example: "이미 존재하는 이메일입니다."
@@ -567,7 +567,7 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
-        "ARTICLE0002":
+        "409":
           description: 이미 존재하는 전화번호
           content:
             application/json:
@@ -578,8 +578,8 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "ARTICLE0002"
+                    type: integer
+                    example: 409
                   message:
                     type: string
                     example: "이미 존재하는 전화번호입니다."
