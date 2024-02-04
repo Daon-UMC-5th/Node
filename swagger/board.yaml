@@ -6,6 +6,7 @@ paths:
         - name: "boardType"
           in: "path"
           required: true
+          description: "게시판 종류"
           schema:
             type: "string"
         - name: "offset"
@@ -86,6 +87,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -163,6 +165,7 @@ paths:
           in: "path"
           required: true
           type: "string"
+          description: "게시판 종류"
       requestBody:
         required: true
         content:
@@ -249,6 +252,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       requestBody:
         required: true
         content:
@@ -334,6 +338,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -380,6 +385,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -429,6 +435,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -478,6 +485,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -580,6 +588,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -623,6 +632,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
       responses:
         "200":
           content:
@@ -666,6 +676,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "게시판 id"
         - name: "offset"
           in: "query"
           required: true
@@ -705,12 +716,16 @@ paths:
                       properties:
                         comment_id:
                           type: "integer"
+                          example: 1
                         user_id:
                           type: "integer"
+                          example: 1
                         board_id:
                           type: "integer"
+                          example: 1
                         content:
                           type: "string"
+                          example: "댓글"
                         created_at:
                           type: "string"
                           format: "date-time"
@@ -743,7 +758,8 @@ paths:
         - name: "commentId"
           in: "path"
           required: true
-          type: "string"
+          type: "integer"
+          description: "댓글 id"
         - name: "offset"
           in: "query"
           required: true
@@ -783,12 +799,16 @@ paths:
                       properties:
                         comment_id:
                           type: "integer"
+                          example: 1
                         user_id:
                           type: "integer"
+                          example: 1
                         board_id:
                           type: "integer"
+                          example: 1
                         content:
                           type: "string"
+                          example: "댓글"
                         created_at:
                           type: "string"
                           format: "date-time"
@@ -821,7 +841,8 @@ paths:
         - name: "commentId"
           in: "path"
           required: true
-          type: "string"
+          type: "integer"
+          description: "댓글 id"
         - name: "offset"
           in: "query"
           required: true
@@ -851,12 +872,16 @@ paths:
                       properties:
                         comment_id:
                           type: "integer"
+                          example: 1
                         user_id:
                           type: "integer"
+                          example: 1
                         board_id:
                           type: "integer"
+                          example: 1
                         content:
                           type: "string"
+                          example: "댓글"
                         created_at:
                           type: "string"
                           format: "date-time"
@@ -889,7 +914,8 @@ paths:
         - name: "boardId"
           in: "path"
           required: true
-          type: "string"
+          type: "integer"
+          description: "게시판 id"
         - name: "offset"
           in: "query"
           required: true
@@ -919,12 +945,16 @@ paths:
                       properties:
                         comment_id:
                           type: "integer"
+                          example: 1
                         user_id:
                           type: "integer"
+                          example: 1
                         board_id:
                           type: "integer"
+                          example: 1
                         content:
                           type: "string"
+                          example: "댓글"
                         created_at:
                           type: "string"
                           format: "date-time"
