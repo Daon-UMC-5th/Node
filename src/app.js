@@ -15,6 +15,7 @@ const { specs } = require("./config/swaggerConfig.js");
 
 //@ 라우터
 const tempRouter = require("./routes/tempRoute");
+const calendarRouter = require("./routes/calendarRoute.js");
 
 //# 라우터
 
@@ -49,7 +50,7 @@ app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
 app.use("/temp", tempRouter);
-
+app.use("/calendar",calendarRouter);
 //# 라우트
 
 //@ 서버 실행
