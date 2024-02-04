@@ -73,5 +73,11 @@ const status = {
     code: "ARTICLE4001",
     message: "게시글이 없습니다.",
   },
+  ARTICLE_DUPLICATION: {
+    status: StatusCodes.BAD_REQUEST,
+    isSuccess: false,
+    code: "COMMON006",
+    message: "요청한 게시글이 이미 존재합니다."
+  }
 };
 module.exports = status;
