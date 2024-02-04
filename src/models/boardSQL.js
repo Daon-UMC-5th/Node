@@ -1,4 +1,4 @@
-const getAllData = "SELECT * FROM board WHERE board_type = ?";
+const getAllData = "SELECT * FROM board WHERE board_type = ? ORDER BY created_at DESC LIMIT ?, 10;";
 
 const getOneData = "SELECT * FROM board WHERE board_id = ?";
 
@@ -18,13 +18,13 @@ const deleteLike = "DELETE FROM like_board WHERE user_id = ? AND board_id = ? ;"
 
 const countLike = "SELECT COUNT(*) FROM like_board WHERE board_id = ? ";
 
-const getAllLike = "SELECT board_id, COUNT(*) FROM like_board GROUP BY board_id";
+const getAllLike = "SELECT board_id, COUNT(*) FROM like_board GROUP BY board_id ORDER BY board_id DESC LIMIT ?, 10;"
 
 const insertScrape = "INSERT INTO bookmark (user_id, board_id, created_at) VALUES (?,?,NOW());"
 
 const deleteScrape = "DELETE FROM bookmark WHERE user_id = ? AND board_id = ?;"
 
-const getCommentData = "SELECT * FROM comment WHERE board_id = ?;"
+const getCommentData = "SELECT * FROM comment WHERE board_id = ? ORDER BY created_at DESC LIMIT ?, 10;"
 
 const insertComment = "INSERT INTO comment (user_id, board_id, content, created_at, updated_at) VALUES (?,?,?,NOW(),NOW());"
 

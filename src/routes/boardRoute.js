@@ -1,6 +1,5 @@
 const express = require('express');
 const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment } = require('../controllers/boardController.js')
-
 const boardRouter = express.Router();
 
 boardRouter.use((req,res,next) => {
@@ -11,7 +10,7 @@ boardRouter.use((req,res,next) => {
 
 //게시판 글
 //게시판 전체 가져오기
-boardRouter.get('/getAll/:boardType', (req, res) => {
+boardRouter.get('/getAll/:boardType',(req, res) => {
     getBoard(req, res);
 });
 //게시판 특정글 조회하기
@@ -34,8 +33,8 @@ boardRouter.delete('/likedown/:boardId', likeDown);
 //특정 글 좋아요 수 가져오기
 boardRouter.get('/like/:boardId', getLike);
 //모든 좋아요 수 가져오기
-boardRouter.get('/allLike', (res) => {
-    getAllLikeBoard(res);
+boardRouter.get('/allLike', (req, res) => {
+    getAllLikeBoard(req, res);
 });
 
 

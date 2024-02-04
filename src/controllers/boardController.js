@@ -6,7 +6,7 @@ const { writeBoard, modifyBoard, eraseBoard, postLikeUp, deleteLike, addScrape, 
 
 //게시판
 const getBoard = async(req,res) => {
-    const boardTypeData = await getBoardType(req.params.boardType);
+    const boardTypeData = await getBoardType(req.params.boardType, req.query.offset);
     res.send(response(status.SUCCESS, boardTypeData));
 }
 const getOneBoard = async(req, res) => {
@@ -36,8 +36,8 @@ const getLike = async(req, res) => {
     res.send(response(status.SUCCESS, await countLike(req.params.boardId)))
 }
 
-const getAllLikeBoard = async(res) => {
-    res.send(response(status.SUCCESS, await countAllLike()));
+const getAllLikeBoard = async(req, res) => {
+    res.send(response(status.SUCCESS, await countAllLike(req.query.offset)));
 }
 
 //스크랩
@@ -50,16 +50,19 @@ const cancelScrape = async(req, res) => {
 
 //댓글
 const getComment = async(req,res) => {
-    res.send(response(status.SUCCESS, await getAllComment(req.params.boardId)));
+    res.send(response(status.SUCCESS, await getAllComment(req.params.boardId, req.query.offset)));
 }
 const postComment = async(req,res) => {
-    res.send(response(status.SUCCESS, await writeComment(req.params.boardId, req.body, req.user_id)))
+    const getBoardId = await writeComment(req.params.boardId, req.body, req.user_id)
+    res.send(response(status.SUCCESS, await getAllComment(getBoardId.board_id, req.query.offset) ))
 }
 const putComment = async(req,res) => {
-    res.send(response(status.SUCCESS, await modifyComment(req.params.commentId, req.body)))
+    const getBoardId = await modifyComment(req.params.commentId, req.body)
+    res.send(response(status.SUCCESS, await getAllComment(getBoardId.board_id, req.query.offset)))
 }
 const deleteComment = async(req,res) => {
-    res.send(response(status.SUCCESS, await eraseComment(req.params.commentId)))
+    const getBoardId = await eraseComment(req.params.commentId)
+    res.send(response(status.SUCCESS, await getAllComment(getBoardId.board_id, req.query.offset) ))
 }
 
 
