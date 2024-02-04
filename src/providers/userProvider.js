@@ -14,8 +14,7 @@ class userProvider {
   static async findid(query) {
     try {
       const result = await userDAO.findId(query);
-      console.log("provider 아이디 조회");
-      console.log(result);
+
       return result;
     } catch (error) {
       throw error;
@@ -25,8 +24,7 @@ class userProvider {
   static async checkNickname(query) {
     try {
       const result = await userDAO.checkNn(query);
-      console.log("provider 닉넴 중복");
-      console.log(result);
+
       if (result == undefined) {
         return result;
       } else {
@@ -39,7 +37,6 @@ class userProvider {
   // email 확인
   static async user_id_check(body) {
     try {
-      console.log("email 확인:", body.email);
       const result = await userDAO.selectUserId(body.email);
       if (result == undefined) {
         return result;
@@ -53,9 +50,7 @@ class userProvider {
   // password 확인
   static async passwordCheck(body) {
     try {
-      console.log("password:", body);
       const result = await userDAO.selectUserPassword(body);
-      console.log("결과", result);
       return result;
     } catch (error) {
       throw error;
@@ -64,9 +59,7 @@ class userProvider {
   // phone_num 중복확인
   static async numCheck(query) {
     try {
-      console.log("phone_num:", query.phone_number);
       const result = await userDAO.numberCheck(query.phone_number);
-      console.log("결과", result);
       if (result == undefined) {
         return result;
       } else {

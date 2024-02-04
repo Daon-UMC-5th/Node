@@ -13,6 +13,12 @@ class BaseError extends Error {
     this.data = data;
   }
 }
+const errResponse = ({ isSuccess, code, message }) => {
+  return {
+    isSuccess: isSuccess,
+    code: code,
+    message: message,
+  };
+};
 
-module.exports = BaseError;
-module.exports = response;
+module.exports = { response, BaseError, errResponse };
