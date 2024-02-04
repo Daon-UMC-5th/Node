@@ -7,7 +7,6 @@ const path = require("path");
 //dotenv.config({ path: path.join(__dirname, "./config.env") });
 dotenv.config({ path: "./config.env" });
 
-
 const pool = mysql.createPool({
   host: process.env.DB_HOST, // mysql의 hostname
   user: process.env.DB_USER, // user 이름
