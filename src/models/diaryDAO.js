@@ -6,17 +6,17 @@ const { getPrivate, getPublic, insertDiary, changeDiary, deleteDiaryData, countD
 const privateDiaryData = async(data) => {
     try {   
         const conn = await pool.getConnection();
-        const diary = await pool.query(getPrivate, data.user_id);
+        const diary = await pool.query(getPrivate, [data.user_id, parseInt(data.offset)]);
         conn.release();
         return diary[0];  
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
 
-const publicDiaryData = async() => {
+const publicDiaryData = async(data) => {
     try {   
         const conn = await pool.getConnection();
-        const pubdiary = await pool.query(getPublic);
+        const pubdiary = await pool.query(getPublic, parseInt(data.offset));
         conn.release();
         return pubdiary[0];  
     } 
@@ -40,6 +40,7 @@ const modifyDiaryData = async(data) => {
         const changeData = await pool.query(changeDiary, [data.is_private, data.title, data.content, data.diary_id]);
         conn.release();
         changeData;
+        return data.diary_id
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
@@ -50,6 +51,7 @@ const eraseDiaryData = async(data) => {
         const eraseData = await pool.query(deleteDiaryData, data.diary_id);
         conn.release();
         eraseData;
+        return data.diary_id
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
@@ -68,7 +70,7 @@ const countDiaryLike = async(data) => {
 const addLikeData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const addDiaryLike = await pool.query(insertDiaryLike, [data.diary_id, data.user_id]);
+        const addDiaryLike = await pool.query(insertDiaryLike, [data.user_id, data.diary_id]);
         addDiaryLike;
         conn.release();
         return data.diary_id;
@@ -79,7 +81,7 @@ const addLikeData = async(data) => {
 const subLikeData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const subDiaryLike = await pool.query(deleteDiaryLike, [data.diary_id, data.user_id]);
+        const subDiaryLike = await pool.query(deleteDiaryLike, [data.user_id, data.diary_id]);
         subDiaryLike;
         conn.release();
         return data.diary_id;
