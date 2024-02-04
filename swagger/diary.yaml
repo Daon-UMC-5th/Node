@@ -33,14 +33,19 @@ paths:
                     properties:
                       diary_id:
                         type: "integer"
+                        example: 1
                       user_id:
                         type: "integer"
+                        example: 1
                       is_private:
                         type: "boolean"
+                        example: true
                       title:
                         type: "string"
+                        example: "일기 제목"
                       content:
                         type: "string"
+                        example: "일기 내용"
                       created_at:
                         type: "string"
                         format: "date-time"
@@ -100,14 +105,19 @@ paths:
                     properties:
                       diary_id:
                         type: "integer"
+                        example: 1
                       user_id:
                         type: "integer"
+                        example: 1
                       is_private:
                         type: "boolean"
+                        example: false
                       title:
                         type: "string"
+                        example: "일기 제목"
                       content:
                         type: "string"
+                        example: "일기 내용"
                       created_at:
                         type: "string"
                         format: "date-time"
@@ -201,6 +211,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "일기 id"
       requestBody:
         required: true
         content:
@@ -263,6 +274,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "일기 id"
       responses:
         "200":
           content:
@@ -309,6 +321,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "일기 id"
       responses:
         "200":
           content:
@@ -357,6 +370,7 @@ paths:
           in: "path"
           required: true
           type: "integer"
+          description: "일기 id"
       responses:
         "200":
           content:
