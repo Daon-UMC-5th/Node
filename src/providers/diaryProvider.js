@@ -1,13 +1,16 @@
 const { privateDiaryData, publicDiaryData } = require('../models/diaryDAO.js')
 
-const privateDiary = async(user) => {
+const privateDiary = async(user, query) => {
     return await privateDiaryData({
-        "user_id" : user
+        "user_id" : user,
+        "offset" : query
     });
 }
 
-const publicDiary = async() => {
-    return await publicDiaryData();
+const publicDiary = async(query) => {
+    return await publicDiaryData({
+        "offset" : query
+    });
 }
 
 

@@ -1,6 +1,6 @@
-const getPrivate = "SELECT * FROM diary WHERE user_id = ?;"
+const getPrivate = "SELECT * FROM diary WHERE user_id = ? ORDER BY created_at DESC LIMIT ?, 10;"
 
-const getPublic = "SELECT * FROM diary WHERE is_private = false;"
+const getPublic = "SELECT * FROM diary WHERE is_private = false ORDER BY created_at DESC LIMIT ?, 10;"
 
 const insertDiary = "INSERT INTO diary (user_id, is_private, title, content, created_at, updated_at) VALUES (?,?,?,?,NOW(), NOW());"
 

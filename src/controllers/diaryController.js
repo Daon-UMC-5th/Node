@@ -4,10 +4,10 @@ const { writeDiary, modifyDiary, eraseDiary, diaryLikeAdd, diaryLikeSub } = requ
 const { privateDiary, publicDiary } = require('../providers/diaryProvider.js');
 
 const getPrivateDiary = async(req,res) => {
-    res.send(response(status.SUCCESS, await privateDiary(req.user_id)));
+    res.send(response(status.SUCCESS, await privateDiary(req.user_id, req.query.offset)));
 }
 const getPublicDiary = async(req,res) => {
-    res.send(response(status.SUCCESS, await publicDiary()));
+    res.send(response(status.SUCCESS, await publicDiary(req.query.offset)));
 }
 const postDiary = async(req,res) => {
     res.send(response(status.SUCCESS, await writeDiary(req.user_id, req.body)));

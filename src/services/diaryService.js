@@ -13,7 +13,7 @@ const writeDiary = async(user, body) => {
 
 const modifyDiary = async(param, body) => {
     return await modifyDiaryData({
-        "diary_id" : param.diaryId,
+        "diary_id" : param,
         "is_private" : body.is_private,
         "title" : body.title,
 	    "content" : body.content,  
