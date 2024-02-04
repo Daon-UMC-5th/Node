@@ -6,63 +6,77 @@ paths:
         - name: "boardType"
           in: "path"
           required: true
-          type: "string"
+          schema:
+            type: "string"
+        - name: "offset"
+          in: "query"
+          required: true
+          example: 오프셋
+          schema:
+            type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    board_id:
-                      type: integer
-                    board_type:
-                      type: string
-                    user_id:
-                      type: integer
-                    title:
-                      type: string
-                    content:
-                      type: string
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 200
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"                      
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        board_id:
+                          type: integer
+                          example: 1
+                        board_type:
+                          type: string
+                          example: notice
+                        user_id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: "공지게시글 제목"
+                        content:
+                          type: string
+                          example: "공지게시글 내용"
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
               
   /board/getOne/{boardId}:
     get:
@@ -73,61 +87,73 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    board_id:
-                      type: integer
-                    board_type:
-                      type: string
-                    user_id:
-                      type: integer
-                    title:
-                      type: string
-                    content:
-                      type: string
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 200
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: array
+                    items:
+                      - type: object
+                        properties:
+                          board_id:
+                            type: integer
+                            example: 30
+                          board_type:
+                            type: string
+                            example: liver
+                          user_id:
+                            type: integer
+                            example: 1
+                          title:
+                            type: string
+                            example: "간암 제목"
+                          content:
+                            type: string
+                            example: "간암 내용"
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: "2024-02-02T13:45:35.000Z"
+                          updated_at:
+                            type: string
+                            format: date-time
+                            example: "2024-02-02T13:45:35.000Z"
+                      - type: boolean
+                        example: true
+                    
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/write/post/{boardType}:
     post:
@@ -137,74 +163,83 @@ paths:
           in: "path"
           required: true
           type: "string"
-        - name: "body"
-          in: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              title:
-                type: "string"
-                description: "게시글 제목"
-              content:
-                type: "string"
-                description: "게시글 내용"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                  example: "게시글 제목"
+                content:
+                  type: "string"
+                  example: "게시글 내용"
+         
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    board_id:
-                      type: integer
-                    board_type:
-                      type: string
-                    user_id:
-                      type: integer
-                    title:
-                      type: string
-                    content:
-                      type: string
-                    created_at:
-                      type: string
-                      format: date-time
-                    updated_at:
-                      type: string
-                      format: date-time
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 200
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"                      
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        board_id:
+                          type: integer
+                          example: 1
+                        board_type:
+                          type: string
+                          example: liver
+                        user_id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: "간암글 제목"
+                        content:
+                          type: string
+                          example: "간암글 내용"
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/write/put/{boardId}:
     put:
@@ -214,74 +249,82 @@ paths:
           in: "path"
           required: true
           type: "integer"
-        - name: "body"
-          in: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              title:
-                type: "string"
-                description: "게시글 제목"
-              content:
-                type: "string"
-                description: "게시글 내용"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                  example: "게시글 제목"
+                content:
+                  type: "string"
+                  example: "게시글 내용"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    board_id:
-                      type: "integer"
-                    board_type:
-                      type: "string"
-                    user_id:
-                      type: "integer"
-                    title:
-                      type: "string"
-                    content:
-                      type: "string"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 200
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"                      
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        board_id:
+                          type: integer
+                          example: 1
+                        board_type:
+                          type: string
+                          example: liver
+                        user_id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: "간암 제목 수정"
+                        content:
+                          type: string
+                          example: "간암 내용 수정"
+                        created_at:
+                          type: string
+                          format: date-time
+                        updated_at:
+                          type: string
+                          format: date-time
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
   
   /board/write/delete/{boardId}:
     delete:
@@ -292,43 +335,43 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
-
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 200
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+  
   /board/likeup/{boardId}:
     post:
       summary: 좋아요 추가
@@ -338,47 +381,45 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    COUNT(*):
-                      type: "integer"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"                      
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+                        example: 1
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
   
   /board/likedown/{boardId}:
     delete:
@@ -389,47 +430,45 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    COUNT(*):
-                      type: "integer"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+                        example: 1
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/like/{boardId}:
     get:
@@ -440,47 +479,98 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+                        example: 1
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+
+  /board/allLike:
+    get:
+      summary: 좋아요 전체 가져오기
+      parameters:
+        - name: "offset"
+          in: "query"
+          required: true
+          example: 오프셋
           schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    COUNT(*):
-                      type: "integer"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+            type: "integer"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        COUNT(*):
+                          type: "integer"
+                          example: 1
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/addScrape/{boardId}:
     post:
@@ -491,42 +581,39 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/subScrape/{boardId}:
     delete:
@@ -537,42 +624,39 @@ paths:
           required: true
           type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/comment/post/{boardId}:
     post:
@@ -581,70 +665,76 @@ paths:
         - name: "boardId"
           in: "path"
           required: true
-          type: "string"
-        - name: "body"
-          in: "body"
+          type: "integer"
+        - name: "offset"
+          in: "query"
           required: true
+          example: 오프셋
           schema:
-            type: "object"
-            properties:
-              content:
-                type: "string"
-                description: "댓글 내용"
+            type: "integer"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                content:
+                  type: "string"
+                  example: "댓글 내용"  
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    comment_id:
-                      type: "integer"
-                    user_id:
-                      type: "integer"
-                    board_id:
-                      type: "integer"
-                    content:
-                      type: "string"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        comment_id:
+                          type: "integer"
+                        user_id:
+                          type: "integer"
+                        board_id:
+                          type: "integer"
+                        content:
+                          type: "string"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/comment/put/{commentId}:
     put:
@@ -654,69 +744,75 @@ paths:
           in: "path"
           required: true
           type: "string"
-        - name: "body"
-          in: "body"
+        - name: "offset"
+          in: "query"
           required: true
+          example: 오프셋
           schema:
-            type: "object"
-            properties:
-              content:
-                type: "string"
-                description: "댓글 내용"
+            type: "integer"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                content:
+                  type: "string"
+                  example: "댓글 내용"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    comment_id:
-                      type: "integer"
-                    user_id:
-                      type: "integer"
-                    board_id:
-                      type: "integer"
-                    content:
-                      type: "string"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        comment_id:
+                          type: "integer"
+                        user_id:
+                          type: "integer"
+                        board_id:
+                          type: "integer"
+                        content:
+                          type: "string"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/comment/delete/{commentId}:
     delete:
@@ -726,69 +822,65 @@ paths:
           in: "path"
           required: true
           type: "string"
-        - name: "body"
-          in: "body"
+        - name: "offset"
+          in: "query"
           required: true
+          example: 오프셋
           schema:
-            type: "object"
-            properties:
-              content:
-                type: "string"
-                description: "댓글 내용"
+            type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    comment_id:
-                      type: "integer"
-                    user_id:
-                      type: "integer"
-                    board_id:
-                      type: "integer"
-                    content:
-                      type: "string"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        comment_id:
+                          type: "integer"
+                        user_id:
+                          type: "integer"
+                        board_id:
+                          type: "integer"
+                        content:
+                          type: "string"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
 
   /board/comment/get/{boardId}:
     get:
@@ -798,57 +890,62 @@ paths:
           in: "path"
           required: true
           type: "string"
+        - name: "offset"
+          in: "query"
+          required: true
+          example: 오프셋
+          schema:
+            type: "integer"
       responses:
-        200:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 200
-                isSuccess:
-                  type: "boolean"
-                  example: true
-                code:
-                  type: "integer"
-                  example: 200
-                message:
-                  type: "string"
-                  example: "success!"
-                result:
-                  type: "object"
-                  properties:
-                    comment_id:
-                      type: "integer"
-                    user_id:
-                      type: "integer"
-                    board_id:
-                      type: "integer"
-                    content:
-                      type: "string"
-                    created_at:
-                      type: "string"
-                      format: "date-time"
-                    updated_at:
-                      type: "string"
-                      format: "date-time"
-        400:
-          schema:
-            type: "array"
-            items:
-              type: "object"
-              properties:
-                status:
-                  type: "integer"
-                  example: 400
-                isSuccess:
-                  type: "boolean"
-                  example: false
-                code:
-                  type: "integer"
-                  example: COMMON000
-                message:
-                  type: "string"
-                  example: "서버 에러, 관리자에게 문의 바랍니다."
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        comment_id:
+                          type: "integer"
+                        user_id:
+                          type: "integer"
+                        board_id:
+                          type: "integer"
+                        content:
+                          type: "string"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+        "400":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  status:
+                    type: "integer"
+                    example: 400
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."

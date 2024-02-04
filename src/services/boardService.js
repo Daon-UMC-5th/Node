@@ -80,11 +80,12 @@ const writeComment = async(param, body, user) => {
         "board_id": param,
 	    "content" : body.content,  
     }); 
-    if (returnWriteComment == -1){
-        throw response(status.INTERNAL_SERVER_ERROR);
-    }else{
-        return await allCommentData(returnWriteComment);
-    }
+    // if (returnWriteComment == -1){
+    //     throw response(status.INTERNAL_SERVER_ERROR);
+    // }else{
+    //     return await allCommentData(returnWriteComment);
+    // }
+    return returnWriteComment
 };
 
 const modifyComment = async(param, body) => {
@@ -92,22 +93,24 @@ const modifyComment = async(param, body) => {
         "comment_id" : param,
 	    "content" : body.content,  
     }); 
-    if (returnModifyComment == -1){
-        throw response(status.INTERNAL_SERVER_ERROR);
-    }else{
-        return await allCommentData(returnModifyComment);
-    }
+    // if (returnModifyComment == -1){
+    //     throw response(status.INTERNAL_SERVER_ERROR);
+    // }else{
+    //     return await allCommentData(returnModifyComment);
+    // }
+    return returnModifyComment
 };
 
 const eraseComment = async(param) => {
     returnEraseComment = await eraseCommentData({
         "comment_id" : param
     }); 
-    if (returnEraseComment == -1){
-        throw response(status.INTERNAL_SERVER_ERROR);
-    }else{
-        return await allCommentData(returnEraseComment);
-    }
+    // if (returnEraseComment == -1){
+    //     throw response(status.INTERNAL_SERVER_ERROR);
+    // }else{
+    //     return await allCommentData(returnEraseComment);
+    // }
+    return returnEraseComment
 };
 
 module.exports = { writeBoard, modifyBoard, eraseBoard, postLikeUp, deleteLike, addScrape, subScrape, writeComment, modifyComment, eraseComment };

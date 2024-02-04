@@ -7,8 +7,9 @@ const { getAllData, getOneData, compareUser, insertData, searchData, changeData,
 const getBoardData = async(data) => {
     try {   
         const conn = await pool.getConnection();
-        const allData = await pool.query(getAllData, data.board_type);
+        const allData = await pool.query(getAllData, [data.board_type, parseInt(data.offset)]);
         conn.release();
+        console.log(allData[0])
         return allData[0];  
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
@@ -17,15 +18,14 @@ const getBoardData = async(data) => {
 const getOneBoardData = async(data) => {
     try {   
         const conn = await pool.getConnection();
-        const [oneData] = await pool.query(getOneData, data.board_id);
+        const oneData = await pool.query(getOneData, data.board_id);
         const btnAdd = await pool.query(compareUser, data.board_id);
         conn.release();
         if(btnAdd[0] = data.user_id){
-            console.log(oneData)
-            return [oneData, true];
+            return [oneData[0][0], true];
         }
         else{
-            return [oneData,false];
+            return [oneData[0][0],false];
         }
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
@@ -107,10 +107,10 @@ const countLikeData = async(data) => {
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
 
-const allLikeData = async() => {
+const allLikeData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const allcount = await pool.query(getAllLike);
+        const allcount = await pool.query(getAllLike, parseInt(data.offset));
         conn.release();
         
         return allcount[0];
@@ -143,7 +143,7 @@ const subScrapeData = async(data) => {
 const allCommentData = async(data) => {
     try {   
         const conn = await pool.getConnection();
-        const commentData = await pool.query(getCommentData, data.board_id);
+        const commentData = await pool.query(getCommentData, [data.board_id, parseInt(data.offset)]);
         conn.release();
         return commentData[0];  
     } 
@@ -156,7 +156,7 @@ const writeCommentData = async(data) => {
         const [writeAllData] = await pool.query(insertComment, [data.user_id, data.board_id, data.content]);
         writeAllData;
         conn.release();
-        return {"board_id" : data.board_id};
+        return {"board_id" : data.board_id };
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
