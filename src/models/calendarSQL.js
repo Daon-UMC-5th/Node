@@ -16,5 +16,26 @@ module.exports.updatePhysicalRecordSQL = updatePhysicalRecordSQL;
 
 
 // 신체기록 중복 확인
-const checkDuplicationDateDateSQL = " select * from physical_record where alarmed_date=? and user_id=?";
-module.exports.checkDuplicationDateDateSQL = checkDuplicationDateDateSQL;
+const checkDuplicationDateInPhysicalSQL = " select * from physical_record where alarmed_date=? and user_id=?";
+module.exports.checkDuplicationDateInPhysicalSQL = checkDuplicationDateInPhysicalSQL;
+
+
+// 진료기록 삽입
+const insertConsultationSQL = "insert into consultation (user_id, hospital, content, alarmed_date, alarmed_at, created_at, updated_at) values(?,?,?,?,?,NOW(),NOW())"
+module.exports.insertConsultationSQL = insertConsultationSQL;
+
+// 진료기록 중복 확인
+const checkDuplicationDateInConsultationSQL = "select * from consultation where alarmed_date=? and user_id=?";
+module.exports.checkDuplicationDateInConsultationSQL = checkDuplicationDateInConsultationSQL;
+
+// 진료기록 조회
+const getConsultationSQL = "select * from consultation where alarmed_date=? and user_id=?";
+module.exports.getConsultationSQL = getConsultationSQL;
+
+// 진료기록 삭제
+const deleteConsultationSQL = "delete from consultation where alarmed_date=? and user_id=?";
+module.exports.deleteConsultationSQL = deleteConsultationSQL;
+
+// 진료기록 수정
+const updateConsultationSQL = "update consultation set hospital=?, content=?, alarmed_at=?, updated_at=NOW() where alarmed_date=? and user_id=?";
+module.exports.updateConsultationSQL = updateConsultationSQL;
