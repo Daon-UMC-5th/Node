@@ -1,14 +1,19 @@
 const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getPrivate, getPublic, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
+const { getPrivate, getPublic, getDiaryImage, oneDiary, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
 
 const privateDiaryData = async(data) => {
     try {   
         const conn = await pool.getConnection();
         const diary = await pool.query(getPrivate, [data.user_id, parseInt(data.offset)]);
+        const diaryLike = await pool.query(getDiaryLike);
+        const diaryImage = await pool.query(getDiaryImage);
+
         conn.release();
-        return diary[0];  
+        resultDiary = [diary[0], diaryLike[0], diaryImage[0]];
+        
+        return resultDiary;
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
@@ -17,8 +22,31 @@ const publicDiaryData = async(data) => {
     try {   
         const conn = await pool.getConnection();
         const pubdiary = await pool.query(getPublic, parseInt(data.offset));
+        const diaryLike = await pool.query(getDiaryLike)
+        const diaryImage = await pool.query(getDiaryImage)
         conn.release();
-        return pubdiary[0];  
+
+        resultDiary = [pubdiary[0], diaryLike[0], diaryImage[0]];
+        return resultDiary; 
+    } 
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+}
+
+const oneDiaryData = async(data) => {
+    try {
+        const conn = await pool.getConnection();
+        const DiaryData = await pool.query(oneDiary, data.diary_id);
+        const DiaryLike = await pool.query(oneDiaryLike, data.diary_id);
+        const DiaryImage = await pool.query(oneDiaryImage, data.diary_id);
+        const btnAdd = await pool.query(compareDiaryUser, data.diary_id);
+        conn.release();
+
+        if(btnAdd[0][0].user_id == data.user_id){ //user_id와 작성자가 같으면 true값돌려줘서 버튼 보이게
+            return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], true];
+        }
+        else{
+            return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], false];
+        }
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
@@ -40,6 +68,9 @@ const modifyDiaryData = async(data) => {
         const changeData = await pool.query(changeDiary, [data.is_private, data.title, data.content, data.diary_id]);
         conn.release();
         changeData;
+        if(changeData[0].affectedRows == 0){
+            throw error;
+        }
         return data.diary_id
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
@@ -51,6 +82,9 @@ const eraseDiaryData = async(data) => {
         const eraseData = await pool.query(deleteDiaryData, data.diary_id);
         conn.release();
         eraseData;
+        if(eraseData[0].affectedRows == 0){
+            throw error;
+        }
         return data.diary_id
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
@@ -90,4 +124,4 @@ const subLikeData = async(data) => {
 }
 
 
-module.exports = { privateDiaryData, publicDiaryData, writeDiaryData, modifyDiaryData, eraseDiaryData, countDiaryLike, addLikeData, subLikeData}
+module.exports = { privateDiaryData, publicDiaryData, oneDiaryData, writeDiaryData, modifyDiaryData, eraseDiaryData, countDiaryLike, addLikeData, subLikeData}
