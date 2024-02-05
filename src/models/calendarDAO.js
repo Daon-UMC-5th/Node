@@ -1,6 +1,12 @@
 const db = require("../config/database.js");
+const calendarRouter = require("../routes/calendarRoute.js");
+// 신체 
 const {insertPhysicalRecordSQL, getPhysicalRecordSQL,deletePhysicalRecordSQL,updatePhysicalRecordSQL} = require("./calendarSQL.js");
-const {checkDuplicationDateDateSQL} = require("./calendarSQL.js");
+const {checkDuplicationDateInPhysicalSQL} = require("./calendarSQL.js");
+
+// 진료
+const {insertConsultationSQL, getConsultationSQL,deleteConsultationSQL, updateConsultationSQL} = require("./calendarSQL.js");
+const {checkDuplicationDateInConsultationSQL} = require("./calendarSQL.js");
 
 // 신체기록 삽입 
 const insertPhysicalRecordInDB = async(data) => {
@@ -83,14 +89,107 @@ const updatePhysicalRecordInDB = async(date,data) => {
 }
 module.exports.updatePhysicalRecordInDB = updatePhysicalRecordInDB;
 
-const checkDuplicationDateDateInDB = async(date,userId) => {
+const checkDuplicationDateInDBInPhysical = async(date,userId) => {
 
    const dbConnection = await db.getConnection();
 
-   const result = await db.query(checkDuplicationDateDateSQL, [date,userId]);
+   const result = await db.query(checkDuplicationDateInPhysicalSQL, [date,userId]);
    console.log(result[0]);
    if(result[0].length != 0) return result[0];
    else return undefined;
 
 }
-module.exports.checkDuplicationDateDateInDB = checkDuplicationDateDateInDB;
+module.exports.checkDuplicationDateInDBInPhysical = checkDuplicationDateInDBInPhysical;
+
+
+
+// 진료
+
+// 진료기록 삽입
+const insertConsultationInDB = async(data) => {
+    const dbConnection = await db.getConnection();
+    const result = await db.query(insertConsultationSQL,[data.user_id, data.hospital, data.content, data.alarmed_date, data.alarmed_at]);
+    console.log(result[0]);
+    dbConnection.release();
+    return result[0];
+}
+module.exports.insertConsultationInDB = insertConsultationInDB;
+
+// 진료기록 중복 체크 
+const checkDuplicationDateInDBInConsultation = async(date, userId) => {
+
+    const dbConnection = await db.getConnection();
+
+    const result = await db.query(checkDuplicationDateInConsultationSQL, [date, userId]);
+    if(result[0].length != 0) return result[0];
+    else return undefined;
+    
+}
+module.exports.checkDuplicationDateInDBInConsultation = checkDuplicationDateInDBInConsultation;
+
+
+// 진료기록 조회
+const checkConsultationInDB = async(date, userId) => {
+
+    const dbConnection = await db.getConnection();
+    try{
+     
+        const result = await db.query(getConsultationSQL,[date, userId]);
+        dbConnection.release();
+       //console.log(result[0]);
+        return result[0];
+    }catch(err){
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+        //console.log(result[0]);
+        return result[0];
+    }
+}
+module.exports.checkConsultationInDB = checkConsultationInDB;
+
+// 진료기록 삭제
+
+const deleteConsultationInDB = async(date, userId) => {
+
+    const dbConnection = await db.getConnection();
+
+    try{
+        const result = await db.query(deleteConsultationSQL, [date,userId]);
+        dbConnection.release();
+        console.log(result[0]);
+
+        return result[0];
+    }catch(err){
+        const result=[];
+        result[0] = "error";
+        dbConnection.release();
+    
+        return result[0];
+    }
+}
+module.exports.deleteConsultationInDB = deleteConsultationInDB;
+
+// 진료기록 수정
+const updateConsultationInDB = async(date, data) => {
+
+    const dbConnection = await db.getConnection();
+
+    try{
+        console.log(data.hospital);
+        const result = await db.query(updateConsultationSQL, [data.hospital, data.content, data.alarmed_at, date, data.user_id]);
+        dbConnection.release();
+
+        return result[0];
+
+    }catch(err){
+
+        console.log(err);
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+
+        return result[0];
+    }
+}
+module.exports.updateConsultationInDB = updateConsultationInDB;
