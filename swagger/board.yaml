@@ -1,7 +1,9 @@
 paths:
-  /board/getAll/{boardType}:
+  /board/get-all/{boardType}:
     get:
       summary: 게시판 목록 가져오기
+      tags:
+        - Board
       parameters:
         - name: "boardType"
           in: "path"
@@ -22,9 +24,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -60,15 +59,24 @@ paths:
                         updated_at:
                           type: string
                           format: date-time
-        "400":
+                        image_url:
+                          type : string
+                          example : "http://example.com/image.jpg"
+                        likecount :
+                          type : integer
+                          example : 6
+                        commentcount :
+                          type : integer
+                          example : 6
+                        scrapecount :
+                          type : integer
+                          example : 6
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -79,9 +87,13 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
               
-  /board/getOne/{boardId}:
+  /board/get-one/{boardId}:
     get:
-      summary: 특정 게시글 가져오기
+      summary: 특정 게시글 가져오기 
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -95,9 +107,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -108,45 +117,51 @@ paths:
                     type: "string"
                     example: "success!"
                   result:
-                    type: array
-                    items:
-                      - type: object
-                        properties:
-                          board_id:
-                            type: integer
-                            example: 30
-                          board_type:
-                            type: string
-                            example: liver
-                          user_id:
-                            type: integer
-                            example: 1
-                          title:
-                            type: string
-                            example: "간암 제목"
-                          content:
-                            type: string
-                            example: "간암 내용"
-                          created_at:
-                            type: string
-                            format: date-time
-                            example: "2024-02-02T13:45:35.000Z"
-                          updated_at:
-                            type: string
-                            format: date-time
-                            example: "2024-02-02T13:45:35.000Z"
-                      - type: boolean
-                        example: true
-                    
-        "400":
+                    type: "object"
+                    properties:
+                      board_id:
+                        type: integer
+                        example: 1
+                      board_type:
+                        type: string
+                        example: notice
+                      user_id:
+                        type: integer
+                        example: 1                        
+                      title:
+                        type: string
+                        exampl: "공지게시글 제목"
+                      content:
+                        type: string
+                        example: "공지게시글 내용"
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      image_url:
+                        type : string
+                        example : "http://example.com/image.jpg"
+                      likecount :
+                        type : integer
+                        example : 6
+                      commentcount :
+                        type : integer
+                        example : 6
+                      scrapecount :
+                        type : integer
+                        example : 6
+                      access : 
+                        type : boolean
+                        example : true    
+                        discription : "user_id와 작성자가 같으면 true"            
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -160,6 +175,10 @@ paths:
   /board/write/post/{boardType}:
     post:
       summary: 게시판 글 작성하기
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardType"
           in: "path"
@@ -187,9 +206,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -200,40 +216,51 @@ paths:
                     type: "string"
                     example: "success!"
                   result:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        board_id:
-                          type: integer
-                          example: 1
-                        board_type:
-                          type: string
-                          example: liver
-                        user_id:
-                          type: integer
-                          example: 1
-                        title:
-                          type: string
-                          example: "간암글 제목"
-                        content:
-                          type: string
-                          example: "간암글 내용"
-                        created_at:
-                          type: string
-                          format: date-time
-                        updated_at:
-                          type: string
-                          format: date-time
-        "400":
+                    type: "object"
+                    properties:
+                      board_id:
+                        type: integer
+                        example: 1
+                      board_type:
+                        type: string
+                        example: notice
+                      user_id:
+                        type: integer
+                        example: 1                        
+                      title:
+                        type: string
+                        exampl: "공지게시글 제목"
+                      content:
+                        type: string
+                        example: "공지게시글 내용"
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      image_url:
+                        type : string
+                        example : "http://example.com/image.jpg"
+                      likecount :
+                        type : integer
+                        example : 6
+                      commentcount :
+                        type : integer
+                        example : 6
+                      scrapecount :
+                        type : integer
+                        example : 6
+                      access : 
+                        type : boolean
+                        example : true  
+                        discription : "user_id와 작성자가 같으면 true"  
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -247,6 +274,8 @@ paths:
   /board/write/put/{boardId}:
     put:
       summary: 게시판 글 수정하기
+      tags:
+        - Board
       parameters:
         - name: "boardId"
           in: "path"
@@ -273,9 +302,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -286,40 +312,51 @@ paths:
                     type: "string"
                     example: "success!"
                   result:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        board_id:
-                          type: integer
-                          example: 1
-                        board_type:
-                          type: string
-                          example: liver
-                        user_id:
-                          type: integer
-                          example: 1
-                        title:
-                          type: string
-                          example: "간암 제목 수정"
-                        content:
-                          type: string
-                          example: "간암 내용 수정"
-                        created_at:
-                          type: string
-                          format: date-time
-                        updated_at:
-                          type: string
-                          format: date-time
-        "400":
+                    type: "object"
+                    properties:
+                      board_id:
+                        type: integer
+                        example: 1
+                      board_type:
+                        type: string
+                        example: notice
+                      user_id:
+                        type: integer
+                        example: 1                        
+                      title:
+                        type: string
+                        exampl: "공지게시글 제목"
+                      content:
+                        type: string
+                        example: "공지게시글 내용"
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+                      image_url:
+                        type : string
+                        example : "http://example.com/image.jpg"
+                      likecount :
+                        type : integer
+                        example : 6
+                      commentcount :
+                        type : integer
+                        example : 6
+                      scrapecount :
+                        type : integer
+                        example : 6
+                      access : 
+                        type : boolean
+                        example : true  
+                        discription : "user_id와 작성자가 같으면 true"  
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -333,6 +370,8 @@ paths:
   /board/write/delete/{boardId}:
     delete:
       summary: 게시판 글 삭제하기
+      tags:
+        - Board
       parameters:
         - name: "boardId"
           in: "path"
@@ -346,9 +385,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -358,15 +394,12 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -377,9 +410,13 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
   
-  /board/likeup/{boardId}:
+  /board/like-up/{boardId}:
     post:
       summary: 좋아요 추가
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -408,15 +445,12 @@ paths:
                       COUNT(*):
                         type: "integer"
                         example: 1
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -427,9 +461,13 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
   
-  /board/likedown/{boardId}:
+  /board/like-down/{boardId}:
     delete:
       summary: 좋아요 삭제
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -458,15 +496,12 @@ paths:
                       COUNT(*):
                         type: "integer"
                         example: 1
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -480,6 +515,8 @@ paths:
   /board/like/{boardId}:
     get:
       summary: 특정 글 좋아요 수 가져오기
+      tags:
+        - Board
       parameters:
         - name: "boardId"
           in: "path"
@@ -508,15 +545,12 @@ paths:
                       COUNT(*):
                         type: "integer"
                         example: 1
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -527,9 +561,11 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
 
-  /board/allLike:
+  /board/all-like:
     get:
       summary: 좋아요 전체 가져오기
+      tags:
+        - Board
       parameters:
         - name: "offset"
           in: "query"
@@ -561,15 +597,12 @@ paths:
                         COUNT(*):
                           type: "integer"
                           example: 1
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -580,9 +613,13 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
 
-  /board/addScrape/{boardId}:
+  /board/add-scrape/{boardId}:
     post:
       summary: 스크랩 추가
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -605,15 +642,12 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -624,9 +658,13 @@ paths:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
 
-  /board/subScrape/{boardId}:
+  /board/sub-scrape/{boardId}:
     delete:
       summary: 스크랩 삭제
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -649,15 +687,12 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
-        "400":
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -671,6 +706,10 @@ paths:
   /board/comment/post/{boardId}:
     post:
       summary: 댓글 작성하기
+      tags:
+        - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -732,15 +771,16 @@ paths:
                         updated_at:
                           type: "string"
                           format: "date-time"
-        "400":
+                        likecount:
+                          type: "integer"
+                          example: 1
+
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -754,6 +794,8 @@ paths:
   /board/comment/put/{commentId}:
     put:
       summary: 댓글 수정하기
+      tags:
+        - Board
       parameters:
         - name: "commentId"
           in: "path"
@@ -815,15 +857,15 @@ paths:
                         updated_at:
                           type: "string"
                           format: "date-time"
-        "400":
+                        likecount:
+                          type: "integer"
+                          example: 1
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -837,6 +879,8 @@ paths:
   /board/comment/delete/{commentId}:
     delete:
       summary: 댓글 삭제하기
+      tags:
+        - Board
       parameters:
         - name: "commentId"
           in: "path"
@@ -888,15 +932,15 @@ paths:
                         updated_at:
                           type: "string"
                           format: "date-time"
-        "400":
+                        likecount:
+                          type: "integer"
+                          example: 1
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 400
                   isSuccess:
                     type: "boolean"
                     example: false
@@ -910,6 +954,8 @@ paths:
   /board/comment/get/{boardId}:
     get:
       summary: 댓글 가져오기
+      tags:
+        - Board
       parameters:
         - name: "boardId"
           in: "path"
@@ -961,15 +1007,117 @@ paths:
                         updated_at:
                           type: "string"
                           format: "date-time"
-        "400":
+                        likecount:
+                          type: "integer"
+                          example: 1
+        "500":
           content:
             application/json:
               schema:
                 type: "object"
                 properties:
-                  status:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
                     type: "integer"
-                    example: 400
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+  
+  /board/comment/like-up/{commentId}:
+    post:
+      summary: 댓글 좋아요 추가
+      tags:
+        - Board
+      security:
+        - api_key: []
+      parameters:
+        - name: "commentId"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "댓글 id"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"                      
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+                        example: 1
+        "500":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: COMMON000
+                  message:
+                    type: "string"
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+  
+  /board/comment/like-down/{commentId}:
+    delete:
+      summary: 댓글 좋아요 삭제
+      tags:
+        - Board
+      security:
+        - api_key: []
+      parameters:
+        - name: "commentId"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "댓글 id"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+                        example: 1
+        "500":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
                   isSuccess:
                     type: "boolean"
                     example: false
