@@ -1,20 +1,20 @@
 const express = require('express');
-const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment } = require('../controllers/boardController.js')
+const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment, likeUpComment, likeDownComment } = require('../controllers/boardController.js')
 const boardRouter = express.Router();
 
 boardRouter.use((req,res,next) => {
-    req.user_id = 1;
+    req.user_id = 2;
     next();
 })
 
 
 //게시판 글
 //게시판 전체 가져오기
-boardRouter.get('/getAll/:boardType',(req, res) => {
+boardRouter.get('/get-all/:boardType',(req, res) => {
     getBoard(req, res);
 });
 //게시판 특정글 조회하기
-boardRouter.get('/getOne/:boardId', (req, res) => {
+boardRouter.get('/get-one/:boardId', (req, res) => {
     getOneBoard(req, res);
 });
 //게시판 글 작성하기
@@ -27,22 +27,22 @@ boardRouter.delete('/write/delete/:boardId',deleteBoard);
 
 //좋아요
 //좋아요 추가
-boardRouter.post('/likeup/:boardId', likeUp);
+boardRouter.post('/like-up/:boardId', likeUp);
 //좋아요 삭제
-boardRouter.delete('/likedown/:boardId', likeDown);
+boardRouter.delete('/like-down/:boardId', likeDown);
 //특정 글 좋아요 수 가져오기
 boardRouter.get('/like/:boardId', getLike);
 //모든 좋아요 수 가져오기
-boardRouter.get('/allLike', (req, res) => {
+boardRouter.get('/all-like', (req, res) => {
     getAllLikeBoard(req, res);
 });
 
 
 //스크랩
 //스크랩 추가
-boardRouter.post('/addScrape/:boardId', postScrape);
+boardRouter.post('/add-scrape/:boardId', postScrape);
 //스크랩 삭제
-boardRouter.delete('/subScrape/:boardId', cancelScrape);
+boardRouter.delete('/sub-scrape/:boardId', cancelScrape);
 
 
 //댓글
@@ -58,8 +58,8 @@ boardRouter.get('/comment/get/:boardId', getComment);
 
 //댓글 좋아요
 //좋아요 추가
-boardRouter.post('/comment/likeup/:commentId');
+boardRouter.post('/comment/like-up/:commentId', likeUpComment);
 //좋아요 취소
-boardRouter.delete('/comment/likedown/:commentId');
+boardRouter.delete('/comment/like-down/:commentId', likeDownComment);
 
 module.exports = boardRouter ;

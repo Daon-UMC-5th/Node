@@ -1,16 +1,22 @@
 const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getAllData, getOneData, compareUser, insertData, searchData, changeData, deleteData, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment } = require('./boardSQL.js');
+const { getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
 
 //게시판
 const getBoardData = async(data) => {
     try {   
         const conn = await pool.getConnection();
         const allData = await pool.query(getAllData, [data.board_type, parseInt(data.offset)]);
+        const allData1 = await pool.query(getAllDataLike);
+        const allData2 = await pool.query(getAllDataComment);
+        const allData3 = await pool.query(getAllDataScrape);
+        const allData4 = await pool.query(getBoardImage);
         conn.release();
-        console.log(allData[0])
-        return allData[0];  
+        
+        resultBoard = [allData[0], allData1[0], allData2[0], allData3[0], allData4[0]];
+
+        return resultBoard;  
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
 }
@@ -20,12 +26,17 @@ const getOneBoardData = async(data) => {
         const conn = await pool.getConnection();
         const oneData = await pool.query(getOneData, data.board_id);
         const btnAdd = await pool.query(compareUser, data.board_id);
+        const oneData1 = await pool.query(getOneDataLike, data.board_id);
+        const oneData2 = await pool.query(getOneDataComment, data.board_id);
+        const oneData3 = await pool.query(getOneDataScrape, data.board_id);
+        const oneData4 = await pool.query(oneBoardImage, data.board_id);
         conn.release();
-        if(btnAdd[0] = data.user_id){
-            return [oneData[0][0], true];
+
+        if(btnAdd[0][0].user_id == data.user_id){ //user_id와 작성자가 같으면 true값돌려줘서 버튼 보이게
+            return [oneData[0][0], oneData1[0], oneData2[0], oneData3[0], oneData4[0], true];
         }
         else{
-            return [oneData[0][0],false];
+            return [oneData[0][0], oneData1[0], oneData2[0], oneData3[0], oneData4[0], false];
         }
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
@@ -45,9 +56,13 @@ const writeBoardData = async(data) => {
 const returnWriteBoardData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const returnSearchData = await pool.query(searchData, [data]);
+        const returnSearchData = await pool.query(searchData, data);
+        const oneData1 = await pool.query(getOneDataLike, data);
+        const oneData2 = await pool.query(getOneDataComment, data);
+        const oneData3 = await pool.query(getOneDataScrape, data);
+        const oneData4 = await pool.query(oneBoardImage, data);
         conn.release();
-        return returnSearchData[0];
+        return [returnSearchData[0][0], oneData1[0], oneData2[0], oneData3[0], oneData4[0], true];
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
@@ -124,6 +139,7 @@ const addScrapeData = async(data) => {
         const conn = await pool.getConnection();
         const [ScrapeData] = await pool.query(insertScrape, [data.user_id, data.board_id]);
         conn.release();
+        ScrapeData;
         return ScrapeData[0]
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
@@ -144,8 +160,12 @@ const allCommentData = async(data) => {
     try {   
         const conn = await pool.getConnection();
         const commentData = await pool.query(getCommentData, [data.board_id, parseInt(data.offset)]);
+        const commentlikedata = await pool.query(getAllCommentDataLike);
         conn.release();
-        return commentData[0];  
+
+        commentlist = [commentData[0], commentlikedata[0]]
+        
+        return commentlist;  
     } 
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
 }
@@ -185,4 +205,35 @@ const eraseCommentData = async(data) => {
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
 }
 
-module.exports = { getBoardData, getOneBoardData, writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, deleteLikeData, countLikeData, allLikeData, addScrapeData, subScrapeData, allCommentData, writeCommentData, modifyCommentData, eraseCommentData };
+const postLikeCommentData = async(data) => {
+    try {
+        const conn = await pool.getConnection();
+        const addCommentLike = await pool.query(insertCommentLike, [data.user_id, data.comment_id]);
+        addCommentLike;
+        conn.release();
+        return data.comment_id;
+    } 
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+}
+const deleteLikeCommentData = async(data) => {
+    try {
+        const conn = await pool.getConnection();
+        const subCommentLike = await pool.query(deleteCommentLike, [data.user_id, data.comment_id]);
+        subCommentLike;
+        conn.release();
+        return data.comment_id;
+    } 
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+}
+const countLikeCommentData = async(data) => {
+    try {
+        const conn = await pool.getConnection();
+        const countComment = await pool.query(countCommentLike, data);
+        const countCommentResult = countComment[0][0]
+        conn.release();
+        return countCommentResult
+    } 
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+}
+
+module.exports = { getBoardData, getOneBoardData, writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, deleteLikeData, countLikeData, allLikeData, addScrapeData, subScrapeData, allCommentData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData };
