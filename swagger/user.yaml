@@ -1,0 +1,588 @@
+openapi: 3.0.0
+info:
+  title: user API
+  version: 1.0.0
+tags:
+  - name: user
+    description: 사용자 관련
+paths:
+  # 회원가입
+  /user/sign-up:
+    post:
+      summary: 회원가입
+      tags:
+        - user
+      description: 사용자 정보를 받아 회원으로 가입합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                user_name:
+                  type: string
+                  description: 사용자명
+                  example: "홍길동"
+                email:
+                  type: string
+                  example: "abc123@naver.com"
+                password:
+                  type: string
+                  example: "abc123"
+                phone_number:
+                  type: string
+                  example: "010-1234-5678"
+                birth_date:
+                  type: string
+                  example: "011010"
+                gender:
+                  type: int
+                  example: 3
+                user_nickname:
+                  type: string
+                  example: "길동"
+                introduction:
+                  type: string
+                  example: "안녕하세요. 잘부탁드려요."
+                role:
+                  type: string
+                  example: "user"
+
+      responses:
+        "200":
+          description: 회원가입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        "409_1":
+          description: 이미 존재하는 이메일
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 이메일입니다."
+                  result:
+                    type: string
+                    example: "abc123@naver.com"
+
+        "409_2":
+          description: 이미 존재하는 전화번호
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 전화번호입니다."
+                  result:
+                    type: string
+                    example: "010-1234-5678"
+        "409_3":
+          description: 이미 존재하는 닉네임
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "닉네임 중복"
+                  result:
+                    type: string
+                    example: "길동"
+
+  # 모든 유저 조회
+  /user/users:
+    get:
+      summary: 모든 유저 조회
+      tags:
+        - user
+      security:
+        - api_key: []
+      description: 모든 사용자 정보를 받아옵니다. jwt token 필요.
+      responses:
+        "200":
+          description: 모든 유저 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        user_id:
+                          type: int
+                          example: 1
+                        user_name:
+                          type: string
+                          example: "홍길동"
+                        email:
+                          type: string
+                          example: "abc123@naver.com"
+                        password:
+                          type: string
+                          example: "9a97199897dcbd6fab6ad4272a05cb832e88a5709fdf0989ecd8c2bc181bab1c"
+                        phone_number:
+                          type: string
+                          example: "010-1234-5678"
+                        birth_date:
+                          type: string
+                          example: "011010"
+                        gender:
+                          type: int
+                          example: 3
+                        user_nickname:
+                          type: string
+                          example: "길동"
+                        introduction:
+                          type: string
+                          example: "안녕하세요. 잘부탁드려요."
+                        role:
+                          type: string
+                          example: "user"
+                        created_at:
+                          type: timestamp
+                          example: "2024-01-29T14:49:51.000Z"
+                        updated_at:
+                          type: timestamp
+                          example: "2024-01-30T14:49:51.000Z"
+        "401":
+          description: jwt token 입력 X
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "jwt token을 입력해주세요"
+
+  # 아이디 찾기
+  /user/find-id:
+    post:
+      summary: 아이디 찾기
+      tags:
+        - user
+      description: 사용자 정보를 받아 유저 아이디를 반환합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_name:
+                  type: string
+                  example: "홍길동"
+                  description: "사용자명"
+                birth_date:
+                  type: string
+                  format: date
+                  example: "010606"
+                  description: "생년월일"
+                gender:
+                  type: integer
+                  example: 3
+                phone_number:
+                  type: string
+                  example: "010-1111-1111"
+                  description: "전화번호"
+      responses:
+        "200":
+          description: id 찾기 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                          example: "abc123@naver.com"
+                        created_at:
+                          type: datetime
+                          example: "2024.02.02"
+
+        "404":
+          description: 일치하는 유저 존재하지 않는다.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "일치하는 유저가 존재하지 않습니다."
+
+  # 비밀번호 변경
+  /user/find-pw:
+    put:
+      summary: 비밀번호 변경
+      tags:
+        - user
+      description: 회원정보를 받아 비밀번호를 변경합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일 주소
+                  example: "user@naver.com"
+                password:
+                  type: string
+                  description: 비밀번호
+                  example: "abc123"
+      responses:
+        "200":
+          description: 비밀번호 변경 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "접근에 성공했습니다."
+        "404":
+          description: 존재하지 않는 이메일
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "존재하지 않는 email입니다."
+
+  # 닉네임 중복
+  /user/overlap-nickname:
+    post:
+      summary: 닉네임 중복 확인
+      tags:
+        - user
+      description: 중복된 닉네임인지 확인합니다.
+      parameters:
+        - name: user_nickname
+          in: query
+          required: true
+          description: 닉네임
+          schema:
+            type: string
+            example: "길동"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_nickname:
+                  type: string
+                  example: "길동"
+                  description: "닉네임"
+      responses:
+        "200":
+          description: 닉네임 중복 아님
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "접근에 성공했습니다."
+        "409":
+          description: 닉네임 중복
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: "string"
+                    example: "닉네임 중복."
+                  result:
+                    type: string
+                    example: "길동"
+
+    # jwt
+  /user/login:
+    post:
+      summary: 로그인 jwt 생성
+      tags:
+        - user
+      description: 로그인 jwt access token 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                  example: "abc123@naver.com"
+                password:
+                  type: string
+                  description: 비밀번호
+                  example: "abc123"
+
+      responses:
+        "200":
+          description: jwt token 발급 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxNiwiaWF0IjoxNzA2ODgyMDc0LCJleHAiOjE3MDY4ODU2NzQsInN1YiI6InVzZXJJbmZvIn0.Z9RK_jxcbPD6XcAlGI5Y0s8UEK_xWFAHtrad57Mu9rM"
+        "404_1":
+          description: id 틀림
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "user_id null"
+        "404_2":
+          description: password 틀림
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "password null"
+
+  # email 존재 확인
+  /user/email-check:
+    post:
+      summary: email 중복 확인
+      tags:
+        - user
+      description: 이미 존재하는 email인지 확인합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 이메일
+                  example: "abc123@naver.com"
+      responses:
+        "200":
+          description: email 중복 X
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+
+        "409":
+          description: 이미 존재하는 이메일
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 이메일입니다."
+                  result:
+                    type: string
+                    example: "abc123@naver.com"
+
+  # 전화번호 중복 확인
+  /user/phone-num-check:
+    post:
+      summary: 전화번호 중복 확인
+      tags:
+        - user
+      description: 이미 존재하는 전화번호인지 확인합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone_number:
+                  type: string
+                  description: 전화번호
+                  example: "010-1111-1111"
+      responses:
+        "200":
+          description: 전화번호 중복 X
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        "409":
+          description: 이미 존재하는 전화번호
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 전화번호입니다."
+                  result:
+                    type: string
+                    example: "010-1111-1111"
