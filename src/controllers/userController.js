@@ -3,13 +3,35 @@ const status = require("../config/responseStatus.js");
 const crypto = require("crypto");
 const userProvider = require("../providers/userProvider.js");
 const userService = require("../services/userService.js");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+// cookie
+const express = require("express");
+const cookieParser = require("cookie-parser");
+
+const app = express();
+
+// cookie-parser 미들웨어를 사용
+app.use(cookieParser());
+
+// 루트에서 환경변수 불러옴
+dotenv.config({ path: "./config.env" });
+const jwtsecret = process.env.JWT_SECRET;
+const blacklistedTokens = new Set();
 
 const userController = {
   // 데이터베이스에서 테이블 이름을 가져오는 메서드
   // 모든 유저 반환
   alluser: async (req, res) => {
     try {
-      return res.send(response(status.SUCCESS, await userProvider.getUser()));
+      const userData = await userProvider.getUser();
+
+      if (Object.keys(req.cookies).length === 0) {
+        return res.send(response(status.TOKEN_VERIFICATION_FAILURE));
+      } else {
+        return res.send(response(status.SUCCESS, userData));
+      }
     } catch (err) {
       console.error("Error acquiring connection:", err);
     }
@@ -110,17 +132,35 @@ const userController = {
       if (!passwordRows || passwordRows.password !== hashedPassword) {
         return res.send(response(status.SIGNIN_PASSWORD_ERROR));
       }
-
-      return res.send(
-        response(
-          status.SUCCESS,
-          await userService.signIn(passwordRows.user_id, req.body)
-        )
-      );
+      const token = await userService.signIn(passwordRows.user_id, req.body);
+      res.cookie("accessToken", token, { httpOnly: true });
+      console.log("token::", token);
+      console.log("cookie:", req.cookies);
+      return res.send(response(status.SUCCESS, token));
     } catch (err) {
       console.error("Error acquiring connection:", err);
     }
   },
+  // 로그아웃
+
+  // logout: async (req, res, next) => {
+  //   try {
+  //     const { accessToken } = req.cookies;
+  //     if (accessToken) {
+  //       blacklistedTokens.add(accessToken);
+  //       console.log("cookies logout:", req.cookies);
+  //       console.log(blacklistedTokens);
+
+  //       return res.clearCookie("accessToken"); // 클라이언트의 쿠키 삭제
+  //       // console.log("cookie:", req.cookies);
+  //       // res.status(200).send("로그아웃 완료");
+  //     } else {
+  //       return res.status(400).send("로그인된 사용자가 아닙니다.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error acquiring connection:", error);
+  //   }
+  // },
   // 이메일 중복 확인
   emailCheck: async (req, res, next) => {
     try {
@@ -144,6 +184,24 @@ const userController = {
         return res.send(response(status.SUCCESS, result));
       } else {
         return res.send(response(status.EXIST_NUM, result));
+      }
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  },
+  // 회원 탈퇴
+  userDelete: async (req, res, next) => {
+    try {
+      // user_id 가져오기
+      console.log(blacklistedTokens);
+      console.log(req.cookies);
+      if (Object.keys(req.cookies).length === 0) {
+        return res.send(response(status.TOKEN_VERIFICATION_FAILURE));
+      } else {
+        const user_id = req.verifiedToken.user_id;
+        console.log(user_id);
+        const result = await userService.deleteUser(user_id);
+        return res.send(response(status.SUCCESS, result));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);

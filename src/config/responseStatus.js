@@ -129,13 +129,13 @@ const status = {
   TOKEN_EMPTY: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: 401,
+    code: 404,
     message: "jwt token을 입력해주세요",
   },
   TOKEN_VERIFICATION_FAILURE: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: 401,
+    code: 404,
     message: "JWT 토큰 검증 실패",
   },
 };

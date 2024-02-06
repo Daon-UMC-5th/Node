@@ -4,6 +4,7 @@ const userRouter = express.Router();
 
 const userController = require("./../controllers/userController");
 const jwtMiddleware = require("./../config/jwtMiddleware.js");
+const status = require("../config/responseStatus.js");
 
 // 모든 유저 조회
 userRouter.get("/users", jwtMiddleware, userController.alluser);
@@ -21,5 +22,46 @@ userRouter.post("/login", userController.login);
 userRouter.post("/email-check", userController.emailCheck);
 // phone_num 중복확인
 userRouter.post("/phone-num-check", userController.phoneNumCheck);
+// 로그아웃
+userRouter.get("/logout", (req, res) => {
+  const { accessToken } = req.cookies;
+  const blacklistedTokens = new Set();
+
+  // 토큰을 블랙리스트에 추가
+  blacklistedTokens.add(accessToken);
+
+  // 콘솔에 로그인이 필요한 메시지와 블랙리스트 출력
+  console.log("로그인이 필요합니다.");
+  console.log("블랙리스트:", blacklistedTokens);
+
+  // 쿠키를 삭제
+  res.clearCookie("accessToken");
+  console.log("삭제완료");
+  console.log(accessToken);
+  jwtMiddleware(req, res, () => {
+    const { accessToken } = req.cookies;
+    console.log("accessToken: ", accessToken);
+    console.log("blacklist:", blacklistedTokens.has(accessToken));
+    // if (accessToken && blacklistedTokens.has(accessToken)) {
+    if (blacklistedTokens.has(accessToken)) {
+      // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리
+      console.log("로그인이 필요합니다.");
+      //   return res.status(401).send("로그인이 필요합니다.");
+      return res.send(status.TOKEN_VERIFICATION_FAILURE);
+
+      //   res.redirect("/");
+    } else {
+      console.log("accessToken none");
+      // 블랙리스트에 없거나 토큰이 없으면 다음 미들웨어로 진행
+      next();
+      // res.redirect("/");
+    }
+  });
+});
+// userRouter.get(
+//   "/logout", jwtMiddleware,userController.logout
+// );
+// 회원탈퇴
+userRouter.delete("/user-delete", jwtMiddleware, userController.userDelete);
 
 module.exports = userRouter;

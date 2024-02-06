@@ -165,6 +165,42 @@ class userDAO {
       console.error("Error acquiring connection:", err);
     }
   }
+  // 회원 탈퇴
+  static async userDelete(user_id) {
+    try {
+      // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
+      const conn = await pool.getConnection();
+      const [result] = await pool.query(
+        `
+        delete from user
+        where user_id=?
+        `,
+        user_id
+      );
+      conn.release();
+      return result[0];
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  }
+  // user_id 구하기
+  static async getUserId(user_id) {
+    try {
+      // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
+      const conn = await pool.getConnection();
+      const [result] = await pool.query(
+        `
+        delete from user
+        where user_id=?
+        `,
+        [user_id]
+      );
+      conn.release();
+      return result[0];
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  }
 }
 
 module.exports = userDAO;

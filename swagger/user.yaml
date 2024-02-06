@@ -192,8 +192,8 @@ paths:
                         updated_at:
                           type: timestamp
                           example: "2024-01-30T14:49:51.000Z"
-        "401":
-          description: jwt token 입력 X
+        "404_1":
+          description: JWT token 입력 필요
           content:
             application/json:
               schema:
@@ -204,10 +204,29 @@ paths:
                     example: false
                   code:
                     type: integer
-                    example: 401
+                    example: 404
                   message:
                     type: string
-                    example: "jwt token을 입력해주세요"
+                    example: "JWT token을 입력해주세요"
+        "404_2":
+          description: JWT token 검증 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT 토큰 검증 실패."
 
   # 아이디 찾기
   /user/find-id:
@@ -586,3 +605,127 @@ paths:
                   result:
                     type: string
                     example: "010-1111-1111"
+  # 로그아웃
+  /user/logout:
+    get:
+      summary: logout
+      tags:
+        - user
+      security:
+        - api_key: []
+      description: 로그아웃(jwt token 삭제)
+
+      responses:
+        "200":
+          description: 로그아웃(jwt token 삭제)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        "404_1":
+          description: JWT token 입력 필요
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT token을 입력해주세요"
+        "404_2":
+          description: JWT token 검증 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT 토큰 검증 실패."
+  # 회원 탈퇴
+  /user/user-delete:
+    delete:
+      summary: 회원 탈퇴
+      tags:
+        - user
+      security:
+        - api_key: []
+      description: 회원 탈퇴
+
+      responses:
+        "200":
+          description: 회원 탈퇴
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        "404_1":
+          description: JWT token 입력 필요
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT token을 입력해주세요"
+        "404_2":
+          description: JWT token 검증 실패
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT 토큰 검증 실패."

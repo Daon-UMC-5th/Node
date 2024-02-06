@@ -69,6 +69,19 @@ class userProvider {
       throw error;
     }
   }
+  // user_id 구하기
+  static async getId(user_id) {
+    try {
+      const result = await userDAO.getUserId(user_id);
+      //만약 해당하는 사용자가 없다면 -> 새로 추가한거!
+      if (!result[0]) {
+        return null;
+      }
+      return result[0].id;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = userProvider;

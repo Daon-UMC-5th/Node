@@ -1,7 +1,19 @@
 const userDAO = require("./../models/userDAO");
 const crypto = require("crypto");
-const jwtsecret = require("../config/secret.js");
+// const jwtsecret = require("../config/secret.js");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const app = express();
+app.use(cookieParser);
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
+
+const dotenv = require("dotenv");
+// const path = require("path");
+
+// 루트에서 환경변수 불러옴
+dotenv.config({ path: "./config.env" });
+const jwtsecret = process.env.JWT_SECRET;
 
 class userService {
   // 회원가입
@@ -55,7 +67,7 @@ class userService {
     }
   }
   // 로그인 인증 방법 (jwt)
-  static async signIn(user_id, body) {
+  static async signIn(user_id, body, res) {
     try {
       //토큰 생성 Service
       let token = await jwt.sign(
@@ -68,8 +80,18 @@ class userService {
           subject: "userInfo",
         } // 유효 기간 365일
       );
+
       console.log("jwt:", token);
       return token;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 회원 탈퇴
+  static async deleteUser(user_id) {
+    try {
+      const result = await userDAO.userDelete(user_id);
+      return result;
     } catch (error) {
       throw error;
     }
