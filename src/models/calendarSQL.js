@@ -39,3 +39,28 @@ module.exports.deleteConsultationSQL = deleteConsultationSQL;
 // 진료기록 수정
 const updateConsultationSQL = "update consultation set hospital=?, content=?, alarmed_at=?, updated_at=NOW() where alarmed_date=? and user_id=?";
 module.exports.updateConsultationSQL = updateConsultationSQL;
+
+// 복용기록 전체 조회
+const getAllMedicationSQL = "select * from medication where alarmed_date=? and user_id=?";
+module.exports.getAllMedicationSQL = getAllMedicationSQL;
+
+// 복용기록 아침/점심/저녁 별 조회
+const getMedicationSQL = "select * from medication where alarmed_date=? and time_of_day=? and user_id=?";
+module.exports.getMedicationSQL = getMedicationSQL;
+
+
+// 복용기록 중복 확인
+const checkDuplicationDateInMedicationSQL = "select * from medication where alarmed_date=? and time_of_day=? and user_id=?";
+module.exports.checkDuplicationDateInMedicationSQL = checkDuplicationDateInMedicationSQL;
+
+// 복용기록 삽입
+const insertMedicationSQL = "insert into medication (user_id, alarmed_date, time_of_day, medicine, alarmed_at, alarm_days, repeat_status, created_at, updated_at) values(?,?,?,?,?,?,?,NOW(),NOW())";
+module.exports.insertMedicationSQL = insertMedicationSQL;
+
+// 복용기록 삭제 
+const deleteMedicationSQL = "delete from medication where alarmed_date=? and time_of_day=? and user_id=?";
+module.exports.deleteMedicationSQL = deleteMedicationSQL;
+
+// 복용기록 수정
+const updateMedicationSQL = "update medication set medicine=?, alarmed_at=?, alarm_days=?, repeat_status=?, updated_at=NOW() where alarmed_date=? and time_of_day=? and user_id=?";
+module.exports.updateMedicationSQL = updateMedicationSQL;
