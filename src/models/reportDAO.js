@@ -4,7 +4,7 @@ class ReportModel {
   // 클래스 레벨의 유효 타입 목록
   static validTypes = ["diary", "board", "comment"];
 
-  // diaryId가 유효한지 확인하는 메서드 (가상의 구현)
+  // typeId가 유효한지 확인하는 메서드 (가상의 구현)
   static async checkIfExists({ type, typeId }) {
     // 해당 type이 맞는지 확인
     if (!ReportModel.validTypes.includes(type)) {
@@ -33,7 +33,7 @@ class ReportModel {
     return rows[0].count > 0;
   }
 
-  // 신고 정보 생성 및 report_id 반환
+  // 신고 정보 생성 및 type_id 반환
   static async createReport({ userId, reason }) {
     const [reportResult] = await db.query(
       "INSERT INTO report (user_id, reason, created_at) VALUES (?, ?, NOW())",
@@ -42,8 +42,8 @@ class ReportModel {
     return reportResult.insertId; // 생성된 신고 ID 반환
   }
 
-  // report_diary 테이블에 신고 정보 삽입
-  // ReportModel의 createDiary 메서드
+  // report_type 테이블에 신고 정보 삽입
+  // ReportModel의 createType 메서드
   static async createType({ type, typeId, reportId }) {
     try {
       const tableName = `report_${type}`; // 예: report_diary

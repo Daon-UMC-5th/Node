@@ -1,5 +1,5 @@
 // services/reportService.js
-const ReportModel = require("../models/reportModel");
+const ReportModel = require("../models/reportDAO");
 
 class ReportService {
   async createReport(reportDto) {
@@ -21,6 +21,7 @@ class ReportService {
       type,
       typeId,
     });
+
     if (hasReported) {
       return { reported: true };
     }
