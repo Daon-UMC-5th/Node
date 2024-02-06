@@ -30,11 +30,10 @@ const modifyBoard = async(param, body) => {
 
 const eraseBoard = async(param) => {
     try{
-    await eraseBoardData({
-        "board_id" : param, 
-    }); 
+    await eraseBoardData(param); 
     }catch (error) { throw error;}
 };
+
 
 
 const postLikeUp = async(param, user) => { 

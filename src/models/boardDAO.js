@@ -1,7 +1,7 @@
 const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
+const { getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
 
 //게시판
 const getBoardData = async(data) => {
@@ -81,7 +81,13 @@ const modifyBoardData = async(data) => {
 const eraseBoardData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const [eraseData] = await pool.query(deleteData, data.board_id);
+        console.log(data)
+        const exist = await pool.query(existBoard, data);
+        if(exist[0][0]==null){
+            conn.release();
+            throw error;
+        }
+        const eraseData = await pool.query(deleteData, data);
         conn.release();
         return eraseData;
     } 
