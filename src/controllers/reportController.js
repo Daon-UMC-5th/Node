@@ -6,7 +6,7 @@ const response = require("../config/response");
 exports.reportDiary = async (req, res) => {
   try {
     const reportDto = new ReportDto(
-      req.user,
+      req.user_id,
       "diary",
       req.params.diaryId,
       req.body.reason
@@ -22,7 +22,7 @@ exports.reportDiary = async (req, res) => {
 exports.reportBoard = async (req, res) => {
   try {
     const reportDto = new ReportDto(
-      req.user,
+      req.user_id,
       "board",
       req.params.boardId,
       req.body.reason
@@ -38,7 +38,7 @@ exports.reportBoard = async (req, res) => {
 exports.reportComment = async (req, res) => {
   try {
     const reportDto = new ReportDto(
-      req.user,
+      req.user_id,
       "comment",
       req.params.commentId,
       req.body.reason

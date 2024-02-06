@@ -5,7 +5,7 @@ const router = express.Router();
 
 // req.user를 설정하는 미들웨어
 router.use((req, res, next) => {
-  req.user = 9;
+  req.user_id = 9;
   console.log("이유 " + req.body.reason);
   next();
 });
