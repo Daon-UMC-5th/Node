@@ -39,6 +39,16 @@ const userController = {
   // 회원가입
   signUp: async (req, res, next) => {
     try {
+      // 이미지
+      var img;
+      if (req.file) {
+        img = req.file.location;
+      } else {
+        img = null;
+        return res.send(response(status.IMAGE_NULL));
+      }
+      console.log("profileImg:", img);
+
       // email 이미 존재할 경우
       const email = await userProvider.user_id_check(req.body);
       if (req.body.email == email) {
@@ -60,7 +70,62 @@ const userController = {
       // 최종 회원가입
       else {
         const reulst = await userService.signup(req.body);
+        // user_id 찾기
+        const findInfo = await userProvider.userInfo(req.body);
+        const img_result = await userService.profileUpload(
+          img,
+          findInfo.user_id
+        );
         return res.send(response(status.SUCCESS,{}));
+      }
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  },
+  // 의료인 회원가입
+  doctorAuth: async (req, res, next) => {
+    try {
+      // 이미지
+      //이미지 파일 경로 -> 변수에 담음
+      var images = [];
+      for (i = 0; i < req.files.length; i++) {
+        images[i] = req.files[i].location;
+      }
+      console.log("프로필 사진 url : ", images[0]); // 프로필 사진
+      console.log("의료인 면허 url : ", images[1]); // 의료인 면허
+      // image 없을 경우
+      if (images[0] === undefined || images[1] === undefined) {
+        return res.send(response(status.IMAGE_NULL));
+      }
+      // email 이미 존재할 경우
+      const email = await userProvider.user_id_check(req.body);
+      if (req.body.email == email) {
+        return res.send(response(status.EXIST_EMAIL, email));
+      }
+
+      // 전화번호 이미 존재할 경우
+      const phoneNum = await userProvider.numCheck(req.body);
+      if (req.body.phone_number == phoneNum) {
+        return res.send(response(status.EXIST_NUM, phoneNum));
+      }
+
+      // 최종 회원가입
+      else {
+        const reulst = await userService.signup(req.body);
+        // user_id 찾기
+        const findInfo = await userProvider.userInfo(req.body);
+        // 프로필 사진
+        const img_result = await userService.profileUpload(
+          images[0],
+          findInfo.user_id
+        );
+        // 의료인면허
+        const doctor = await userService.doctorUpload(
+          images[1],
+          findInfo.user_id
+        );
+
+        return res.send(response(status.SUCCESS));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);
@@ -141,26 +206,7 @@ const userController = {
       console.error("Error acquiring connection:", err);
     }
   },
-  // 로그아웃
 
-  // logout: async (req, res, next) => {
-  //   try {
-  //     const { accessToken } = req.cookies;
-  //     if (accessToken) {
-  //       blacklistedTokens.add(accessToken);
-  //       console.log("cookies logout:", req.cookies);
-  //       console.log(blacklistedTokens);
-
-  //       return res.clearCookie("accessToken"); // 클라이언트의 쿠키 삭제
-  //       // console.log("cookie:", req.cookies);
-  //       // res.status(200).send("로그아웃 완료");
-  //     } else {
-  //       return res.status(400).send("로그인된 사용자가 아닙니다.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error acquiring connection:", error);
-  //   }
-  // },
   // 이메일 중복 확인
   emailCheck: async (req, res, next) => {
     try {
