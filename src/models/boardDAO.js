@@ -1,4 +1,4 @@
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
 const { getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
@@ -47,6 +47,7 @@ const writeBoardData = async(data) => {
         const conn = await pool.getConnection();
         const writeAllData = await pool.query(insertData, [data.board_type, data.user_id, data.title, data.content]);
         conn.release();
+        console.log(writeAllData[0]);
         return writeAllData[0].insertId;
         
     } 

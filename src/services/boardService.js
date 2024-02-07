@@ -1,5 +1,5 @@
 const { writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, countLikeData, deleteLikeData, addScrapeData, subScrapeData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData, allCommentData } = require('../models/boardDAO.js')
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { oneBoardDTO } = require('../dtos/boardDTO.js');
 
@@ -11,6 +11,7 @@ const writeBoard = async(param, body, user) => {
         "title" : body.title,
 	    "content" : body.content,  
     }); 
+    console.log(returnData);
         if (returnData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
         else{return await oneBoardDTO(await returnWriteBoardData (returnData));}
     }catch (error) { throw error;}
@@ -24,7 +25,7 @@ const modifyBoard = async(param, body) => {
 	    "content" : body.content,  
     }); 
         if (returnModifyData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
-        else{return await oneBoardDTO(await returnWriteBoardData (returnModifyData));}
+        else{ return await oneBoardDTO(await returnWriteBoardData (returnModifyData));}
     }catch (error) { throw error;}
 };
 

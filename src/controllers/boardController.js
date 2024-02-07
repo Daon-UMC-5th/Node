@@ -1,4 +1,4 @@
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { getBoardType, getBoardId, countLike, countAllLike, getAllComment} = require('../providers/boardProvider.js');
 const { writeBoard, modifyBoard, eraseBoard, postLikeUp, deleteLike, addScrape, subScrape, writeComment, modifyComment, eraseComment, postLikeComment, deleteLikeComment } = require('../services/boardService.js')
@@ -19,8 +19,9 @@ const getOneBoard = async(req, res) => {
 }
 const postBoard = async(req,res) => {
     try{
-    res.send(response(status.SUCCESS, await writeBoard(req.params.boardType, req.body, req.user_id) ))
-    }catch (error) {res.send(response(status.INTERNAL_SERVER_ERROR))}
+    console.log(`테스트 user_id: ${req.user_id}`);
+    res.send(response(status.SUCCESS, await writeBoard(req.params.boardType, req.body, req.user_id)));
+    }catch (error) {res.send(response(status.INTERNAL_SERVER_ERROR));}
 }
 const putBoard = async(req,res) => {
     try{

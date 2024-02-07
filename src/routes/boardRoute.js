@@ -3,11 +3,14 @@ const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDow
 const boardRouter = express.Router();
 const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
-boardRouter.use(jwtMiddleware, (req,res,next) => {
-    req.user_id = req.verifiedToken.user_id;
-    next();
-})
+const {response} = require('../config/response.js');
+const status = require('../config/responseStatus.js');
 
+boardRouter.use(jwtMiddleware,(req,res,next) => {
+    req.user_id = req.verifiedToken.user_id;
+    if(req.user_id!==0){next();}
+    else{res.send(response(status.MEMBER_NOT_FOUND))}
+})
 
 //게시판 글
 //게시판 전체 가져오기

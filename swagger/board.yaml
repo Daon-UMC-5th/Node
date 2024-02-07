@@ -4,11 +4,13 @@ paths:
       summary: 게시판 목록 가져오기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardType"
           in: "path"
           required: true
-          description: "게시판 종류"
+          description: "게시판 종류/notice,liver,stomach,intestine,breast,womb,etc"
           schema:
             type: "string"
         - name: "offset"
@@ -28,7 +30,7 @@ paths:
                     type: "boolean"
                     example: true
                   code:
-                    type: "integer"                      
+                    type: "integer"
                     example: 200
                   message:
                     type: "string"
@@ -60,17 +62,17 @@ paths:
                           type: string
                           format: date-time
                         image_url:
-                          type : string
-                          example : "http://example.com/image.jpg"
-                        likecount :
-                          type : integer
-                          example : 6
-                        commentcount :
-                          type : integer
-                          example : 6
-                        scrapecount :
-                          type : integer
-                          example : 6
+                          type: string
+                          example: "http://example.com/image.jpg"
+                        likecount:
+                          type: integer
+                          example: 6
+                        commentcount:
+                          type: integer
+                          example: 6
+                        scrapecount:
+                          type: integer
+                          example: 6
         "500":
           content:
             application/json:
@@ -86,10 +88,10 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-              
+
   /board/get-one/{boardId}:
     get:
-      summary: 특정 게시글 가져오기 
+      summary: 특정 게시글 가져오기
       tags:
         - Board
       security:
@@ -127,7 +129,7 @@ paths:
                         example: notice
                       user_id:
                         type: integer
-                        example: 1                        
+                        example: 1
                       title:
                         type: string
                         exampl: "공지게시글 제목"
@@ -141,21 +143,21 @@ paths:
                         type: string
                         format: date-time
                       image_url:
-                        type : string
-                        example : "http://example.com/image.jpg"
-                      likecount :
-                        type : integer
-                        example : 6
-                      commentcount :
-                        type : integer
-                        example : 6
-                      scrapecount :
-                        type : integer
-                        example : 6
-                      access : 
-                        type : boolean
-                        example : true    
-                        discription : "user_id와 작성자가 같으면 true"            
+                        type: string
+                        example: "http://example.com/image.jpg"
+                      likecount:
+                        type: integer
+                        example: 6
+                      commentcount:
+                        type: integer
+                        example: 6
+                      scrapecount:
+                        type: integer
+                        example: 6
+                      access:
+                        type: boolean
+                        example: true
+                        discription: "user_id와 작성자가 같으면 true"
         "500":
           content:
             application/json:
@@ -184,7 +186,7 @@ paths:
           in: "path"
           required: true
           type: "string"
-          description: "게시판 종류"
+          description: "게시판 종류/notice,liver,stomach,intestine,breast,womb,etc"
       requestBody:
         required: true
         content:
@@ -198,7 +200,7 @@ paths:
                 content:
                   type: "string"
                   example: "게시글 내용"
-         
+
       responses:
         "200":
           content:
@@ -210,7 +212,7 @@ paths:
                     type: "boolean"
                     example: true
                   code:
-                    type: "integer"                      
+                    type: "integer"
                     example: 200
                   message:
                     type: "string"
@@ -226,7 +228,7 @@ paths:
                         example: notice
                       user_id:
                         type: integer
-                        example: 1                        
+                        example: 1
                       title:
                         type: string
                         exampl: "공지게시글 제목"
@@ -240,21 +242,21 @@ paths:
                         type: string
                         format: date-time
                       image_url:
-                        type : string
-                        example : "http://example.com/image.jpg"
-                      likecount :
-                        type : integer
-                        example : 6
-                      commentcount :
-                        type : integer
-                        example : 6
-                      scrapecount :
-                        type : integer
-                        example : 6
-                      access : 
-                        type : boolean
-                        example : true  
-                        discription : "user_id와 작성자가 같으면 true"  
+                        type: string
+                        example: "http://example.com/image.jpg"
+                      likecount:
+                        type: integer
+                        example: 6
+                      commentcount:
+                        type: integer
+                        example: 6
+                      scrapecount:
+                        type: integer
+                        example: 6
+                      access:
+                        type: boolean
+                        example: true
+                        discription: "user_id와 작성자가 같으면 true"
         "500":
           content:
             application/json:
@@ -276,6 +278,8 @@ paths:
       summary: 게시판 글 수정하기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -306,7 +310,7 @@ paths:
                     type: "boolean"
                     example: true
                   code:
-                    type: "integer"                      
+                    type: "integer"
                     example: 200
                   message:
                     type: "string"
@@ -322,7 +326,7 @@ paths:
                         example: notice
                       user_id:
                         type: integer
-                        example: 1                        
+                        example: 1
                       title:
                         type: string
                         exampl: "공지게시글 제목"
@@ -336,21 +340,21 @@ paths:
                         type: string
                         format: date-time
                       image_url:
-                        type : string
-                        example : "http://example.com/image.jpg"
-                      likecount :
-                        type : integer
-                        example : 6
-                      commentcount :
-                        type : integer
-                        example : 6
-                      scrapecount :
-                        type : integer
-                        example : 6
-                      access : 
-                        type : boolean
-                        example : true  
-                        discription : "user_id와 작성자가 같으면 true"  
+                        type: string
+                        example: "http://example.com/image.jpg"
+                      likecount:
+                        type: integer
+                        example: 6
+                      commentcount:
+                        type: integer
+                        example: 6
+                      scrapecount:
+                        type: integer
+                        example: 6
+                      access:
+                        type: boolean
+                        example: true
+                        discription: "user_id와 작성자가 같으면 true"
         "500":
           content:
             application/json:
@@ -366,12 +370,14 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-  
+
   /board/write/delete/{boardId}:
     delete:
       summary: 게시판 글 삭제하기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -409,7 +415,7 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-  
+
   /board/like-up/{boardId}:
     post:
       summary: 좋아요 추가
@@ -434,7 +440,7 @@ paths:
                     type: "boolean"
                     example: true
                   code:
-                    type: "integer"                      
+                    type: "integer"
                     example: 200
                   message:
                     type: "string"
@@ -460,7 +466,7 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-  
+
   /board/like-down/{boardId}:
     delete:
       summary: 좋아요 삭제
@@ -517,6 +523,8 @@ paths:
       summary: 특정 글 좋아요 수 가져오기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -566,6 +574,8 @@ paths:
       summary: 좋아요 전체 가져오기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -731,7 +741,7 @@ paths:
               properties:
                 content:
                   type: "string"
-                  example: "댓글 내용"  
+                  example: "댓글 내용"
       responses:
         "200":
           content:
@@ -796,6 +806,8 @@ paths:
       summary: 댓글 수정하기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "commentId"
           in: "path"
@@ -881,6 +893,8 @@ paths:
       summary: 댓글 삭제하기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "commentId"
           in: "path"
@@ -956,6 +970,8 @@ paths:
       summary: 댓글 가져오기
       tags:
         - Board
+      security:
+        - api_key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -1025,7 +1041,7 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-  
+
   /board/comment/like-up/{commentId}:
     post:
       summary: 댓글 좋아요 추가
@@ -1050,7 +1066,7 @@ paths:
                     type: "boolean"
                     example: true
                   code:
-                    type: "integer"                      
+                    type: "integer"
                     example: 200
                   message:
                     type: "string"
@@ -1076,7 +1092,7 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
-  
+
   /board/comment/like-down/{commentId}:
     delete:
       summary: 댓글 좋아요 삭제
