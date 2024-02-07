@@ -20,7 +20,7 @@ const tempRouter = require("./routes/tempRoute");
 const searchRouter = require("./routes/searchRoute.js");
 const authRouter = require("./routes/authRoute.js");
 const userRouter = require("./routes/userRoute");
-const authRouter = require("./routes/authRoute.js");
+const mypageRouter = require("./routes/mypageRoute.js");
 
 
 //# 라우터
@@ -68,7 +68,7 @@ app.use("/temp", tempRouter);
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
-
+app.use("/mypage", mypageRouter);
 //#
 
 
