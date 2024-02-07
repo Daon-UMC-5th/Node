@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
 const memoryStore = require("memorystore")(expressSession);
+const bodyParser = require('body-parser');
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -21,8 +22,7 @@ const searchRouter = require("./routes/searchRoute.js");
 const authRouter = require("./routes/authRoute.js");
 const userRouter = require("./routes/userRoute");
 const mypageRouter = require("./routes/mypageRoute.js");
-
-
+const boardRouter = require("./routes/boardRoute.js");
 //# 라우터
 
 //@ app 설정 공간
@@ -52,6 +52,8 @@ app.use(
 	  extended: true
 	})
 );
+app.use(cookieParser());
+app.use(bodyParser.json());
 //# app 설정 공간
 
 //@ 라우트
@@ -69,8 +71,8 @@ app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/mypage", mypageRouter);
-//#
-
+app.use("/board", boardRouter);
+//# 라우트
 
 //@ 서버 실행
 const port = process.env.PORT || 3000;
