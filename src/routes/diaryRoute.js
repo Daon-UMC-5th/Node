@@ -1,10 +1,11 @@
 const express = require('express');
 const { getPrivateDiary, getPublicDiary, getOneDiary, postDiary, putDiary, deleteDiary, diaryLikeUp, diaryLikeDown} = require('../controllers/diaryController.js')
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
 const diaryRouter = express.Router();
 
-diaryRouter.use((req,res,next) => {
-    req.user_id = 1;
+diaryRouter.use(jwtMiddleware, (req,res,next) => {
+    req.user_id = req.verifiedToken.user_id;
     next();
 })
 
