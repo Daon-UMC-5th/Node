@@ -36,6 +36,8 @@ userRouter.get("/logout", (req, res) => {
 
   // 쿠키를 삭제
   res.clearCookie("accessToken");
+
+
   jwtMiddleware(req, res, () => {
     const { accessToken } = req.cookies;
 
@@ -45,6 +47,8 @@ userRouter.get("/logout", (req, res) => {
       console.log("로그인이 필요합니다.");
       //   return res.status(401).send("로그인이 필요합니다.");
       return res.send(status.SUCCESS);
+
+      // return res.send(status.SUCCESS);
     } else {
       console.log("accessToken none");
       // 블랙리스트에 없거나 토큰이 없으면 다음 미들웨어로 진행
