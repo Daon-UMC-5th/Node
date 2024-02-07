@@ -97,6 +97,8 @@ paths:
       summary: 공유 일기 목록 가져오기
       tags:
         - Diary
+      security:
+        - api_key: []
       parameters:
         - name: "offset"
           in: "query"
