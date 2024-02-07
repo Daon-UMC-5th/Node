@@ -20,6 +20,8 @@ const tempRouter = require("./routes/tempRoute");
 const searchRouter = require("./routes/searchRoute.js");
 const authRouter = require("./routes/authRoute.js");
 const userRouter = require("./routes/userRoute");
+const mypageRouter = require("./routes/mypageRoute.js");
+
 
 //# 라우터
 
@@ -50,7 +52,6 @@ app.use(
 	  extended: true
 	})
 );
-
 //# app 설정 공간
 
 //@ 라우트
@@ -67,7 +68,7 @@ app.use("/temp", tempRouter);
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
-
+app.use("/mypage", mypageRouter);
 //#
 
 

@@ -1,25 +1,25 @@
 openapi: 3.0.0
 paths:
-  # 이메일로 인증코드 전송
-  /auth/email/code:
+  # 문자로 인증코드 전송
+  /auth/sms/code:
     post:
       tags:
-        - Authorization 
-      summary: 이메일 - 인증코드 전송
-      requestBody:
+        - Authorization
+      summary: 문자 - 인증코드 전송
+      requestBody: 
         required: true
         content:
           application/json:
             schema:
               type: object
               properties:
-                inputEmail:
+                inputPhone:
                   type: string
-                  description: 이메일
-                  example: "happyeunnn11@gmail.com"
+                  description: 전화번호
+                  example: "01012345678"
       responses:
         '200':
-          description: 이메일 전송 성공
+          description: 문자 전송 성공
           content:
             application/json:
               schema:
@@ -37,40 +37,37 @@ paths:
                   result:
                     type: object
                     properties:
-                      accepted:
-                        type: array
-                        example: ["happyeunnn11@gmail.com"]
-                      rejected:
-                        type: array
-                      elho:
-                        type: array
-                        example: ["SIZE 35882577","8BITMIME","AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH","ENHANCEDSTATUSCODES","PIPELINING","CHUNKING","SMTPUTF8"]
-                      envelopeTime:
-                        type: integer
-                        example: 775
-                      messageTime:
-                        type: integer
-                        example: 316
-                      response:
+                      groupId: 
                         type: string
-                        example: "250 2.0.0 OK  1706688073 z15-20020aa785cf000000b006daa809584csm9231542pfn.182 - gsmtp"
-                      envelope:
-                        type: object
-                        properties:
-                          from:
-                            type: string
-                            example: "daon20231227@gmail.com"
-                          to:
-                            type: object
-                            example: ["happyeunnn11@gmail.com"]
-                          messageId:
-                            type: string
-                            example: "<860f6ae7-0e4e-21f8-229b-19d498b87746@gmail.com>"
-                 
-        '400':
-          description: 이메일 전송 실패 
+                        example: "G4V20240201223802PFS8VQZOVANNM0B"
+                      to:
+                        type: string
+                        example: "01089064491"
+                      from:
+                        type: string
+                        example: "01089064491"
+                      type:
+                        type: string
+                        example: "SMS"
+                      statusMessage:
+                        type: string
+                        example: "정상 접수(이통사로 접수 예정) "
+                      country:
+                        type: string
+                        example: "82"
+                      messageId:
+                        type: string
+                        example: "M4V20240201223802UIPOEHKKOHSK7DF"
+                      statusCode: 
+                        type: string
+                        example: "2000"
+                      accountId:
+                        type: string
+                        example: "24012451987788"
+        '500':
+          description: 서버 측 에러 - 문자 전송 실패
           content:
-            application/json:
+            application/json: 
               schema:
                 type: object
                 properties:
@@ -78,18 +75,18 @@ paths:
                     type: boolean
                     example: false
                   code:
-                    type: string
-                    example: "COMMON001"
+                    type: integer
+                    example: 500
                   message:
                     type: string
-                    example: "잘못된 요청입니다."
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
   
-  # 이메일 인증 확인
-  /auth/email/code/check:
+  # 문자 인증 확인
+  /auth/sms/code/check:
     post:
       tags:
-        - Authorization 
-      summary: 이메일 - 인증코드 확인
+        - Authorization
+      summary: 문자 - 인증코드 확인
       requestBody:
         required: true
         content:
@@ -99,11 +96,11 @@ paths:
               properties:
                 inputCode:
                   type: string
-                  description: 인증콛,
-                  example: "OnrqEs"
-      responses:  
+                  description: 인증코드 
+                  example: "961881"
+      responses:
         '200':
-          description: 이메일 전송 성공
+          description: 문자 인증 성공
           content:
             application/json:
               schema:
@@ -136,15 +133,15 @@ paths:
                     example: "잘못된 요청입니다."
         '406':
           description: 인증코드 불일치 오류
-          content: 
+          content:
             application/json:
               schema:
                 type: object
                 properties:
-                  isSuccess: 
+                  isSuccess:
                     type: boolean
                     example: false
-                  code: 
+                  code:
                     type: integer
                     example: 406
                   message:
