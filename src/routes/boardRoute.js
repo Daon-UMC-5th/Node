@@ -2,7 +2,6 @@ const express = require('express');
 const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment, likeUpComment, likeDownComment } = require('../controllers/boardController.js')
 const boardRouter = express.Router();
 const jwtMiddleware = require("./../config/jwtMiddleware.js");
-
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 

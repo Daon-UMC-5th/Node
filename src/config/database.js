@@ -39,5 +39,4 @@ async function checkDatabaseConnection() {
 // 함수 실행
 checkDatabaseConnection();
 
-
 module.exports = pool;
