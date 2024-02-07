@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 // const secret_config = require("./secret");
 const { response, errResponse } = require("./response");
 const baseResponse = require("./responseStatus");
+const status = require("../config/responseStatus.js");
 
 // cookie
 const express = require("express");
