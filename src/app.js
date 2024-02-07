@@ -72,8 +72,6 @@ app.use("/mypage", mypageRouter);
 //#
 
 
-
-
 //@ 서버 실행
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {

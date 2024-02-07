@@ -46,7 +46,7 @@ module.exports = {
             res.send(response(status.SUCCESS));
         }
         // 인증코드가 서로 일치하지 않는 경우
-        else if(result == "incorrectInputCode") res.send(response(status.CODE_NOT_MATCH));
+        else if(result=="incorrectInputCode") res.send(response(status.CODE_NOT_MATCH));
     },
 
     authorizeBySMS : async(req,res,next) => {
@@ -68,7 +68,6 @@ module.exports = {
     // 만약 인증코드 전송이 실패했다면, 서버 쪽 문제 
     else res.send(response(status.INTERNAL_SERVER_ERROR));
     },
-
     checkCodeFromSMS: async(req,res,next) => {
         
         // 사용자로부터 인증코드 입력 받기
@@ -89,7 +88,5 @@ module.exports = {
             res.send(response(status.SUCCESS));
         } 
         else if(result=="incorrectInputCode") res.send(response(status.CODE_NOT_MATCH));
-        
-
     }
 }

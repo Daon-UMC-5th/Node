@@ -1,16 +1,18 @@
 
+
 //@ 라이브러리 import 
 const nodeMailer = require("nodemailer");
+
 // 문자 인증코드 전송
 const path = require("path");
 const dotenv = require("dotenv");
 const coolsms = require('coolsms-node-sdk').default;
 const { text } = require("express");
-//# 
 
 dotenv.config({ path: path.join(__dirname, './config.env') });
 
 const messageService = new coolsms(process.env.COOLSMS_API_KEY, process.env.COOLSMS_API_SECRET);
+
 
 //@ 함수 설정
 // length 길이로 랜덤 문자/숫자 조합 생성하는 함수 
@@ -44,7 +46,6 @@ const checkLengthOfCode = async(inputCode) => {
     return lengthOfInputCode;
 }
 
-// 해당 이메일로 랜덤 인증 코드 보내는 함수
 const send = async(email,code) => {
     const transporter = nodeMailer.createTransport({
         service: "gmail",
@@ -150,12 +151,15 @@ module.exports ={
                 return result;
             }
         }
-
         // 1-2. 사용자가 인증코드를 잘못 입력한 경우 (ex. 인증코드가 6자리가 아닌 경우)
+
         else{
             let result = "wrongInputCode";
             return result;
         }
     }
 
+
 };
+
+

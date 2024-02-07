@@ -3,8 +3,10 @@ const dotenv = require("dotenv");
 const path = require("path");
 
 // 루트에서 환경변수 불러옴
+
 //dotenv.config({ path: path.join(__dirname, "./config.env") });
 dotenv.config({ path: "./config.env" });
+
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST, // mysql의 hostname
