@@ -43,7 +43,7 @@ const status = {
     code: "COMMON004",
     message: "금지된 요청입니다.",
   },
-  
+
   NOT_FOUND: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
@@ -55,11 +55,10 @@ const status = {
   MEMBER_NOT_FOUND: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,
-    code: "MEMBER4001",
+    code: 404,
     message: "사용자가 없습니다.",
   },
 
-  
   NICKNAME_NOT_EXIST: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,
@@ -72,6 +71,12 @@ const status = {
     isSuccess: false,
     code: "ARTICLE4001",
     message: "게시글이 없습니다.",
+  },
+  IMAGE_NULL: {
+    status: StatusCodes.NOT_FOUND,
+    isSuccess: false,
+    code: 404,
+    message: "이미지가 없습니다.",
   },
 };
 module.exports = status;
