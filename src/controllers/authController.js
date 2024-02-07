@@ -1,5 +1,5 @@
 const authService = require("../services/authService.js");
-const response = require("../config/response.js");
+const {response} = require("../config/response.js");
 const status = require("../config/responseStatus.js");
 
 module.exports = {
@@ -41,7 +41,10 @@ module.exports = {
         // 사용자가 인증코드를 잘못 입력한 경우 (ex. 인증코드가 6자리가 아닌 경우)
         if(result == "wrongInputCode") res.send(response(status.BAD_REQUEST));
         // 인증코드가 서로 일치하는 경우
-        else if(result == "correctInputCode") res.send(response(status.SUCCESS));
+        else if(result == "correctInputCode"){
+            req.session.code = null;
+            res.send(response(status.SUCCESS));
+        }
         // 인증코드가 서로 일치하지 않는 경우
         else if(result == "incorrectInputCode") res.send(response(status.CODE_NOT_MATCH));
     },
@@ -81,7 +84,10 @@ module.exports = {
         
         // 사용자가 인증코드를 잘못 입력한 경우 (ex. 인증코드가 6자리가 아닌 경우)
         if(result=="wrongInputCode") res.send(response(status.BAD_REQUEST));
-        else if(result=="correctInputCode") res.send(response(status.SUCCESS));
+        else if(result=="correctInputCode"){
+            req.session.code = null;
+            res.send(response(status.SUCCESS));
+        } 
         else if(result=="incorrectInputCode") res.send(response(status.CODE_NOT_MATCH));
         
 
