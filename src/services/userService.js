@@ -39,6 +39,7 @@ class userService {
         role: body.role,
         created_at: date,
         updated_at: date,
+        agree: body.agree,
       });
       return joinUserData;
     } catch (error) {

@@ -193,8 +193,7 @@ const userController = {
   userDelete: async (req, res, next) => {
     try {
       // user_id 가져오기
-      console.log(blacklistedTokens);
-      console.log(req.cookies);
+
       if (Object.keys(req.cookies).length === 0) {
         return res.send(response(status.TOKEN_VERIFICATION_FAILURE));
       } else {

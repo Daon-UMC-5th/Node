@@ -54,9 +54,7 @@ const jwtMiddleware = (req, res, next) => {
   }).catch(onError);
   // cookie?
   const { accessToken } = req.cookies;
-  console.log("accessToken: ", accessToken);
-  console.log("blacklist:", blacklistedTokens.has(accessToken));
-  console.log("blacklist:", blacklistedTokens);
+
   // if (accessToken && blacklistedTokens.has(accessToken)) {
   if (blacklistedTokens.has(accessToken)) {
     // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리

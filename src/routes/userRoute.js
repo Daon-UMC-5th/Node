@@ -35,32 +35,24 @@ userRouter.get("/logout", (req, res) => {
   console.log("블랙리스트:", blacklistedTokens);
 
   // 쿠키를 삭제
-  res.clearCookie("accessToken");
-  console.log("삭제완료");
-  console.log(accessToken);
+
   jwtMiddleware(req, res, () => {
     const { accessToken } = req.cookies;
-    console.log("accessToken: ", accessToken);
-    console.log("blacklist:", blacklistedTokens.has(accessToken));
+
     // if (accessToken && blacklistedTokens.has(accessToken)) {
     if (blacklistedTokens.has(accessToken)) {
       // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리
       console.log("로그인이 필요합니다.");
       //   return res.status(401).send("로그인이 필요합니다.");
       return res.send(status.TOKEN_VERIFICATION_FAILURE);
-
-      //   res.redirect("/");
     } else {
       console.log("accessToken none");
       // 블랙리스트에 없거나 토큰이 없으면 다음 미들웨어로 진행
       next();
-      // res.redirect("/");
     }
   });
 });
-// userRouter.get(
-//   "/logout", jwtMiddleware,userController.logout
-// );
+
 // 회원탈퇴
 userRouter.delete("/user-delete", jwtMiddleware, userController.userDelete);
 

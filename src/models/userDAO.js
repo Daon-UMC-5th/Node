@@ -26,8 +26,8 @@ class userDAO {
       const conn = await pool.getConnection();
       const [signUp] = await pool.query(
         `
-      insert into user (user_name,email,password,phone_number,birth_date,gender,user_nickname,introduction,role,created_at,updated_at)
-      values (?,?,?,?,?,?,?,?,?,?,?)
+      insert into user (user_name,email,password,phone_number,birth_date,gender,user_nickname,introduction,role,created_at,updated_at,agree)
+      values (?,?,?,?,?,?,?,?,?,?,?,?)
        `,
         [
           body.user_name,
@@ -41,6 +41,7 @@ class userDAO {
           body.role,
           body.created_at,
           body.updated_at,
+          body.agree,
         ]
       );
       console.log(signUp);

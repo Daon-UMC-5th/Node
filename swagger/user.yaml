@@ -48,6 +48,9 @@ paths:
                 role:
                   type: string
                   example: "user"
+                agree:
+                  type: boolean
+                  example: "0(비동의), 1(동의)"
 
       responses:
         "200":
@@ -192,6 +195,9 @@ paths:
                         updated_at:
                           type: timestamp
                           example: "2024-01-30T14:49:51.000Z"
+                        agree:
+                          type: boolean
+                          example: "0(비동의), 1(동의)"
         "404_1":
           description: JWT token 입력 필요
           content:
