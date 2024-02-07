@@ -10,6 +10,15 @@ class userProvider {
       throw error;
     }
   }
+  // user_id 찾기
+  static async userInfo(body) {
+    try {
+      const result = await userDAO.findInfo(body);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
   // id 찾기
   static async findid(query) {
     try {

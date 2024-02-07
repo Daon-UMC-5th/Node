@@ -6,17 +6,17 @@ tags:
   - name: user
     description: 사용자 관련
 paths:
-  # 회원가입
+  # 회원가입(일반유저)
   /user/sign-up:
     post:
-      summary: 회원가입
+      summary: 일반 유저 회원가입
       tags:
         - user
       description: 사용자 정보를 받아 회원으로 가입합니다.
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: "object"
               properties:
@@ -24,33 +24,48 @@ paths:
                   type: string
                   description: 사용자명
                   example: "홍길동"
+                  required: true
+
                 email:
                   type: string
                   example: "abc123@naver.com"
+                  required: true
                 password:
                   type: string
                   example: "abc123"
+                  required: true
                 phone_number:
                   type: string
                   example: "010-1234-5678"
+                  required: true
                 birth_date:
                   type: string
                   example: "011010"
+                  required: true
                 gender:
                   type: int
                   example: 3
+                  required: true
                 user_nickname:
                   type: string
-                  example: "길동"
+                  example: "kildong"
+                  required: true
                 introduction:
                   type: string
                   example: "안녕하세요. 잘부탁드려요."
                 role:
                   type: string
                   example: "user"
+                  required: true
                 agree:
-                  type: boolean
-                  example: "0(비동의), 1(동의)"
+                  type: tinyint
+                  description: "0(비동의), 1(동의)"
+                  example: "0"
+                  required: true
+                image:
+                  type: file
+                  description: 프로필 이미지
+                  example: 이미지 파일(프로필 이미지)
 
       responses:
         "200":
@@ -69,6 +84,177 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+        "404":
+          description: 이미지 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "이미지가 없습니다."
+
+        "409_1":
+          description: 이미 존재하는 이메일
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 이메일입니다."
+                  result:
+                    type: string
+                    example: "abc123@naver.com"
+
+        "409_2":
+          description: 이미 존재하는 전화번호
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "이미 존재하는 전화번호입니다."
+                  result:
+                    type: string
+                    example: "010-1234-5678"
+        "409_3":
+          description: 이미 존재하는 닉네임
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: "닉네임 중복"
+                  result:
+                    type: string
+                    example: "길동"
+  # 회원가입(의료인유저)
+  /user/doctor-signup:
+    post:
+      summary: 의료인 회원가입
+      tags:
+        - user
+      description: 사용자 정보를 받아 (의료인)회원으로 가입합니다.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              properties:
+                user_name:
+                  type: string
+                  description: 사용자명
+                  example: "홍길동"
+                  required: true
+                email:
+                  type: string
+                  example: "abc123@naver.com"
+                  required: true
+                password:
+                  type: string
+                  example: "abc123"
+                  required: true
+                phone_number:
+                  type: string
+                  example: "010-1234-5678"
+                  required: true
+                birth_date:
+                  type: string
+                  example: "011010"
+                  required: true
+                gender:
+                  type: int
+                  example: 3
+                  required: true
+                user_nickname:
+                  type: string
+                  example: "kildong"
+                  required: true
+                introduction:
+                  type: string
+                  example: "안녕하세요. 잘부탁드려요."
+                role:
+                  type: string
+                  example: "doctor"
+                  required: true
+                agree:
+                  type: tinyint
+                  description: "0(비동의), 1(동의)"
+                  example: "0"
+                  required: true
+                images:
+                  type: array
+                  description: 이미지 2장 필요, 첫번째 프로필 이미지, 두번째 의료인 면허 이미지
+                  items:
+                    type: file
+                    format: binary
+
+      responses:
+        "200":
+          description: 회원가입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+        "404":
+          description: 이미지 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "이미지가 없습니다."
+
         "409_1":
           description: 이미 존재하는 이메일
           content:
