@@ -1,9 +1,10 @@
 const express = require('express');
 const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment, likeUpComment, likeDownComment } = require('../controllers/boardController.js')
 const boardRouter = express.Router();
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
-boardRouter.use((req,res,next) => {
-    req.user_id = 2;
+boardRouter.use(jwtMiddleware, (req,res,next) => {
+    req.user_id = req.verifiedToken.user_id;
     next();
 })
 
