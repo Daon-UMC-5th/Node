@@ -199,7 +199,7 @@ paths:
                           type: boolean
                           example: "0(비동의), 1(동의)"
         "404_1":
-          description: JWT token 입력 필요
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
             application/json:
               schema:
@@ -215,7 +215,7 @@ paths:
                     type: string
                     example: "JWT token을 입력해주세요"
         "404_2":
-          description: JWT token 검증 실패
+          description: JWT token 검증 실패(swagger에서 로그아웃 후 user 전체 조회시 jwt 필요한 상태)
           content:
             application/json:
               schema:
@@ -623,7 +623,7 @@ paths:
 
       responses:
         "200":
-          description: 로그아웃(jwt token 삭제)
+          description: 로그아웃(jwt token 삭제), 200 출력시 로그아웃 성공
           content:
             application/json:
               schema:
@@ -639,7 +639,7 @@ paths:
                     type: string
                     example: "접근에 성공했습니다."
         "404_1":
-          description: JWT token 입력 필요
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
             application/json:
               schema:
@@ -654,25 +654,7 @@ paths:
                   message:
                     type: string
                     example: "JWT token을 입력해주세요"
-        "404_2":
-          description: JWT token 검증 실패
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  isSuccess:
-                    type: boolean
-                    example: false
-                  code:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: "JWT 토큰 검증 실패."
+
   # 회원 탈퇴
   /user/user-delete:
     delete:
@@ -685,7 +667,7 @@ paths:
 
       responses:
         "200":
-          description: 회원 탈퇴
+          description: 회원 탈퇴 성공
           content:
             application/json:
               schema:
@@ -701,7 +683,7 @@ paths:
                     type: string
                     example: "접근에 성공했습니다."
         "404_1":
-          description: JWT token 입력 필요
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
             application/json:
               schema:
@@ -717,7 +699,7 @@ paths:
                     type: string
                     example: "JWT token을 입력해주세요"
         "404_2":
-          description: JWT token 검증 실패
+          description: JWT token 검증 실패(swagger에서 로그아웃 후 회원 탈퇴 실행할 때)
           content:
             application/json:
               schema:
