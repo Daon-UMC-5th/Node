@@ -1,7 +1,7 @@
 const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getPrivate, getPublic, getDiaryImage, oneDiary, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
+const { getPrivate, getPublic, getDiaryImage, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
 
 const privateDiaryData = async(data) => {
     try {   
@@ -15,7 +15,7 @@ const privateDiaryData = async(data) => {
         
         return resultDiary;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const publicDiaryData = async(data) => {
@@ -29,65 +29,71 @@ const publicDiaryData = async(data) => {
         resultDiary = [pubdiary[0], diaryLike[0], diaryImage[0]];
         return resultDiary; 
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const oneDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const DiaryData = await pool.query(oneDiary, data.diary_id);
-        const DiaryLike = await pool.query(oneDiaryLike, data.diary_id);
-        const DiaryImage = await pool.query(oneDiaryImage, data.diary_id);
-        const btnAdd = await pool.query(compareDiaryUser, data.diary_id);
+        const DiaryData = await pool.query(oneDiary, data.diary_date);
+        id = await pool.query(searchDiaryId, data.diary_date);
+        diaryId = id[0][0]
+   // console.log(diary_id)
+        const DiaryLike = await pool.query(oneDiaryLike, diaryId.diary_id);
+        const DiaryImage = await pool.query(oneDiaryImage, diaryId.diary_id);
+        const btnAdd = await pool.query(compareDiaryUser, diaryId.diary_id);
+        await console.log(btnAdd)
         conn.release();
 
         if(btnAdd[0][0].user_id == data.user_id){ //user_id와 작성자가 같으면 true값돌려줘서 버튼 보이게
-            return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], true];
+           console.log('a')
+           return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], true];
         }
         else{
+            console.log('a')
             return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], false];
         }
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 
 const writeDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const DiaryData = await pool.query(insertDiary, [data.user_id, data.is_private, data.title, data.content]);
+        const DiaryData = await pool.query(insertDiary, [data.user_id, data.is_private, data.title, data.content ,data.diary_date]);
         conn.release();
-        return DiaryData[0].insertId;
+        return DiaryData[0].insertId; // insertId값으로 date찾는 sql에 넣고 date를 리턴값으로
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const modifyDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const changeData = await pool.query(changeDiary, [data.is_private, data.title, data.content, data.diary_id]);
+        const changeData = await pool.query(changeDiary, [data.is_private, data.title, data.content, data.diary_date]);
         conn.release();
         changeData;
         if(changeData[0].affectedRows == 0){
             throw error;
         }
-        return data.diary_id
+        return data
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const eraseDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        const eraseData = await pool.query(deleteDiaryData, data.diary_id);
+        const eraseData = await pool.query(deleteDiaryData, data.diary_date);
         conn.release();
         eraseData;
         if(eraseData[0].affectedRows == 0){
             throw error;
         }
-        return data.diary_id
+        return data
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const countDiaryLike = async(data) => {
@@ -98,7 +104,7 @@ const countDiaryLike = async(data) => {
         conn.release();
         return countResult
     } 
-    catch (err) {throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) {throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const addLikeData = async(data) => {
@@ -109,7 +115,7 @@ const addLikeData = async(data) => {
         conn.release();
         return data.diary_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const subLikeData = async(data) => {
@@ -120,7 +126,7 @@ const subLikeData = async(data) => {
         conn.release();
         return data.diary_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 
