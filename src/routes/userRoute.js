@@ -3,6 +3,8 @@ const express = require("express");
 const userRouter = express.Router();
 const multer = require("multer");
 const upload = multer();
+const { response, BaseError } = require("../config/response.js");
+
 const {
   imageUploader_profile,
   imageUploader_doctor,
@@ -60,8 +62,7 @@ userRouter.get("/logout", (req, res) => {
     if (blacklistedTokens.has(accessToken)) {
       // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리
       console.log("로그인이 필요합니다.");
-      //   return res.status(401).send("로그인이 필요합니다.");
-      return res.send(status.SUCCESS);
+      return res.send(response(status.SUCCESS, {}));
 
       // return res.send(status.SUCCESS);
     } else {

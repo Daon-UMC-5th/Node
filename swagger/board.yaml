@@ -190,7 +190,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: "object"
               properties:
@@ -200,6 +200,9 @@ paths:
                 content:
                   type: "string"
                   example: "게시글 내용"
+                image:
+                  type: "file"
+                  example: "게시글 이미지"
 
       responses:
         "200":
