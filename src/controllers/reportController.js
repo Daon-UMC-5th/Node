@@ -1,6 +1,6 @@
 const ReportService = require("../services/reportService");
 const ReportDto = require("../dtos/reportDTO");
-const response = require("../config/response");
+const {response} = require("../config/response");
 
 // 일기장 신고
 exports.reportDiary = async (req, res) => {
