@@ -91,6 +91,9 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /diary/get-public:
     get:
@@ -184,8 +187,11 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
-  /diary/get-one-diary/{diaryId}:
+  /diary/get-one-diary/{diaryDate}:
     get:
       summary: 특정 일기 가져오기
       tags:
@@ -193,12 +199,12 @@ paths:
       security:
         - api_key: []
       parameters:
-        - name: "diaryId"
+        - name: "diaryDate"
           in: "path"
           required: true
-          description: "일기 Id"
+          description: "일기 날짜"
           schema:
-            type: "integer"
+            type: "string"
       responses:
         "200":
           content:
@@ -272,15 +278,25 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
 
-  /diary/write/post:
+  /diary/write/post/{diaryDate}:
     post:
       summary: 일기 작성하기
       tags:
         - Diary
       security:
         - api_key: []
+      parameters:
+        - name: "diaryDate"
+          in: "path"
+          required: true
+          description: "일기 날짜"
+          schema:
+            type: "string"
       requestBody:
         required: true
         content:
@@ -336,8 +352,11 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
-  /diary/write/put/{diaryId}:
+  /diary/write/put/{diaryDate}:
     put:
       summary: 일기 수정하기
       tags:
@@ -345,11 +364,12 @@ paths:
       security:
         - api_key: []
       parameters:
-        - name: "diaryId"
+        - name: "diaryDate"
           in: "path"
           required: true
-          type: "integer"
-          description: "일기 id"
+          description: "일기 날짜"
+          schema:
+            type: "string"
       requestBody:
         required: true
         content:
@@ -402,8 +422,11 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
-  /diary/write/delete/{diaryId}:
+  /diary/write/delete/{diaryDate}:
     delete:
       summary: 일기 삭제하기
       tags:
@@ -411,11 +434,12 @@ paths:
       security:
         - api_key: []
       parameters:
-        - name: "diaryId"
+        - name: "diaryDate"
           in: "path"
           required: true
-          type: "integer"
-          description: "일기 id"
+          description: "일기 날짜"
+          schema:
+            type: "string"
       responses:
         "200":
           content:
@@ -451,6 +475,9 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /diary/like-up/{diaryId}:
     post:
@@ -501,6 +528,9 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /diary/like-down/{diaryId}:
     delete:
@@ -551,3 +581,6 @@ paths:
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환

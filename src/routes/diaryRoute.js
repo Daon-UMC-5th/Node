@@ -19,10 +19,10 @@ diaryRouter.get('/get-private', (req, res) => {
 diaryRouter.get('/get-public',(req, res) => {
     getPublicDiary(req, res);
 });
-diaryRouter.get('/get-one-diary/:diaryId', getOneDiary);
-diaryRouter.post('/write/post', postDiary);
-diaryRouter.put('/write/put/:diaryId', putDiary);
-diaryRouter.delete('/write/delete/:diaryId', deleteDiary);
+diaryRouter.get('/get-one-diary/:diaryDate', getOneDiary);
+diaryRouter.post('/write/post/:diaryDate', postDiary);
+diaryRouter.put('/write/put/:diaryDate', putDiary);
+diaryRouter.delete('/write/delete/:diaryDate', deleteDiary);
 
 diaryRouter.post('/like-up/:diaryId', diaryLikeUp);
 diaryRouter.delete('/like-down/:diaryId', diaryLikeDown);

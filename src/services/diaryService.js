@@ -2,9 +2,10 @@ const {writeDiaryData, modifyDiaryData, eraseDiaryData, addLikeData, subLikeData
 const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 
-const writeDiary = async(user, body) => {
+const writeDiary = async(param, user, body) => {
     try{
     return await writeDiaryData({
+        "diary_date" : param,
         "user_id" : user,
         "is_private" : body.is_private,
         "title" : body.title,
@@ -15,7 +16,7 @@ const writeDiary = async(user, body) => {
 const modifyDiary = async(param, body) => {
     try{
     return await modifyDiaryData({
-        "diary_id" : param,
+        "diary_date" : param,
         "is_private" : body.is_private,
         "title" : body.title,
 	    "content" : body.content,  
@@ -25,7 +26,7 @@ const modifyDiary = async(param, body) => {
 const eraseDiary = async(param) => {
     try{
     return await eraseDiaryData({
-        "diary_id" : param
+        "diary_date" : param
     });}catch (error) { throw error;}
 };
 
@@ -35,7 +36,7 @@ const diaryLikeAdd = async(param, user) => {
         "diary_id" : param,
         "user_id" : user
     });
-        if (likeAddData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if (likeAddData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countDiaryLike(likeAddData);}
     }catch (error) { throw error;}
 }
@@ -46,7 +47,7 @@ const diaryLikeSub = async(param, user) => {
         "diary_id" : param,
         "user_id" : user
     });
-        if (likeSubData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if (likeSubData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countDiaryLike(likeSubData);}
     }catch (error) { throw error;}
 }

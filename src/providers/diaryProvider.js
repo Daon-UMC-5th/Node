@@ -29,7 +29,7 @@ const OneDiary = async(user, param) => {
     try{
     resultOneDiary = await oneDiaryData({
         "user_id" : user,
-        "diary_id" : param
+        "diary_date" : param
     });
         if (resultOneDiary == -1){throw console.log('error');}
         else{return await oneDiaryDTO(resultOneDiary);}
