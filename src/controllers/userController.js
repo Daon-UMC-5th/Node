@@ -76,7 +76,9 @@ const userController = {
           img,
           findInfo.user_id
         );
+
         return res.send(response(status.SUCCESS,{}));
+
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);

@@ -138,7 +138,6 @@ const status = {
     code: 404,
     message: "JWT 토큰 검증 실패",
   },
-
   ARTICLE_DUPLICATION: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,

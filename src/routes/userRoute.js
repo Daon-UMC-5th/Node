@@ -53,7 +53,6 @@ userRouter.get("/logout", (req, res) => {
   // 쿠키를 삭제
   res.clearCookie("accessToken");
 
-
   jwtMiddleware(req, res, () => {
     const { accessToken } = req.cookies;
 
