@@ -78,7 +78,6 @@ const status = {
     code: "ARTICLE4001",
     message: "게시글이 없습니다.",
   },
-
   CODE_NOT_MATCH: {
     status: StatusCodes.NOT_ACCEPTABLE,
     isSuccess: false,
