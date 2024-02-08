@@ -75,6 +75,8 @@ paths:
               message:
                 type: string
                 example: "게시글이 없습니다."
+              result:
+                type: object
         
 # 일기장 검색 
   /search/diary:
@@ -152,4 +154,6 @@ paths:
               message:
                 type: string
                 example: "게시글이 없습니다."
+              result:
+                type: object
         

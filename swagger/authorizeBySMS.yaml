@@ -80,6 +80,8 @@ paths:
                   message:
                     type: string
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
   
   # 문자 인증 확인
   /auth/sms/code/check:
@@ -115,6 +117,8 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: object
         '400':
           description: 사용자 인증코드 형식 오류
           content:
@@ -131,6 +135,8 @@ paths:
                   message:
                     type: string
                     example: "잘못된 요청입니다."
+                  result:
+                    type: object
         '406':
           description: 인증코드 불일치 오류
           content:
@@ -147,3 +153,5 @@ paths:
                   message:
                     type: string
                     example: "인증코드가 일치하지 않습니다."
+                  result:
+                    type: object
