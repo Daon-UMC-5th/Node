@@ -12,7 +12,7 @@ module.exports = {
         console.log(`result: ${result}`);
         if(result.length!=0) res.send(response(status.SUCCESS, JSON.stringify(result)));
       // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
 
     },
     searchInBoard: async(req,res,next) => {
@@ -21,7 +21,7 @@ module.exports = {
 
         if(result.length!=0) res.send(response(status.SUCCESS, JSON.stringify(result)));
         // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
 
     }
 }
