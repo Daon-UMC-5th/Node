@@ -1,4 +1,4 @@
-const response = require("../config/response.js");
+const {response} = require("../config/response.js");
 const status = require("../config/responseStatus.js");
 const calendarService = require("../services/calendarService.js");
 
@@ -10,7 +10,7 @@ module.exports = {
     registerPhysicalRecord: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId = req.user_id;
 
         // 사용자가 신체를 기록한 날짜
         const date = req.params.date;
@@ -31,10 +31,10 @@ module.exports = {
         const result = await calendarService.insertPhysicalRecord(userInformation);
 
 
-        if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION));
+        if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION,{}));
         else{
-            if(result) res.send(response(status.SUCCESS));
-            else res.send(response(status.INTERNAL_SERVER_ERROR));
+            if(result) res.send(response(status.SUCCESS,{}));
+            else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         }
      
 
@@ -43,7 +43,7 @@ module.exports = {
     viewPhysicalRecord: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId = req.user_id;
 
         // 사용자가 신체기록을 조회하고자 하는 날짜
         const date = req.params.date;
@@ -54,9 +54,9 @@ module.exports = {
         // 해당 날짜에 신체 기록이 있는 경우
         if(result) res.send(response(status.SUCCESS, result));
         // 해당 날짜에 신체 기록이 없는 경우
-        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND));
+        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
         // 서버 에러로 조회 실패
-        else res.send(response(status.INTERNAL_SERVER_ERROR));
+        else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
 
 
     },
@@ -64,7 +64,7 @@ module.exports = {
     deletePhysicalRecord: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId = req.user_id;
 
         // 사용자가 신체기록을 삭제하고자 하는 날짜 
         const date = req.params.date;
@@ -72,17 +72,17 @@ module.exports = {
 
         const result = await calendarService.removePhysicalRecord(date,userId);
         // 서버 에러로 삭제 실패 
-        if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 삭제 성공 
-        else if(result != undefined) res.send(response(status.SUCCESS));
+        else if(result != undefined) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 신체기록을 삭제하려는 경우 
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
     },
     // 신체 기록 수정 
     updatePhysicalRecord: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3; 
+        const userId = req.user_id;
 
         // 사용자가 신체기록을 수정하고자 하는 날짜
         const date = req.params.date;
@@ -100,11 +100,11 @@ module.exports = {
 
         const result = await calendarService.modifyPhysicalRecord(date, modification);
         // 서버 에러로 수정 실패
-        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 수정 성공 
-        else if(result) res.send(response(status.SUCCESS));
+        else if(result) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 신체기록을 수정하려는 경우 
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
     },
 
 
@@ -114,7 +114,7 @@ module.exports = {
     // 날짜별 진료목록 삽입
     registerConsultation: async(req,res,next) => {
           // 사용자의 userid 받아옴
-          const userId = 3;
+          const userId = req.user_id;
 
           // 사용자가 신체를 기록한 날짜
           const date = req.params.date;
@@ -130,10 +130,10 @@ module.exports = {
           //console.log(userInformation.alarmed_at);
           const result = await calendarService.insertConsultation(userInformation);
         
-          if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION));
+          if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION,{}));
           else{
-              if(result) res.send(response(status.SUCCESS));
-              else res.send(response(status.INTERNAL_SERVER_ERROR));
+              if(result) res.send(response(status.SUCCESS,{}));
+              else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
           }
 
 
@@ -142,7 +142,7 @@ module.exports = {
     viewConsultation: async(req,res,next) => {
 
            // 사용자의 userid 받아옴
-           const userId = 3;
+           const userId = req.user_id;
 
            // 사용자가 진료를 기록한 날짜
            const date = req.params.date;
@@ -153,9 +153,9 @@ module.exports = {
         // 해당 날짜에 진료 기록이 있는 경우
         if(result) res.send(response(status.SUCCESS, result));
         // 해당 날짜에 진료 기록이 없는 경우
-        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND));
+        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
         // 서버 에러로 조회 실패
-        else res.send(response(status.INTERNAL_SERVER_ERROR));
+        else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
 
 
            
@@ -164,7 +164,7 @@ module.exports = {
     deleteConsultation: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId = req.user_id;
 
         
         // 사용자가 진료를 기록한 날짜
@@ -174,18 +174,18 @@ module.exports = {
         const result = await calendarService.removeConsultation(date, userId);
 
         // 서버 에러로 삭제 실패 
-        if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 삭제 성공 
-        else if(result != undefined) res.send(response(status.SUCCESS));
+        else if(result != undefined) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 신체기록을 삭제하려는 경우 
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
         
     },
     // 날짜별 진료목록 수정 
     updateConsultation : async(req,res,next) => {
         
         // 사용자의 userid 받아옴
-        const userId =3;
+        const userId =  req.user_id;
 
         // 사용자가 진료기록을 수정하고자 하는 날짜
         const date = req.params.date;
@@ -202,17 +202,17 @@ module.exports = {
         const result = await calendarService.modifyConsultation(date,modification);
 
         // 서버 에러로 수정 실패
-        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 수정 성공 
-        else if(result) res.send(response(status.SUCCESS));
+        else if(result) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 신체기록을 수정하려는 경우 
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
     },
 
     // 날짜별 복용목록 모두 조회 
     viewAllMedication: async(req,res,next) => {
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId =  req.user_id;
 
         // 아침, 점심, 저녁
         const date = req.params.date;
@@ -222,9 +222,9 @@ module.exports = {
         console.log(result);
 
           // 서버 에러로 조회 실패
-          if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR));
+          if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
           // 해당 날짜에 복용 기록이 없는 경우
-          else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND));
+          else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
           // 해당 날짜에 복용 기록이 있는 경우
           else res.send(response(status.SUCCESS, result));
     },
@@ -234,7 +234,8 @@ module.exports = {
     viewMedication: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId =  req.user_id;
+
 
         //아침, 점심, 저녁
         const when = req.params.when;
@@ -245,9 +246,9 @@ module.exports = {
         
         console.log(result);
         // 서버 에러로 조회 실패
-        if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 해당 날짜에 복용 기록이 없는 경우
-        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND));
+        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
         // 해당 날짜에 복용 기록이 있는 경우
         else res.send(response(status.SUCCESS, result));
         
@@ -257,7 +258,8 @@ module.exports = {
     registerMedication: async(req,res,next) => {
 
     // 사용자의 userid 받아옴
-    const userId = 3;
+    const userId =  req.user_id;
+
 
     //아침, 점심, 저녁
      const when = req.params.when;
@@ -282,10 +284,10 @@ module.exports = {
     const result = await calendarService.insertMedication(userInformation);
 
     
-    if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION));
+    if(result=="duplication") res.send(response(status.ARTICLE_DUPLICATION,{}));
     else{
-        if(result) res.send(response(status.SUCCESS));
-        else res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result) res.send(response(status.SUCCESS,{}));
+        else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
     }
     },
     
@@ -293,7 +295,8 @@ module.exports = {
     deleteMedication: async(req,res,next) => {
         
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId =  req.user_id;
+
 
         // 사용자가 신체기록을 삭제하고자 하는 부분과 날짜
         const  when = req.params.when;
@@ -303,11 +306,11 @@ module.exports = {
 
 
         // 서버 에러로 삭제 실패 
-         if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+         if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 삭제 성공 
-         else if(result != undefined) res.send(response(status.SUCCESS));
+         else if(result != undefined) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 신체기록을 삭제하려는 경우 
-         else res.send(response(status.ARTICLE_NOT_FOUND));
+         else res.send(response(status.ARTICLE_NOT_FOUND,{}));
   
 
 
@@ -316,7 +319,8 @@ module.exports = {
     updateMedication: async(req,res,next) => {
      
         // 사용자의 userid 받아옴
-        const userId = 3;
+        const userId =  req.user_id;
+
 
         // 사용자가 신체기록을 수정하고자 하는 부분과 날짜
         const when = req.params.when;
@@ -339,11 +343,11 @@ module.exports = {
         const result = await calendarService.modifyMedication(userInformation);
 
         // 서버 에러로 수정 실패
-        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR));
+        if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         // 수정 성공 
-        else if(result) res.send(response(status.SUCCESS));
+        else if(result) res.send(response(status.SUCCESS,{}));
         // 존재하지 않는 복용기록을 수정하려는 경우 
-        else res.send(response(status.ARTICLE_NOT_FOUND));
+        else res.send(response(status.ARTICLE_NOT_FOUND,{}));
         
     }
 
