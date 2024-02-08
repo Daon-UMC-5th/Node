@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
 const memoryStore = require("memorystore")(expressSession);
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -17,12 +17,13 @@ const { specs } = require("./config/swaggerConfig.js");
 //# 폴더 파일 import
 
 //@ 라우터
-const tempRouter = require("./routes/tempRoute");
 const searchRouter = require("./routes/searchRoute.js");
 const authRouter = require("./routes/authRoute.js");
 const userRouter = require("./routes/userRoute");
 const mypageRouter = require("./routes/mypageRoute.js");
 const boardRouter = require("./routes/boardRoute.js");
+const reportRouter = require("./routes/reportRoute");
+
 //# 라우터
 
 //@ app 설정 공간
@@ -38,19 +39,21 @@ app.use(cors());
 app.use(express.json());
 
 app.use(cookieParser("secret_password"));
-app.use(expressSession({
-	secret: "secret_password",
-	cookie:{
-		maxAge:4000000
-	},
-	resave:false,
-	saveUninitialized:true,
-	store: new memoryStore()
-}));
 app.use(
-	express.urlencoded({
-	  extended: true
-	})
+  expressSession({
+    secret: "secret_password",
+    cookie: {
+      maxAge: 4000000,
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: new memoryStore(),
+  })
+);
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
 );
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -66,12 +69,13 @@ app.get("/", (req, res) => {
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
-app.use("/temp", tempRouter);
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/mypage", mypageRouter);
 app.use("/board", boardRouter);
+app.use("/report", reportRouter);
+
 //# 라우트
 
 //@ 서버 실행

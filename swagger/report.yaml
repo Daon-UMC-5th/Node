@@ -1,0 +1,265 @@
+# openapi: 3.0.0
+# info:
+#   version: "1.0.0"
+#   title: "DAON API"
+#   description: "DAON API"
+# servers:
+#   - url: "http://15.164.2.250"
+
+# components:
+#   securitySchemes:
+#     BearerAuth:
+#       type: http
+#       scheme: bearer
+#       bearerFormat: JWT
+#       description: "실제 In: header, Name: api_key\n\n"
+#  Example: `Bearer your_jwt_token`
+# 하단 텍스트창: 'Bearer' [space] 'token' 텍스트 창에 입력 \n
+
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      in: header
+      name: api_key
+      description: "JWT 토큰을 `api_key` 헤더를 통해 전송합니다. 토큰 형식은 JWT입니다.\n\nExample: `your_jwt_token`"
+  responses:
+    NotFound404:
+      description: "ID가 존재하지 않습니다."
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              isSuccess:
+                type: "boolean"
+                example: false
+              code:
+                type: "integer"
+                example: 404
+              message:
+                type: "string"
+                example: "ID가 존재하지 않습니다."
+              result:
+                type: "object"
+                description: 빈 객체
+    Conflict409:
+      description: "이미 신고한 내용입니다."
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              isSuccess:
+                type: "boolean"
+                example: false
+              code:
+                type: "integer"
+                example: 409
+              message:
+                type: "string"
+                example: "이미 신고된 리소스입니다."
+              result:
+                type: "object"
+                description: 빈 객체
+    InternalServerError500:
+      description: "내부 서버 오류가 발생했습니다."
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              isSuccess:
+                type: "boolean"
+                example: false
+              code:
+                type: "integer"
+                example: 500
+              message:
+                type: "string"
+                example: "서버 처리 중 오류가 발생했습니다. 다시 시도해 주세요."
+              result:
+                type: "object"
+                description: 빈 객체
+
+paths:
+  # 일기 신고
+  /report/diary/{diaryId}:
+    post:
+      summary: "일기 신고"
+      tags:
+        - Report
+      security:
+        - api_key: []
+      description: "사용자가 일기를 신고할 수 있습니다. (header: api_key 에 유저 jwt 토큰 필요)"
+      parameters:
+        # - name: "Authorization"
+        #   in: "header"
+        #   required: true
+        #   schema:
+        #     type: "string"
+        #   description: "JWT 토큰이 필요합니다"
+        - name: "diaryId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+          description: "신고할 일기의 ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "reason"
+              properties:
+                reason:
+                  type: "string"
+                  description: 신고 이유
+                  example: 낚시/도배
+      responses:
+        "200":
+          description: "신고가 성공적으로 생성됨"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "신고 처리가 완료되었습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체
+        "404":
+          $ref: "#/components/responses/NotFound404"
+        "409":
+          $ref: "#/components/responses/Conflict409"
+        "500":
+          $ref: "#/components/responses/InternalServerError500"
+
+  # 게시판 신고
+  /report/board/{boardId}:
+    post:
+      summary: "게시판 글 신고"
+      tags:
+        - Report
+      security:
+        - api_key: []
+      description: "사용자가 게시판 글을 신고할 수 있습니다. (header: api_key 에 유저 jwt 토큰 필요)"
+      parameters:
+        # - name: "Authorization"
+        #   in: "header"
+        #   required: true
+        #   schema:
+        #     type: "string"
+        #   description: "JWT 토큰이 필요합니다"
+        - name: "boardId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+          description: "신고할 게시판 글의 ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "reason"
+              properties:
+                reason:
+                  type: "string"
+                  description: 신고 이유
+                  example: 낚시/도배
+      responses:
+        "200":
+          description: "신고가 성공적으로 생성됨"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "신고 처리가 완료되었습니다."
+                  result:
+                    type: "object"
+        "404":
+          $ref: "#/components/responses/NotFound404"
+        "409":
+          $ref: "#/components/responses/Conflict409"
+        "500":
+          $ref: "#/components/responses/InternalServerError500"
+
+  # 댓글 신고
+  /report/comment/{commentId}:
+    post:
+      summary: "댓글 신고"
+      tags:
+        - Report
+      security:
+        - api_key: []
+      description: "사용자가 댓글을 신고할 수 있습니다. (header: api_key 에 유저 jwt 토큰 필요)"
+      parameters:
+        # - name: "Authorization"
+        #   in: "header"
+        #   required: true
+        #   schema:
+        #     type: "string"
+        #   description: "JWT 토큰이 필요합니다"
+        - name: "boardId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+          description: "신고할 게시판 글의 ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - "reason"
+              properties:
+                reason:
+                  type: "string"
+                  description: 신고 이유
+                  example: 낚시/도배
+      responses:
+        "200":
+          description: "신고가 성공적으로 생성됨"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "신고 처리가 완료되었습니다."
+                  result:
+                    type: "object"
+        "404":
+          $ref: "#/components/responses/NotFound404"
+        "409":
+          $ref: "#/components/responses/Conflict409"
+        "500":
+          $ref: "#/components/responses/InternalServerError500"

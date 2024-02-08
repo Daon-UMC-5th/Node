@@ -10,7 +10,6 @@ const options = {
     },
     host: "localhost:3000",
     basePath: "/",
-
     components: {
       securitySchemes: {
         api_key: {
@@ -25,4 +24,3 @@ const options = {
 };
 
 module.exports.specs = SwaggerJsdoc(options);
-
