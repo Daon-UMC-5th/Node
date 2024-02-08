@@ -138,5 +138,11 @@ const status = {
     code: 404,
     message: "JWT 토큰 검증 실패",
   },
+  ARTICLE_DUPLICATION: {
+    status: StatusCodes.BAD_REQUEST,
+    isSuccess: false,
+    code: "COMMON006",
+    message: "요청한 게시글이 이미 존재합니다."
+  }
 };
 module.exports = status;

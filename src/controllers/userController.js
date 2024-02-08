@@ -28,7 +28,7 @@ const userController = {
       const userData = await userProvider.getUser();
 
       if (Object.keys(req.cookies).length === 0) {
-        return res.send(response(status.TOKEN_VERIFICATION_FAILURE));
+        return res.send(response(status.TOKEN_VERIFICATION_FAILURE,{}));
       } else {
         return res.send(response(status.SUCCESS, userData));
       }
@@ -60,7 +60,7 @@ const userController = {
       // 최종 회원가입
       else {
         const reulst = await userService.signup(req.body);
-        return res.send(response(status.SUCCESS));
+        return res.send(response(status.SUCCESS,{}));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);
@@ -114,7 +114,7 @@ const userController = {
     try {
       const user_id = await userProvider.user_id_check(req.body);
       if (user_id == null)
-        return res.send(response(status.SIGNIN_USER_ID_ERROR));
+        return res.send(response(status.SIGNIN_USER_ID_ERROR,{}));
 
       const selectUserId = user_id;
 
@@ -130,7 +130,7 @@ const userController = {
       );
 
       if (!passwordRows || passwordRows.password !== hashedPassword) {
-        return res.send(response(status.SIGNIN_PASSWORD_ERROR));
+        return res.send(response(status.SIGNIN_PASSWORD_ERROR,{}));
       }
       const token = await userService.signIn(passwordRows.user_id, req.body);
       res.cookie("accessToken", token, { httpOnly: true });
