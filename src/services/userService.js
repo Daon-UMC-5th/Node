@@ -17,7 +17,7 @@ const jwtsecret = process.env.JWT_SECRET;
 
 class userService {
   // 회원가입
-  static async signup(body) {
+  static async signup(body, img) {
     // 현재 날짜 시간
     let date = new Date();
     // 비밀번호 암호화
@@ -42,6 +42,24 @@ class userService {
         agree: body.agree,
       });
       return joinUserData;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 프로필 img upload
+
+  static async profileUpload(img, user_id) {
+    try {
+      const result = await userDAO.profileImg(img, user_id);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async doctorUpload(img, user_id) {
+    try {
+      const result = await userDAO.doctorImg(img, user_id);
+      return result;
     } catch (error) {
       throw error;
     }

@@ -143,6 +143,12 @@ const status = {
     isSuccess: false,
     code: "COMMON006",
     message: "요청한 게시글이 이미 존재합니다."
-  }
+  },
+  IMAGE_NULL: {
+    status: StatusCodes.NOT_FOUND,
+    isSuccess: false,
+    code: 404,
+    message: "이미지가 없습니다.",
+  },
 };
 module.exports = status;

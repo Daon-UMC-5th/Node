@@ -20,7 +20,7 @@ class userDAO {
     }
   }
   // 회원가입
-  static async addUser(body) {
+  static async addUser(body, img) {
     try {
       // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
       const conn = await pool.getConnection();
@@ -47,6 +47,62 @@ class userDAO {
       console.log(signUp);
       conn.release();
       return signUp;
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  }
+  // user_id 찾기
+  static async findInfo(body) {
+    try {
+      // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
+      const conn = await pool.getConnection();
+      const [result] = await pool.query(
+        `
+        select user_id
+        from user
+        where email=? and phone_number=? and user_nickname=?
+      `,
+        [body.email, body.phone_number, body.user_nickname]
+      );
+      conn.release();
+      return result[0];
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  }
+  // profile img
+  static async profileImg(img, user_id) {
+    try {
+      // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
+      const conn = await pool.getConnection();
+      const [result] = await pool.query(
+        `
+        insert into image_profile (user_id,image_url)
+        values (?,?)
+      `,
+        [user_id, img]
+      );
+      conn.release();
+      return result[0];
+    } catch (err) {
+      console.error("Error acquiring connection:", err);
+    }
+  }
+  // 의료인 면허
+
+  static async doctorImg(img, user_id) {
+    try {
+      // MySQL 데이터베이스에서 모든 테이블의 이름을 가져오는 쿼리
+      const conn = await pool.getConnection();
+      const [result] = await pool.query(
+        `
+        insert into image_doctor (user_id,image_url)
+        values (?,?)
+      `,
+        [user_id, img]
+      );
+      conn.release();
+      return result[0];
     } catch (err) {
       console.error("Error acquiring connection:", err);
     }
