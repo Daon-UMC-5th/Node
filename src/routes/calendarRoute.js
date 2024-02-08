@@ -1,6 +1,16 @@
 const express = require("express");
 const calendarRouter = express.Router();
 const calendarController = require("../controllers/calendarController.js");
+const status = require('../config/responseStatus.js');
+const {response} = require("../config/response.js");
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
+
+calendarRouter.use(jwtMiddleware,(req,res,next) => {
+    req.user_id = req.verifiedToken.user_id;
+    if(req.user_id!==-1) next();
+    else res.send(response(status.MEMBER_NOT_FOUND));
+})
+
 
 // 날짜별 진료 목록 조회 
 calendarRouter.get("/consultation/:date", calendarController.viewConsultation);
