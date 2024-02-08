@@ -1,12 +1,12 @@
 const express = require("express");
 const reportController = require("./../controllers/reportController");
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
 const router = express.Router();
 
-// req.user를 설정하는 미들웨어
-router.use((req, res, next) => {
-  req.user_id = 9;
-  console.log("이유 " + req.body.reason);
+// jwt 토큰에서 user_id 가져오는 미들웨어
+router.use(jwtMiddleware, (req, res, next) => {
+  req.user_id = req.verifiedToken.user_id;
   next();
 });
 
