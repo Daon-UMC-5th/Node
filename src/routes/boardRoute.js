@@ -7,8 +7,8 @@ const status = require('../config/responseStatus.js');
 
 boardRouter.use(jwtMiddleware,(req,res,next) => {
     req.user_id = req.verifiedToken.user_id;
-    if(req.user_id!==0){next();}
-    else{res.send(response(status.MEMBER_NOT_FOUND))}
+    if(req.user_id!==-1){next();}
+    else{res.send(response(status.MEMBER_NOT_FOUND,{}))}
 })
 
 //게시판 글

@@ -18,7 +18,7 @@ const getBoardData = async(data) => {
 
         return resultBoard;  
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{}); }
 }
 
 const getOneBoardData = async(data) => {
@@ -39,7 +39,7 @@ const getOneBoardData = async(data) => {
             return [oneData[0][0], oneData1[0], oneData2[0], oneData3[0], oneData4[0], false];
         }
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{}); }
 }
 
 const writeBoardData = async(data) => {
@@ -51,7 +51,7 @@ const writeBoardData = async(data) => {
         return writeAllData[0].insertId;
         
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const returnWriteBoardData = async(data) => {
@@ -65,7 +65,7 @@ const returnWriteBoardData = async(data) => {
         conn.release();
         return [returnSearchData[0][0], oneData1[0], oneData2[0], oneData3[0], oneData4[0], true];
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const modifyBoardData = async(data) => {
@@ -76,13 +76,12 @@ const modifyBoardData = async(data) => {
         conn.release();
         return data.board_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const eraseBoardData = async(data) => {
     try {
         const conn = await pool.getConnection();
-        console.log(data)
         const exist = await pool.query(existBoard, data);
         if(exist[0][0]==null){
             conn.release();
@@ -92,7 +91,7 @@ const eraseBoardData = async(data) => {
         conn.release();
         return eraseData;
     } 
-    catch (err) {throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) {throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 //좋아요
@@ -104,7 +103,7 @@ const postLikeData = async(data) => {
         conn.release();
         return data.board_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const deleteLikeData = async(data) => {
@@ -115,7 +114,7 @@ const deleteLikeData = async(data) => {
         conn.release();
         return data.board_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const countLikeData = async(data) => {
@@ -126,7 +125,7 @@ const countLikeData = async(data) => {
         conn.release();
         return countResult
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const allLikeData = async(data) => {
@@ -137,7 +136,7 @@ const allLikeData = async(data) => {
         
         return allcount[0];
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 //스크랩
@@ -149,7 +148,7 @@ const addScrapeData = async(data) => {
         ScrapeData;
         return ScrapeData[0]
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const subScrapeData = async(data) => {
@@ -159,7 +158,7 @@ const subScrapeData = async(data) => {
         conn.release();
         return ScrapeData[0]
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 //댓글
@@ -174,7 +173,7 @@ const allCommentData = async(data) => {
         
         return commentlist;  
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR); }
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{}); }
 }
 
 const writeCommentData = async(data) => {
@@ -185,7 +184,7 @@ const writeCommentData = async(data) => {
         conn.release();
         return {"board_id" : data.board_id };
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const modifyCommentData = async(data) => {
@@ -197,7 +196,7 @@ const modifyCommentData = async(data) => {
         conn.release();
         return boardIdData[0];
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const eraseCommentData = async(data) => {
@@ -209,7 +208,7 @@ const eraseCommentData = async(data) => {
         conn.release();
         return boardIdData[0];
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const postLikeCommentData = async(data) => {
@@ -220,7 +219,7 @@ const postLikeCommentData = async(data) => {
         conn.release();
         return data.comment_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 const deleteLikeCommentData = async(data) => {
     try {
@@ -230,7 +229,7 @@ const deleteLikeCommentData = async(data) => {
         conn.release();
         return data.comment_id;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 const countLikeCommentData = async(data) => {
     try {
@@ -240,7 +239,7 @@ const countLikeCommentData = async(data) => {
         conn.release();
         return countCommentResult
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 module.exports = { getBoardData, getOneBoardData, writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, deleteLikeData, countLikeData, allLikeData, addScrapeData, subScrapeData, allCommentData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData };

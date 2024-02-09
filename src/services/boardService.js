@@ -1,5 +1,5 @@
 const { writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, countLikeData, deleteLikeData, addScrapeData, subScrapeData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData, allCommentData } = require('../models/boardDAO.js')
-const {response} = require('../config/response.js');
+const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { oneBoardDTO } = require('../dtos/boardDTO.js');
 
@@ -11,7 +11,7 @@ const writeBoard = async(param, body, user) => {
         "title" : body.title,
 	    "content" : body.content,  
     }); 
-        if (returnData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if (returnData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await oneBoardDTO(await returnWriteBoardData (returnData));}
     }catch (error) { throw error;}
 };
@@ -23,17 +23,18 @@ const modifyBoard = async(param, body) => {
         "title" : body.title,
 	    "content" : body.content,  
     }); 
-        if (returnModifyData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
-        else{ return await oneBoardDTO(await returnWriteBoardData (returnModifyData));}
+        if (returnModifyData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
+        else{return await oneBoardDTO(await returnWriteBoardData (returnModifyData));}
     }catch (error) { throw error;}
 };
 
 const eraseBoard = async(param) => {
     try{
-    await eraseBoardData(param); 
+    returnErase = await eraseBoardData(param);
+    if (returnErase == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
+    else{return {}}
     }catch (error) { throw error;}
 };
-
 
 
 const postLikeUp = async(param, user) => { 
@@ -42,7 +43,7 @@ const postLikeUp = async(param, user) => {
         "board_id" : param,
         "user_id" : user
     });
-        if (likeUpData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if (likeUpData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countLikeData(likeUpData);}
     }catch (error) { throw error;}
 }
@@ -53,26 +54,30 @@ const deleteLike = async(param, user) => {
         "board_id" : param,
         "user_id" : user
     });
-        if (likeDownData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if (likeDownData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countLikeData(likeDownData);}
     }catch (error) { throw error;}
 }
 
 const addScrape = async(param, user) => { 
     try{
-    await addScrapeData({
+    returnAddScrape = await addScrapeData({
         "board_id" : param,
         "user_id" : user
     });
+    if (returnAddScrape == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
+    else{return {}}
     }catch (error) { throw error;}
 }
 
 const subScrape = async(param, user) => { 
     try{
-    await subScrapeData({
+    returnSubScrape = await subScrapeData({
         "board_id" : param,
         "user_id" : user
     });
+    if (returnSubScrape == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
+    else{return {}}
     }catch (error) { throw error;}
 }
 
@@ -84,7 +89,7 @@ const writeComment = async(param, body, user) => {
 	    "content" : body.content,  
     }); 
     // if (returnWriteComment == -1){
-    //     throw response(status.INTERNAL_SERVER_ERROR);
+    //     throw response(status.INTERNAL_SERVER_ERROR,{});
     // }else{
     //     return await allCommentData(returnWriteComment);
     // }
@@ -99,7 +104,7 @@ const modifyComment = async(param, body) => {
 	    "content" : body.content,  
     }); 
     // if (returnModifyComment == -1){
-    //     throw response(status.INTERNAL_SERVER_ERROR);
+    //     throw response(status.INTERNAL_SERVER_ERROR,{});
     // }else{
     //     return await allCommentData(returnModifyComment);
     // }
@@ -113,7 +118,7 @@ const eraseComment = async(param) => {
         "comment_id" : param
     }); 
     // if (returnEraseComment == -1){
-    //     throw response(status.INTERNAL_SERVER_ERROR);
+    //     throw response(status.INTERNAL_SERVER_ERROR,{});
     // }else{
     //     return await allCommentData(returnEraseComment);
     // }
@@ -127,7 +132,7 @@ const postLikeComment = async(param, user) => {
         "comment_id" : param,
         "user_id" : user
     });
-        if(likeUpCommentData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if(likeUpCommentData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countLikeCommentData(likeUpCommentData);}
     }catch (error) { throw error;}
 }
@@ -138,7 +143,7 @@ const deleteLikeComment = async(param, user) => {
         "comment_id" : param,
         "user_id" : user
     });
-        if(likeDownCommentData == -1){throw response(status.INTERNAL_SERVER_ERROR);}
+        if(likeDownCommentData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await countLikeCommentData(likeDownCommentData);}
     }catch (error) { throw error;}
 }

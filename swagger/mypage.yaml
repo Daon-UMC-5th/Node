@@ -20,9 +20,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -85,6 +82,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /mypage/get-comment:
     get:
@@ -107,9 +107,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -172,6 +169,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /mypage/get-scrape:
     get:
@@ -194,9 +194,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -259,6 +256,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /mypage/get-page:
     get:
@@ -274,9 +274,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -309,6 +306,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /mypage/change-profile:
     put:
@@ -337,9 +337,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -349,6 +346,9 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
         "500":
           content:
             application/json:
@@ -364,3 +364,6 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
