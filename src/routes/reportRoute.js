@@ -10,6 +10,11 @@ router.use(jwtMiddleware, (req, res, next) => {
   next();
 });
 
+// router.use((req, res, next) => {
+//   req.user_id = 5;
+//   next();
+// });
+
 // 일기 신고 라우트
 router.route("/diary/:diaryId").post(reportController.reportDiary);
 router.route("/board/:boardId").post(reportController.reportBoard);
