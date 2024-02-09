@@ -1,6 +1,6 @@
 const express = require("express");
 const reportController = require("./../controllers/reportController");
-// const jwtMiddleware = require("./../config/jwtMiddleware.js");
+const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
 const router = express.Router();
 
