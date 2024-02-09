@@ -1,6 +1,6 @@
 const express = require("express");
 const reportController = require("./../controllers/reportController");
-const jwtMiddleware = require("./../config/jwtMiddleware.js");
+// const jwtMiddleware = require("./../config/jwtMiddleware.js");
 
 const router = express.Router();
 
@@ -9,6 +9,11 @@ router.use(jwtMiddleware, (req, res, next) => {
   req.user_id = req.verifiedToken.user_id;
   next();
 });
+
+// router.use((req, res, next) => {
+//   req.user_id = 5;
+//   next();
+// });
 
 // 일기 신고 라우트
 router.route("/diary/:diaryId").post(reportController.reportDiary);

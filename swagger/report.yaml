@@ -58,7 +58,7 @@ components:
                 example: 409
               message:
                 type: "string"
-                example: "이미 신고된 리소스입니다."
+                example: "이미 신고한 내용입니다."
               result:
                 type: "object"
                 description: 빈 객체

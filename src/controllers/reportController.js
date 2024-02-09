@@ -56,7 +56,7 @@ const handleReportResult = (res, reportResult) => {
   } else if (reportResult.invalidTypeId) {
     return sendResponse(res, 404, "ID가 존재하지 않습니다.");
   } else {
-    return sendResponse(res, 200, "이미 신고된 리소스입니다.");
+    return sendResponse(res, 200, "신고 처리가 완료되었습니다.");
   }
 };
 
