@@ -5,6 +5,7 @@ const userRouter = express.Router();
 const userController = require("./../controllers/userController");
 const jwtMiddleware = require("./../config/jwtMiddleware.js");
 const status = require("../config/responseStatus.js");
+const { response, BaseError } = require("../config/response.js");
 
 // 모든 유저 조회
 userRouter.get("/users", jwtMiddleware, userController.alluser);
@@ -44,7 +45,7 @@ userRouter.get("/logout", (req, res) => {
       // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리
       console.log("로그인이 필요합니다.");
       //   return res.status(401).send("로그인이 필요합니다.");
-      return res.send(status.SUCCESS);
+      return res.send(response(status.SUCCESS, {}));
     } else {
       console.log("accessToken none");
       // 블랙리스트에 없거나 토큰이 없으면 다음 미들웨어로 진행

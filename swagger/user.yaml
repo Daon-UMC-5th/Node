@@ -69,6 +69,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409_1":
           description: 이미 존재하는 이메일
           content:
@@ -214,6 +217,9 @@ paths:
                   message:
                     type: string
                     example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
         "404_2":
           description: JWT token 검증 실패(swagger에서 로그아웃 후 user 전체 조회시 jwt 필요한 상태)
           content:
@@ -221,9 +227,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
-                    type: integer
-                    example: 404
                   isSuccess:
                     type: boolean
                     example: false
@@ -233,6 +236,9 @@ paths:
                   message:
                     type: string
                     example: "JWT 토큰 검증 실패."
+                  result:
+                    type: string
+                    example: {}
 
   # 아이디 찾기
   /user/find-id:
@@ -308,6 +314,9 @@ paths:
                   message:
                     type: string
                     example: "일치하는 유저가 존재하지 않습니다."
+                  result:
+                    type: string
+                    example: {}
 
   # 비밀번호 변경
   /user/find-pw:
@@ -347,6 +356,9 @@ paths:
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "404":
           description: 존재하지 않는 이메일
           content:
@@ -363,6 +375,9 @@ paths:
                   message:
                     type: "string"
                     example: "존재하지 않는 email입니다."
+                  result:
+                    type: string
+                    example: {}
 
   # 닉네임 중복
   /user/overlap-nickname:
@@ -371,14 +386,7 @@ paths:
       tags:
         - user
       description: 중복된 닉네임인지 확인합니다.
-      parameters:
-        - name: user_nickname
-          in: query
-          required: true
-          description: 닉네임
-          schema:
-            type: string
-            example: "길동"
+
       requestBody:
         required: true
         content:
@@ -406,6 +414,9 @@ paths:
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409":
           description: 닉네임 중복
           content:
@@ -484,6 +495,9 @@ paths:
                   message:
                     type: string
                     example: "user_id null"
+                  result:
+                    type: string
+                    example: {}
         "404_2":
           description: password 틀림
           content:
@@ -500,6 +514,9 @@ paths:
                   message:
                     type: string
                     example: "password null"
+                  result:
+                    type: string
+                    example: {}
 
   # email 존재 확인
   /user/email-check:
@@ -536,6 +553,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
 
         "409":
           description: 이미 존재하는 이메일
@@ -592,6 +612,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409":
           description: 이미 존재하는 전화번호
           content:
@@ -638,6 +661,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "404_1":
           description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
@@ -654,6 +680,9 @@ paths:
                   message:
                     type: string
                     example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
 
   # 회원 탈퇴
   /user/user-delete:
@@ -682,6 +711,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "404_1":
           description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
@@ -698,6 +730,9 @@ paths:
                   message:
                     type: string
                     example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
         "404_2":
           description: JWT token 검증 실패(swagger에서 로그아웃 후 회원 탈퇴 실행할 때)
           content:
@@ -705,9 +740,6 @@ paths:
               schema:
                 type: object
                 properties:
-                  status:
-                    type: integer
-                    example: 404
                   isSuccess:
                     type: boolean
                     example: false
@@ -717,3 +749,6 @@ paths:
                   message:
                     type: string
                     example: "JWT 토큰 검증 실패."
+                  result:
+                    type: string
+                    example: {}

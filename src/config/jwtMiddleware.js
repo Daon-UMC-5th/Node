@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 // const secret_config = require("./secret");
 const { response, errResponse } = require("./response");
+const status = require("../config/responseStatus.js");
+
 const baseResponse = require("./responseStatus");
 
 // cookie
@@ -29,7 +31,7 @@ const jwtMiddleware = (req, res, next) => {
 
   // token does not exist
   if (token == undefined) {
-    return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    return res.send(response(status.TOKEN_EMPTY, {}));
   }
 
   // create a promise that decodes the token
@@ -44,7 +46,7 @@ const jwtMiddleware = (req, res, next) => {
   const onError = (error) => {
     console.error("JWT Verification Error:", error);
 
-    return res.send(errResponse(baseResponse.TOKEN_VERIFICATION_FAILURE));
+    return res.send(response(status.TOKEN_VERIFICATION_FAILURE, {}));
   };
   // process the promise
   p.then((verifiedToken) => {
@@ -60,7 +62,7 @@ const jwtMiddleware = (req, res, next) => {
     // 블랙리스트에 있는 토큰이면 로그인하지 않은 것으로 처리
     console.log("로그인이 필요합니다.");
     // return res.status(401).send("로그인이 필요합니다.");
-    return res.send(status.TOKEN_VERIFICATION_FAILURE);
+    return res.send(response(status.TOKEN_VERIFICATION_FAILURE, {}));
 
     // res.redirect("/");
   } else {

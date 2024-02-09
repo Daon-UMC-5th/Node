@@ -28,7 +28,7 @@ const userController = {
       const userData = await userProvider.getUser();
 
       if (Object.keys(req.cookies).length === 0) {
-        return res.send(response(status.TOKEN_VERIFICATION_FAILURE,{}));
+        return res.send(response(status.TOKEN_VERIFICATION_FAILURE, {}));
       } else {
         return res.send(response(status.SUCCESS, userData));
       }
@@ -60,7 +60,7 @@ const userController = {
       // 최종 회원가입
       else {
         const reulst = await userService.signup(req.body);
-        return res.send(response(status.SUCCESS,{}));
+        return res.send(response(status.SUCCESS, {}));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);
@@ -72,7 +72,7 @@ const userController = {
       // 회원정보 없을 때
       const result = await userProvider.findid(req.body);
       if (result == undefined) {
-        return res.send(response(status.NO_USER, result));
+        return res.send(response(status.NO_USER, {}));
       } else {
         return res.send(response(status.SUCCESS, result));
       }
@@ -86,12 +86,11 @@ const userController = {
       // email 존재하지 않을 때
       const email = await userProvider.user_id_check(req.body);
       if (email == undefined) {
-        return res.send(response(status.EMAIL_NO_EXIST, email));
+        return res.send(response(status.EMAIL_NO_EXIST, {}));
       }
+      const result = await userService.findpw(req.body);
       // 최종 변경 가능
-      return res.send(
-        response(status.SUCCESS, await userService.findpw(req.body))
-      );
+      return res.send(response(status.SUCCESS, {}));
     } catch (err) {
       console.error("Error acquiring connection:", err);
     }
@@ -103,7 +102,7 @@ const userController = {
       if (result != undefined) {
         return res.send(response(status.NICKNAME_REPEAT, result));
       } else {
-        return res.send(response(status.SUCCESS, result));
+        return res.send(response(status.SUCCESS, {}));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);
@@ -114,7 +113,7 @@ const userController = {
     try {
       const user_id = await userProvider.user_id_check(req.body);
       if (user_id == null)
-        return res.send(response(status.SIGNIN_USER_ID_ERROR,{}));
+        return res.send(response(status.SIGNIN_USER_ID_ERROR, {}));
 
       const selectUserId = user_id;
 
@@ -130,7 +129,7 @@ const userController = {
       );
 
       if (!passwordRows || passwordRows.password !== hashedPassword) {
-        return res.send(response(status.SIGNIN_PASSWORD_ERROR,{}));
+        return res.send(response(status.SIGNIN_PASSWORD_ERROR, {}));
       }
       const token = await userService.signIn(passwordRows.user_id, req.body);
       res.cookie("accessToken", token, { httpOnly: true });
@@ -141,33 +140,14 @@ const userController = {
       console.error("Error acquiring connection:", err);
     }
   },
-  // 로그아웃
 
-  // logout: async (req, res, next) => {
-  //   try {
-  //     const { accessToken } = req.cookies;
-  //     if (accessToken) {
-  //       blacklistedTokens.add(accessToken);
-  //       console.log("cookies logout:", req.cookies);
-  //       console.log(blacklistedTokens);
-
-  //       return res.clearCookie("accessToken"); // 클라이언트의 쿠키 삭제
-  //       // console.log("cookie:", req.cookies);
-  //       // res.status(200).send("로그아웃 완료");
-  //     } else {
-  //       return res.status(400).send("로그인된 사용자가 아닙니다.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error acquiring connection:", error);
-  //   }
-  // },
   // 이메일 중복 확인
   emailCheck: async (req, res, next) => {
     try {
       const result = await userProvider.user_id_check(req.body);
 
       if (result == undefined) {
-        return res.send(response(status.SUCCESS, result));
+        return res.send(response(status.SUCCESS, {}));
       } else {
         return res.send(response(status.EXIST_EMAIL, result));
       }
@@ -181,7 +161,7 @@ const userController = {
       const result = await userProvider.numCheck(req.body);
 
       if (result == undefined) {
-        return res.send(response(status.SUCCESS, result));
+        return res.send(response(status.SUCCESS, {}));
       } else {
         return res.send(response(status.EXIST_NUM, result));
       }
@@ -195,12 +175,12 @@ const userController = {
       // user_id 가져오기
 
       if (Object.keys(req.cookies).length === 0) {
-        return res.send(response(status.TOKEN_VERIFICATION_FAILURE));
+        return res.send(response(status.TOKEN_VERIFICATION_FAILURE, {}));
       } else {
         const user_id = req.verifiedToken.user_id;
         console.log(user_id);
         const result = await userService.deleteUser(user_id);
-        return res.send(response(status.SUCCESS, result));
+        return res.send(response(status.SUCCESS, {}));
       }
     } catch (err) {
       console.error("Error acquiring connection:", err);
