@@ -18,7 +18,7 @@ const MyBoardData = async(data) => {
 
         return resultBoard;  
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const MyCommentData = async(data) => {
@@ -36,7 +36,7 @@ const MyCommentData = async(data) => {
         
         return resultBoard;  
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const MyScrapeData = async(data) => {
@@ -53,7 +53,7 @@ const MyScrapeData = async(data) => {
 
         return resultBoard;    
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const MyPageData = async(data) => {
@@ -66,7 +66,7 @@ const MyPageData = async(data) => {
         conn.release();
         return MyPageList;
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 const profileData = async(data) => {
@@ -76,7 +76,7 @@ const profileData = async(data) => {
         conn.release();
         return MyProfile[0];  
     } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR);}
+    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
 module.exports = { MyBoardData, MyCommentData, MyScrapeData, MyPageData, profileData };

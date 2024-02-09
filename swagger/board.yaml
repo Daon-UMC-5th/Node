@@ -88,6 +88,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/get-one/{boardId}:
     get:
@@ -173,6 +176,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/write/post/{boardType}:
     post:
@@ -272,6 +278,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/write/put/{boardId}:
     put:
@@ -370,6 +379,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/write/delete/{boardId}:
     delete:
@@ -400,6 +412,9 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
         "500":
           content:
             application/json:
@@ -415,6 +430,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/like-up/{boardId}:
     post:
@@ -466,6 +484,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/like-down/{boardId}:
     delete:
@@ -517,6 +538,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/like/{boardId}:
     get:
@@ -568,6 +592,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/all-like:
     get:
@@ -622,6 +649,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/add-scrape/{boardId}:
     post:
@@ -652,6 +682,9 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
         "500":
           content:
             application/json:
@@ -667,6 +700,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/sub-scrape/{boardId}:
     delete:
@@ -697,6 +733,9 @@ paths:
                   message:
                     type: "string"
                     example: "success!"
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
         "500":
           content:
             application/json:
@@ -712,6 +751,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/post/{boardId}:
     post:
@@ -800,6 +842,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/put/{commentId}:
     put:
@@ -887,6 +932,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/delete/{commentId}:
     delete:
@@ -964,6 +1012,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/get/{boardId}:
     get:
@@ -1041,6 +1092,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/like-up/{commentId}:
     post:
@@ -1092,6 +1146,9 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
 
   /board/comment/like-down/{commentId}:
     delete:
@@ -1143,3 +1200,6 @@ paths:
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
