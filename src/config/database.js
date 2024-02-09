@@ -21,6 +21,7 @@ const pool = mysql.createPool({
   queueLimit: 0, // getConnection에서 오류가 발생하기 전에 Pool에 대기할 요청의 개수 한도
 });
 
+
 // 데이터베이스 연결 확인 함수
 async function checkDatabaseConnection() {
   try {
@@ -37,6 +38,5 @@ async function checkDatabaseConnection() {
 
 // 함수 실행
 checkDatabaseConnection();
-
 
 module.exports = pool;

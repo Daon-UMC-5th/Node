@@ -24,6 +24,7 @@ const mypageRouter = require("./routes/mypageRoute.js");
 const boardRouter = require("./routes/boardRoute.js");
 const reportRouter = require("./routes/reportRoute");
 const calendarRouter = require("./routes/calendarRoute.js");
+const diaryRouter = require("./routes/diaryRoute.js");
 //# 라우터
 
 //@ app 설정 공간
@@ -69,6 +70,7 @@ app.get("/", (req, res) => {
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
+
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
@@ -76,6 +78,7 @@ app.use("/mypage", mypageRouter);
 app.use("/board", boardRouter);
 app.use("/report", reportRouter);
 app.use("/calendar",calendarRouter);
+app.use("/diary", diaryRouter);
 //# 라우트
 
 //@ 서버 실행
