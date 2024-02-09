@@ -70,6 +70,7 @@ app.get("/", (req, res) => {
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // 실제로 작동,  테스트 한 후 지우기
+
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
