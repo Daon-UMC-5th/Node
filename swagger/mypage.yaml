@@ -5,7 +5,7 @@ paths:
       tags:
         - MyPage
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -92,7 +92,7 @@ paths:
       tags:
         - MyPage
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -179,7 +179,7 @@ paths:
       tags:
         - MyPage
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -266,7 +266,7 @@ paths:
       tags:
         - MyPage
       security:
-        - api_key: []
+        - api-key: []
       responses:
         "200":
           content:
@@ -316,7 +316,7 @@ paths:
       tags:
         - MyPage
       security:
-        - api_key: []
+        - api-key: []
       requestBody:
         required: true
         content:

@@ -5,7 +5,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -101,7 +101,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -197,7 +197,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryDate"
           in: "path"
@@ -289,7 +289,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryDate"
           in: "path"
@@ -362,7 +362,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryDate"
           in: "path"
@@ -432,7 +432,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryDate"
           in: "path"
@@ -485,7 +485,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryId"
           in: "path"
@@ -538,7 +538,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "diaryId"
           in: "path"

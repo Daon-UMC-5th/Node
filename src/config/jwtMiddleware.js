@@ -26,7 +26,8 @@ const blacklistedTokens = new Set();
 const jwtMiddleware = (req, res, next) => {
   // read the token from header or url
   // const token = req.headers["x-access-token"] || req.query.token;
-  const token = req.headers["api_key"] || req.query.token;
+  // console.log(req.headers);
+  const token = req.headers["api-key"] || req.query.token;
   console.log("token:", token);
 
   // token does not exist

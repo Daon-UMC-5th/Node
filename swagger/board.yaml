@@ -5,7 +5,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardType"
           in: "path"
@@ -98,7 +98,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -186,7 +186,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardType"
           in: "path"
@@ -288,7 +288,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -389,7 +389,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -440,7 +440,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -494,7 +494,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -548,7 +548,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -602,7 +602,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
@@ -659,7 +659,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -710,7 +710,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -761,7 +761,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -852,7 +852,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "commentId"
           in: "path"
@@ -942,7 +942,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "commentId"
           in: "path"
@@ -1022,7 +1022,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "boardId"
           in: "path"
@@ -1102,7 +1102,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "commentId"
           in: "path"
@@ -1156,7 +1156,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "commentId"
           in: "path"
