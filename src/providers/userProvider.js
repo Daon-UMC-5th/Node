@@ -69,7 +69,7 @@ class userProvider {
       throw error;
     }
   }
-  // user_id 구하기
+  // user_id 구하기 -->>??
   static async getId(user_id) {
     try {
       const result = await userDAO.getUserId(user_id);
@@ -78,6 +78,15 @@ class userProvider {
         return null;
       }
       return result[0].id;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // 회원가입 user_id 구하기
+  static async user_id(body) {
+    try {
+      const result = await userDAO.getUserId(body);
+      return result;
     } catch (error) {
       throw error;
     }
