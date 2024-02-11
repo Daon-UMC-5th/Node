@@ -1,5 +1,5 @@
 const {writeDiaryData, modifyDiaryData, eraseDiaryData, addLikeData, subLikeData, countDiaryLike } = require('../models/diaryDAO.js');
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 
 const writeDiary = async(param, user, body) => {

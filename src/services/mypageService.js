@@ -1,5 +1,5 @@
 const { profileData } = require('../models/mypageDAO.js')
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 
 
