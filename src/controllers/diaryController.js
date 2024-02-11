@@ -1,13 +1,22 @@
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { writeDiary, modifyDiary, eraseDiary, diaryLikeAdd, diaryLikeSub } = require('../services/diaryService.js')
-const { privateDiary, publicDiary, OneDiary } = require('../providers/diaryProvider.js');
+const { privateDiary, publicDiary, ImageList, OneDiary } = require('../providers/diaryProvider.js');
 
 const getPrivateDiary = async(req,res) => {
+    try{
     res.send(response(status.SUCCESS, await privateDiary(req.user_id, req.query.offset))); 
+    }catch (error) {res.send(response(status.ARTICLE_NOT_FOUND,{}))}//param 추가 필요(date)
 }
 const getPublicDiary = async(req,res) => {
+    try{
     res.send(response(status.SUCCESS, await publicDiary(req.query.offset))); 
+    }catch (error) {res.send(response(status.ARTICLE_NOT_FOUND,{}))}
+}
+const getImage = async(req,res) => {
+    try{
+    res.send(response(status.SUCCESS, await ImageList(req.user_id, req.params.year, req.params.month))); 
+    }catch (error) {res.send(response(status.ARTICLE_NOT_FOUND,{}))}    
 }
 const getOneDiary = async(req,res) => {
     try{
@@ -41,4 +50,4 @@ const diaryLikeDown =async(req,res) => {
     res.send(response(status.SUCCESS, await diaryLikeSub(req.params.diaryId, req.user_id)));
     }catch (error) {res.send(response(status.ARTICLE_NOT_FOUND,{}))}
 }
-module.exports = { getPrivateDiary, getPublicDiary, getOneDiary, postDiary, putDiary, deleteDiary, diaryLikeUp, diaryLikeDown}
+module.exports = { getPrivateDiary, getPublicDiary, getImage, getOneDiary, postDiary, putDiary, deleteDiary, diaryLikeUp, diaryLikeDown}
