@@ -14,6 +14,7 @@ const bodyParser = require("body-parser");
 
 //@  폴더 파일 import
 const { specs } = require("./config/swaggerConfig.js");
+const { multerErrorHandler } = require("./config/errorHandlers.js");
 //# 폴더 파일 import
 
 //@ 라우터
@@ -25,6 +26,7 @@ const boardRouter = require("./routes/boardRoute.js");
 const reportRouter = require("./routes/reportRoute");
 const calendarRouter = require("./routes/calendarRoute.js");
 const diaryRouter = require("./routes/diaryRoute.js");
+const uploadRouter = require("./routes/uploadRoute.js");
 //# 라우터
 
 //@ app 설정 공간
@@ -77,9 +79,14 @@ app.use("/user", userRouter);
 app.use("/mypage", mypageRouter);
 app.use("/board", boardRouter);
 app.use("/report", reportRouter);
-app.use("/calendar",calendarRouter);
+app.use("/calendar", calendarRouter);
 app.use("/diary", diaryRouter);
+app.use("/upload", uploadRouter);
 //# 라우트
+
+// @에러 핸들
+app.use(multerErrorHandler);
+//# 에러 핸들
 
 //@ 서버 실행
 const port = process.env.PORT || 3000;

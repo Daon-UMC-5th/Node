@@ -77,7 +77,7 @@ class userService {
         }, // 토큰의 내용(payload)
         jwtsecret, // 비밀키
         {
-          expiresIn: "1h",
+          expiresIn: "1d",
           subject: "userInfo",
         } // 유효 기간 365일
       );
