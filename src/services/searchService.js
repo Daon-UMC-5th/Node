@@ -1,7 +1,9 @@
 const db = require("../config/database.js");
 const searchDTO = require("../dtos/searchDTO.js");
-const { getDiaryFromDB } = require("../models/searchDAO.js");
-const { getBoardFromDB } = require("../models/searchDAO.js");
+
+const { getBoardFromDB, getAllLikeInBoardInDB, getImageUrlInBoardInDB, getCommentInBoardInDB, getScrapeInBoardInDB} = require("../models/searchDAO.js");
+const {getPrivateDiaryFromDB, getPublicDiaryFromDB, getLikeInDiaryInDB,  getImageUrlInDiaryInDB} = require("../models/searchDAO.js");
+
 
 // 일기장 검색 시 중복 검사 
 const checkDiaryDuplication = function(diary,diaries){
@@ -26,13 +28,72 @@ const checkBoardDuplication = function(board, boards){
 
 };
 
-
 module.exports = {
-    getDiaries: async(search) => {
+    getPrivateDiaries: async(userId, search, pageNum) => {
+
+        const diary = await getPrivateDiaryFromDB(userId);
+
+        var count = 0;
+        var diarys = [];
+     
+        // 제목과 동일한 경우
+        diary.forEach( (d) => {
+            if(d.title.indexOf(search) != -1){
+                //console.log(chatRoom);
+                diarys[count] = d;
+                count++;
+            }});
+
+      
+       // 내용과 동일한 경우
+       diary.forEach((d) => {
+         
+           if(d.content.indexOf(search)!=-1){
+
+            if(diarys.length==0) {
+                diarys[count] = d;
+                count++;
+            }
+            else{
+                  // 검색반환 결과로 이미 추가된 경우에는 제외(중복 제외)
+                  const isDuplication = checkDiaryDuplication(d, diarys);
+                  if(!isDuplication){
+                      boards[count] = d;
+                      count++;
+                  }
+            }
+          
+       
+           }
+       });
+       //console.log("검색결과",diarys);
+       
+       // 페이징 기능 구현
+       const totalPage = diarys.length;
+       console.log(totalPage);
+       const pageUnit = 10;
+       const lastPage = (pageUnit * pageNum);
+       const firstPage = pageNum;
+       let index=0;
+       var result = [];
+       for(let i=firstPage;i<=lastPage && i<=totalPage;i++){
+           result[index]= diarys[i-1];
+           result[index].image_url = await getImageUrlInDiaryInDB(diarys[i-1].diary_id);
+           result[index].likecount = await getLikeInDiaryInDB(diarys[i-1].diary_id);
+           index++;
+       }
+
+       console.log(result);
+
+       return searchDTO(result);
+
+    },
+
+    getPublicDiaries: async(userId, search, pageNum) => {
         
        // console.log(search);
         // 데이터베이스로부터 전체 일기목록 가지고 오기 
-        const diary = await getDiaryFromDB(search);
+        const diary = await getPublicDiaryFromDB(search);
 
        // console.log(diary);
         var count = 0;
@@ -69,12 +130,33 @@ module.exports = {
            }
        });
        console.log("검색결과",diarys);
-       return await searchDTO(diarys);
+       
+       // 페이징 기능 구현
+       const totalPage = diarys.length;
+       console.log(totalPage);
+       const pageUnit = 10;
+       const lastPage = (pageUnit * pageNum);
+       const firstPage = pageNum;
+       let index=0;
+       var result = [];
+       for(let i=firstPage;i<=lastPage&& i<=totalPage;i++){
+        result[index]= diarys[i-1];
+        result[index].image_url = await getImageUrlInDiaryInDB(diarys[i-1].diary_id);
+        result[index].likecount = await getLikeInDiaryInDB(diarys[i-1].diary_id);
+        index++;
+       }
+
+       console.log(result);
+
+       return searchDTO(result);
+
+
+      // return await searchDTO(diarys);
   
        
     },
 
-    getBoard: async(search) => {
+    getBoard: async(search,pageNum) => {
         // 데이터베이스로부터 전체 게시판 목록 가져오기
         const board = await getBoardFromDB(search);
         var count = 0;
@@ -90,7 +172,7 @@ module.exports = {
                 count++;
         }
     });
-        console.log(`첫번째: ${boards}`);
+        //console.log(`첫번째: ${boards}`);
         // 내용과 동일한 경우
        board.forEach((b) => {
          
@@ -111,8 +193,39 @@ module.exports = {
        
         }
     });
+
     //console.log(boards);
-     return await searchDTO(boards);
+    // 페이징 기능 구현
+    const totalPage = boards.length;
+    console.log(totalPage);
+    const pageUnit = 10;
+    const lastPage = (pageUnit * pageNum);
+    let firstPage;
+    if(pageNum == 1) firstPage = 1;
+    else firstPage = ((pageNum-1)*pageUnit)+1;
+    let index=0;
+    var result = [];
+
+    if(totalPage<firstPage) return undefined;
+
+    for(let i=firstPage;i<=lastPage && i<=totalPage;i++){
+        
+       
+            result[index] = boards[i-1];
+            result[index].likecount = await getAllLikeInBoardInDB(boards[i-1].board_id);
+            result[index].image_url = await getImageUrlInBoardInDB(boards[i-1].board_id);
+            result[index].commentcount = await getCommentInBoardInDB(boards[i-1].board_id);
+            result[index].scrapecount = await getScrapeInBoardInDB(boards[i-1].board_id);
+            index++;
+    }
+   // console.log(result);
+     
+   
+
+    //console.log(await getAllLikeInBoardInDB(1));
+    console.log(result);
+    //console.log(boards);
+    return await searchDTO(boards);
     }
     
 }

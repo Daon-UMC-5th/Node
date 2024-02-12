@@ -17,8 +17,9 @@ module.exports = {
         
         // result에 값이 들어있으면 해당 이메일로 랜덤 인증 번호 전송에 성공
         if(result != undefined){
+           
             // 성공 시, 사용자에게 전송된 인증코드를 일시적으로 저장
-            req.session.code = result[1];
+            req.session.email = result[1];
            // console.log(req.session.code);
             res.send(response(status.SUCCESS, result[0]));
         }
@@ -34,8 +35,8 @@ module.exports = {
 
         // 사용자에게 전송된 인증코드 
         //console.log(req.session.code);
-        let code = await req.session.code;
-        //console.log(`original code: ${code}`);
+        let code = await req.session.email;
+        console.log(`original code: ${code}`);
         let result = await authService.matchCode(inputCode,code);
 
         // 사용자가 인증코드를 잘못 입력한 경우 (ex. 인증코드가 6자리가 아닌 경우)
@@ -43,6 +44,7 @@ module.exports = {
         // 인증코드가 서로 일치하는 경우
         else if(result == "correctInputCode"){
             req.session.code = null;
+            req.session.destroy();
             res.send(response(status.SUCCESS,{}));
         }
         // 인증코드가 서로 일치하지 않는 경우
@@ -58,7 +60,7 @@ module.exports = {
     let result = await authService.sendSms(phone);
 
     if(result != undefined){
-          req.session.code = result[1];
+          req.session.sms = result[1];
           console.log(req.session.code);
     
       //  console.log(`result[0]: ${result[0]}`);
@@ -74,8 +76,8 @@ module.exports = {
         let inputCode = req.body.inputCode;
 
         // 사용자에게 전송된 인증코드
-        console.log(req.session.code);
-        let code = await req.session.code;
+        //console.log(req.session.code);
+        let code = await req.session.sms;
 
         console.log(`session code: ${code}`);
 
@@ -85,6 +87,7 @@ module.exports = {
         if(result=="wrongInputCode") res.send(response(status.BAD_REQUEST,{}));
         else if(result=="correctInputCode"){
             req.session.code = null;
+            req.session.destroy();
             res.send(response(status.SUCCESS,{}));
         } 
         else if(result=="incorrectInputCode") res.send(response(status.CODE_NOT_MATCH,{}));
