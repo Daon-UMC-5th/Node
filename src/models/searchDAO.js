@@ -1,6 +1,6 @@
 const db = require("../config/database.js");
 const {getBoardSQL, getAllLikeInBoardSQL,getImageUrlInBoardSQL,getCommentInBoardSQL,getScrapeInBoardSQL} = require("./searchSQL.js");
-const {getPrivateDiarySQL, getPublicDiarySQL} = require("./searchSQL.js");
+const {getPrivateDiarySQL, getPublicDiarySQL, getLikeInDiarySQL, getImageUrlInDiarySQL} = require("./searchSQL.js");
 
 const getBoardFromDB = async(search) => {
     const dbConnection = await db.getConnection();
@@ -95,7 +95,7 @@ const getPrivateDiaryFromDB = async(userId) => {
 }
 module.exports.getPrivateDiaryFromDB = getPrivateDiaryFromDB;
 
-const getPublicDiaryFromDB = async(userId) =>{
+const getPublicDiaryFromDB= async(userId) =>{
 
     const dbConnection = await db.getConnection();
 
@@ -105,3 +105,32 @@ const getPublicDiaryFromDB = async(userId) =>{
     return result[0];
 }
 module.exports.getPublicDiaryFromDB = getPublicDiaryFromDB;
+
+const getLikeInDiaryInDB = async(diaryId) => {
+    const dbConnection = await db.getConnection();
+    let result = await db.query(getLikeInDiarySQL, [diaryId]);
+    dbConnection.release();
+    result = result[0];
+    //console.log(result[0]);
+    if(result[0]!= undefined) {
+        //console.log(result);
+       // console.log(result[0].likecount);
+        return result[0].likecount;
+    }
+    else{
+      return 0;
+    }
+
+}
+module.exports.getLikeInDiaryInDB = getLikeInDiaryInDB;
+
+const getImageUrlInDiaryInDB = async(diaryId) => {
+    const dbConnection = await db.getConnection();
+
+   let result = await db.query(getImageUrlInDiarySQL, [diaryId]);
+    result = result[0];
+    dbConnection.release();
+    //console.log(result[0]);
+    return result[0].image_url;
+}
+module.exports.getImageUrlInDiaryInDB = getImageUrlInDiaryInDB;

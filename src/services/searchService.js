@@ -2,7 +2,7 @@ const db = require("../config/database.js");
 const searchDTO = require("../dtos/searchDTO.js");
 
 const { getBoardFromDB, getAllLikeInBoardInDB, getImageUrlInBoardInDB, getCommentInBoardInDB, getScrapeInBoardInDB} = require("../models/searchDAO.js");
-const {getPrivateDiaryFromDB, getPublicDiaryFromDB} = require("../models/searchDAO.js");
+const {getPrivateDiaryFromDB, getPublicDiaryFromDB, getLikeInDiaryInDB,  getImageUrlInDiaryInDB} = require("../models/searchDAO.js");
 
 
 // 일기장 검색 시 중복 검사 
@@ -27,7 +27,6 @@ const checkBoardDuplication = function(board, boards){
     return isDuplication;
 
 };
-
 
 module.exports = {
     getPrivateDiaries: async(userId, search, pageNum) => {
@@ -79,6 +78,8 @@ module.exports = {
        var result = [];
        for(let i=firstPage;i<=lastPage && i<=totalPage;i++){
            result[index]= diarys[i-1];
+           result[index].image_url = await getImageUrlInDiaryInDB(diarys[i-1].diary_id);
+           result[index].likecount = await getLikeInDiaryInDB(diarys[i-1].diary_id);
            index++;
        }
 
@@ -140,6 +141,8 @@ module.exports = {
        var result = [];
        for(let i=firstPage;i<=lastPage&& i<=totalPage;i++){
         result[index]= diarys[i-1];
+        result[index].image_url = await getImageUrlInDiaryInDB(diarys[i-1].diary_id);
+        result[index].likecount = await getLikeInDiaryInDB(diarys[i-1].diary_id);
         index++;
        }
 
