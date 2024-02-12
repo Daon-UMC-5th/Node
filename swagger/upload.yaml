@@ -94,8 +94,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
     put:
@@ -123,8 +121,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
@@ -187,8 +183,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
     put:
@@ -223,8 +217,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
@@ -287,8 +279,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
     put:
@@ -323,8 +313,6 @@ paths:
           $ref: "#/components/responses/MulterErrorResponse"
         "404":
           $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
@@ -413,7 +401,7 @@ components:
                 type: "object"
                 description: 빈 객체
     Conflict409:
-      description: "이미 신고한 내용입니다."
+      description: "이미지가 이미 존재합니다."
       content:
         application/json:
           schema:
