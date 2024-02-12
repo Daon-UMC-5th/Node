@@ -376,7 +376,7 @@ components:
                 example: 400
               message:
                 type: string
-                example: LIMIT_UNEXPECTED_FILE
+                example: File must be an image or pdf.
               result:
                 type: object
                 example: {}
