@@ -53,5 +53,5 @@ const diaryLikeDown =async(req,res) => {
     res.send(response(status.SUCCESS, await diaryLikeSub(req.params.diaryId, req.user_id)));
     }catch (error) {res.send(response(status.ARTICLE_NOT_FOUND,{}))}
 }
-module.exports = { getPrivateDiary, getPublicDiary, getImage, getOneDiary, postDiary, putDiary, deleteDiary, diaryLikeUp, diaryLikeDown}
 
+module.exports = { getPrivateDiary, getPublicDiary, getImage, getOneDiary, postDiary, putDiary, deleteDiary, diaryLikeUp, diaryLikeDown}
