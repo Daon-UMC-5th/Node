@@ -78,7 +78,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -171,7 +171,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -259,7 +259,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -361,7 +361,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -462,7 +462,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -513,7 +513,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -567,7 +567,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -621,7 +621,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -675,7 +675,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -732,7 +732,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -783,7 +783,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -834,7 +834,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -925,7 +925,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1015,7 +1015,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1095,7 +1095,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1175,7 +1175,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1229,7 +1229,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1283,7 +1283,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: COMMON000
+                    example: 500
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."

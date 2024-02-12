@@ -90,7 +90,7 @@ paths:
                         scrapecount:
                           type: integer
                           example: 2
-        404:
+        "404":
           description: 검색 결과 없음
           content:
             application/json:
@@ -194,7 +194,7 @@ paths:
                         likecount:
                           type: integer
                           example: 0
-        404:
+        "404":
           description: 검색 결과 없음
           content:
             application/json:
@@ -301,7 +301,7 @@ paths:
                         likecount:
                           type: integer
                           example: 1
-        404:
+        "404":
           description: 검색 결과 없음
           content:
             application/json:
