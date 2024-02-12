@@ -6,10 +6,11 @@ const {checkDuplicationDateInPhysicalSQL} = require("./calendarSQL.js");
 // 진료
 const {insertConsultationSQL, getConsultationSQL,deleteConsultationSQL, updateConsultationSQL} = require("./calendarSQL.js");
 const {checkDuplicationDateInConsultationSQL} = require("./calendarSQL.js");
-
+const {getAllConsultationSQL} = require("./calendarSQL.js");
 // 복용
 const {getMedicationSQL,getAllMedicationSQL,insertMedicationSQL, deleteMedicationSQL, updateMedicationSQL} = require("./calendarSQL.js");
 const {checkDuplicationDateInMedicationSQL} = require("./calendarSQL.js");
+
 
 
 
@@ -137,12 +138,12 @@ module.exports.checkDuplicationDateInDBInConsultation = checkDuplicationDateInDB
 
 
 // 진료기록 조회
-const checkConsultationInDB = async(date, userId) => {
+const checkConsultationInDB = async(date, userId,consultationId) => {
 
     const dbConnection = await db.getConnection();
     try{
      
-        const result = await db.query(getConsultationSQL,[date, userId]);
+        const result = await db.query(getConsultationSQL,[date, userId,consultationId]);
         dbConnection.release();
        //console.log(result[0]);
         return result[0];
@@ -227,12 +228,12 @@ module.exports.checkAllMedicationInDB =  checkAllMedicationInDB;
 
 
 // 복용기록 조회
-const checkMedicationInDB = async(timeOfDay, date, userId) => {
+const checkMedicationInDB = async(timeOfDay, date, userId, medicationId) => {
     console.log(timeOfDay);
     const dbConnection = await db.getConnection();
 
     try{
-        const result = await db.query(getMedicationSQL, [date,timeOfDay,userId]);
+        const result = await db.query(getMedicationSQL, [date,timeOfDay,userId, medicationId]);
         console.log(result);
         dbConnection.release();
         return result[0];
@@ -380,3 +381,22 @@ const getAllMedicationMonthlyInDB = async(userId, month)=> {
     }
 }
 module.exports.getAllMedicationMonthlyInDB = getAllMedicationMonthlyInDB;
+
+const getAllConsultationInDB = async(userId, date) =>{
+
+    const dbConnection = await db.getConnection();
+    try{
+        const result = await db.query(getAllConsultationSQL, [date,userId]);
+
+       // console.log(result);
+        dbConnection.release();
+        return result[0];
+
+    }catch(err){
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+        return result[0];
+    }
+}
+module.exports.getAllConsultationInDB = getAllConsultationInDB;

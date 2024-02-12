@@ -30,7 +30,7 @@ const checkDuplicationDateInConsultationSQL = "select * from consultation where 
 module.exports.checkDuplicationDateInConsultationSQL = checkDuplicationDateInConsultationSQL;
 
 // 진료기록 조회
-const getConsultationSQL = "select * from consultation where alarmed_date=? and user_id=?";
+const getConsultationSQL = "select * from consultation where alarmed_date=? and user_id=? and consultation_id=?";
 module.exports.getConsultationSQL = getConsultationSQL;
 
 // 진료기록 삭제
@@ -46,7 +46,7 @@ const getAllMedicationSQL = "select * from medication where alarmed_date=? and u
 module.exports.getAllMedicationSQL = getAllMedicationSQL;
 
 // 복용기록 아침/점심/저녁 별 조회
-const getMedicationSQL = "select * from medication where alarmed_date=? and time_of_day=? and user_id=?";
+const getMedicationSQL = "select * from medication where alarmed_date=? and time_of_day=? and user_id=? and medication_id=?";
 module.exports.getMedicationSQL = getMedicationSQL;
 
 
@@ -77,3 +77,7 @@ module.exports.getAllConsultationMonthlySQL = getAllConsultationMonthlySQL;
 
 const getAllMedicationMonthlySQL = "select medication_id, alarmed_date from medication where user_id=? and alarmed_date between ? and ?;"
 module.exports.getAllMedicationMonthlySQL = getAllMedicationMonthlySQL;
+
+
+const getAllConsultationSQL = "select * from consultation where alarmed_date=? and user_id=?;"
+module.exports.getAllConsultationSQL = getAllConsultationSQL;

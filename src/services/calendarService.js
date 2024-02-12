@@ -5,7 +5,7 @@ const {checkDuplicationDateInDBInPhysical} = require("../models/calendarDAO.js")
 
 // 진료기록 삽입,조회,삭제,수정
 const {insertConsultationInDB, checkConsultationInDB, deleteConsultationInDB,updateConsultationInDB} = require("../models/calendarDAO.js");
-const {getConsultationDTO} = require("../dtos/calendarDTO.js");
+const {getConsultationDTO,  getAllConsultationDTO} = require("../dtos/calendarDTO.js");
 const {checkDuplicationDateInDBInConsultation} = require("../models/calendarDAO.js");
 
 // 복용기록 삽입,조회,삭제,수정
@@ -15,6 +15,7 @@ const {checkDuplicationDateInDBInMedication} = require("../models/calendarDAO.js
 
 const {getAllPhysicalRecordMonthlyInDB, getAllConsultationMonthlyInDB, getAllMedicationMonthlyInDB} = require("../models/calendarDAO.js");
 
+const {getAllConsultationInDB} = require("../models/calendarDAO.js");
 
 
 // 같은 사용자가 같은 날짜에 중복으로 작성하는지를 체크하는 함수 in physical_record
@@ -200,14 +201,14 @@ module.exports={
         else return undefined;
         
     },
-    // 진료기록 조회
-    getConsultation: async(date, userId) => {
+    // 진료기록 개별 조회
+    getConsultation: async(date, userId, consultationId) => {
 
-        const result = await checkConsultationInDB(date,userId);
+        const result = await checkConsultationInDB(date,userId,consultationId);
         //sconsole.log(result);
          // 서버 에러
          if(result == "error") return result;
-         else if(result.length != 0) return result;
+         else if(result.length != 0) return getConsultationDTO(result);
          else return undefined;
     },
     removeConsultation: async(date, userId,  consultationId) => {
@@ -244,7 +245,7 @@ module.exports={
           else if(result.length != 0) return getAllMedicationDTO(result);
           else return undefined;
     },
-    getMedication: async(when, date, userId) => {
+    getMedication: async(when, date, userId, medicationId) => {
 
         let timeOfDay;
 
@@ -253,11 +254,11 @@ module.exports={
         else if(when == "evening") timeOfDay ="저녁";
       
 
-        const result = await checkMedicationInDB(timeOfDay,date,userId);
+        const result = await checkMedicationInDB(timeOfDay,date,userId, medicationId);
 
           // 서버 에러
           if(result == "error") return result;
-          else if(result.length != 0) return result;
+          else if(result.length != 0) return getMedicationDTO(result);
           else return undefined;
     },
     insertMedication: async(information) => {
@@ -342,6 +343,17 @@ module.exports={
 
         console.log(result);
         return result;
+    },
+    getAllConsultation: async(userId, date) =>{
+        
+        const result = await getAllConsultationInDB(userId, date);
+
+//        console.log(result);
+
+        // 서버 에러
+        if(result == "error") return result;
+         else if(result.length != 0) return  getAllConsultationDTO(result);
+         else return undefined;
     }
 
 };

@@ -145,8 +145,9 @@ module.exports = {
            // 사용자가 진료를 기록한 날짜
            const date = req.params.date;
            console.log(date);
-
-           const result = await calendarService.getConsultation(date, userId);
+           const consultationId = req.query.id;
+           console.log(consultationId);
+           const result = await calendarService.getConsultation(date, userId,consultationId);
 
         // 해당 날짜에 진료 기록이 있는 경우
         if(result) res.send(response(status.SUCCESS, result));
@@ -236,7 +237,7 @@ module.exports = {
     },
 
     // 복용
-    // 날짜별 복용목록 아침/점심/저녁 별 조회
+    // 날짜별 복용목록 아침/점심/저녁 개별 조회
     viewMedication: async(req,res,next) => {
 
         // 사용자의 userid 받아옴
@@ -247,8 +248,11 @@ module.exports = {
         const when = req.params.when;
         // 사용자가 복용기록을 조회하고자 하는 날짜
         const date = req.params.date;
-        
-        const result = await calendarService.getMedication(when,date,userId);
+
+        const medicationId = req.query.id;
+        console.log(medicationId);
+
+        const result = await calendarService.getMedication(when,date,userId, medicationId);
         
         console.log(result);
         // 서버 에러로 조회 실패
@@ -374,6 +378,20 @@ module.exports = {
 
         if(result != undefined) res.send(response(status.SUCCESS, result));
         else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+
+    },
+    viewAllConsultation: async(req,res,next) => {
+        const userId = req.user_id;
+        const date = req.params.date;
+        const result = await calendarService.getAllConsultation(userId, date);
+
+
+         // 서버 에러로 조회 실패
+        if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        // 해당 날짜에 복용 기록이 없는 경우
+        else if(result==undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
+        // 해당 날짜에 복용 기록이 있는 경우
+        else res.send(response(status.SUCCESS, result));
 
     }
 
