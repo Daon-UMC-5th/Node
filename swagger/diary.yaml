@@ -87,7 +87,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -183,7 +183,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -253,7 +253,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -344,7 +344,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -418,7 +418,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -488,7 +488,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -541,7 +541,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -594,7 +594,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -647,7 +647,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: ARTICLE4001
+                    example: 404
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
