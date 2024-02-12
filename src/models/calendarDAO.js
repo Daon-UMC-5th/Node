@@ -1,5 +1,4 @@
 const db = require("../config/database.js");
-const calendarRouter = require("../routes/calendarRoute.js");
 // 신체 
 const {insertPhysicalRecordSQL, getPhysicalRecordSQL,deletePhysicalRecordSQL,updatePhysicalRecordSQL} = require("./calendarSQL.js");
 const {checkDuplicationDateInPhysicalSQL} = require("./calendarSQL.js");
@@ -12,6 +11,9 @@ const {checkDuplicationDateInConsultationSQL} = require("./calendarSQL.js");
 const {getMedicationSQL,getAllMedicationSQL,insertMedicationSQL, deleteMedicationSQL, updateMedicationSQL} = require("./calendarSQL.js");
 const {checkDuplicationDateInMedicationSQL} = require("./calendarSQL.js");
 
+
+
+const {getAllPhysicalRecordMonthlySQL, getAllConsultationMonthlySQL, getAllMedicationMonthlySQL} = require("./calendarSQL.js");
 // 신체기록 삽입 
 const insertPhysicalRecordInDB = async(data) => {
 
@@ -71,6 +73,8 @@ const deletePhysicalRecordInDB = async(date,userId) => {
         
     }
 };
+
+
 module.exports.deletePhysicalRecordInDB = deletePhysicalRecordInDB;
 
 // 신체기록 수정
@@ -154,12 +158,12 @@ module.exports.checkConsultationInDB = checkConsultationInDB;
 
 // 진료기록 삭제
 
-const deleteConsultationInDB = async(date, userId) => {
+const deleteConsultationInDB = async(date, userId, consultationId) => {
 
     const dbConnection = await db.getConnection();
 
     try{
-        const result = await db.query(deleteConsultationSQL, [date,userId]);
+        const result = await db.query(deleteConsultationSQL, [date, userId, consultationId]);
         dbConnection.release();
         console.log(result[0]);
 
@@ -175,13 +179,13 @@ const deleteConsultationInDB = async(date, userId) => {
 module.exports.deleteConsultationInDB = deleteConsultationInDB;
 
 // 진료기록 수정
-const updateConsultationInDB = async(date, data) => {
+const updateConsultationInDB = async(date, data, consultationId) => {
 
     const dbConnection = await db.getConnection();
 
     try{
         console.log(data.hospital);
-        const result = await db.query(updateConsultationSQL, [data.hospital, data.content, data.alarmed_at, date, data.user_id]);
+        const result = await db.query(updateConsultationSQL, [data.hospital, data.content, data.alarmed_at, date, data.user_id, consultationId]);
         dbConnection.release();
         console.log(result[0]);
         return result[0];
@@ -253,7 +257,7 @@ const checkDuplicationDateInDBInMedication = async(date, timeOfDay, userId) => {
 }
 module.exports.checkDuplicationDateInDBInMedication = checkDuplicationDateInDBInMedication;
 
-
+// 복용기록 삽입
 const insertMedicationInDB = async(data) => {
 
     const dbConnection = await db.getConnection();
@@ -270,12 +274,12 @@ module.exports.insertMedicationInDB = insertMedicationInDB;
 
 
 // 복용기록 삭제
-const deleteMedicationInDB = async(date, timeOfDay, userId) => {
+const deleteMedicationInDB = async(date, timeOfDay, userId, medicationId) => {
 
     const dbConnection = await db.getConnection();
 
     try{
-        const result = await db.query(deleteMedicationSQL, [date, timeOfDay, userId]);
+        const result = await db.query(deleteMedicationSQL, [date, timeOfDay, userId, medicationId]);
         dbConnection.release();
         console.log(result[0]);
 
@@ -291,12 +295,12 @@ const deleteMedicationInDB = async(date, timeOfDay, userId) => {
 module.exports.deleteMedicationInDB = deleteMedicationInDB;
 
 // 복용기록 수정
-const updateMedicationInDB = async(data) => {
+const updateMedicationInDB = async(data,medicationId) => {
 
     const dbConnection = await db.getConnection();
 
     try{
-        const result = await db.query(updateMedicationSQL,[data.medicine, data.alarmed_at, data.alarm_days,data.repeat_status, data.alarmed_date, data.time_of_day, data.user_id]);
+        const result = await db.query(updateMedicationSQL,[data.medicine, data.alarmed_at, data.alarm_days,data.repeat_status, data.alarmed_date, data.time_of_day, data.user_id, medicationId]);
         dbConnection.release();
 
         return result[0];
@@ -310,3 +314,69 @@ const updateMedicationInDB = async(data) => {
     }
 }
 module.exports.updateMedicationInDB = updateMedicationInDB;
+
+const getAllPhysicalRecordMonthlyInDB = async(userId, month) => {
+
+
+    const startDate = `${month}-01`;
+    const endDate = `${month}-31`;
+
+    const dbConnection = await db.getConnection();
+
+    try{
+        const result = await db.query(getAllPhysicalRecordMonthlySQL, [userId, startDate, endDate]);
+        dbConnection.release();
+
+        return result[0];
+    }catch(err){
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+
+        return result[0];
+    }
+}
+module.exports.getAllPhysicalRecordMonthlyInDB = getAllPhysicalRecordMonthlyInDB;
+
+const getAllConsultationMonthlyInDB = async(userId, month) =>{
+    const startDate = `${month}-01`;
+    const endDate = `${month}-31`;
+
+    const dbConnection = await db.getConnection();
+
+    try{
+        const result = await db.query(getAllConsultationMonthlySQL, [userId, startDate, endDate]);
+        dbConnection.release();
+
+        return result[0];
+    }catch(err){
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+
+        return result[0];
+    }
+
+}
+module.exports.getAllConsultationMonthlyInDB = getAllConsultationMonthlyInDB;
+
+const getAllMedicationMonthlyInDB = async(userId, month)=> {
+    const startDate = `${month}-01`;
+    const endDate = `${month}-31`;
+
+    const dbConnection = await db.getConnection();
+
+    try{
+        const result = await db.query(getAllMedicationMonthlySQL , [userId, startDate, endDate]);
+        dbConnection.release();
+
+        return result[0];
+    }catch(err){
+        const result = [];
+        result[0] = "error";
+        dbConnection.release();
+
+        return result[0];
+    }
+}
+module.exports.getAllMedicationMonthlyInDB = getAllMedicationMonthlyInDB;

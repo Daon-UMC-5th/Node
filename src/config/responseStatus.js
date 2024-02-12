@@ -75,7 +75,7 @@ const status = {
   ARTICLE_NOT_FOUND: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: "ARTICLE4001",
+    code: 404,
     message: "게시글이 없습니다.",
   },
   CODE_NOT_MATCH: {
