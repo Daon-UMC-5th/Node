@@ -12,6 +12,8 @@ calendarRouter.use(jwtMiddleware,(req,res,next) => {
 })
 
 
+calendarRouter.get("/:month", calendarController.viewAllCalendar);
+
 // 날짜별 진료 목록 조회 
 calendarRouter.get("/consultation/:date", calendarController.viewConsultation);
 // 날짜별 진료 목록 등록
