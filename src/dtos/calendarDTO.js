@@ -111,3 +111,25 @@ const getAllMedicationDTO = async(result) => {
     return modifyResult;
 }
 module.exports.getAllMedicationDTO = getAllMedicationDTO;
+
+
+const getAllConsultationDTO = async(result) => {
+    let modifyResult = [];
+    let count = 0;
+    result.forEach(async(r) => {
+         const date = await updateDate(r.alarmed_date);
+    modifyResult[count]= {
+    "consultation_id": r.consultation_id,
+    "user_id": r.user_id,
+    "hospital": r.hospital,
+    "content": r.content,
+    "alarmed_date": date,
+    "alarmed_at": r.alarmed_at,
+    "created_at" : r.created_at,
+    "updated_at": r.updated_at
+};
+    count++;
+    });
+    return modifyResult;
+}
+module.exports.getAllConsultationDTO = getAllConsultationDTO;

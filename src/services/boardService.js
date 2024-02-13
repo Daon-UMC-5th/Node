@@ -1,5 +1,5 @@
 const { writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, countLikeData, deleteLikeData, addScrapeData, subScrapeData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData, allCommentData } = require('../models/boardDAO.js')
-const response = require('../config/response.js');
+const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { oneBoardDTO } = require('../dtos/boardDTO.js');
 

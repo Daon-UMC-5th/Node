@@ -10,17 +10,17 @@ const options = {
     },
     host: "localhost:3000",
     basePath: "/",
-    // components: {
-    //   securitySchemes: {
-    //     api_key: {
-    //       type: "apiKey",
-    //       in: "header",
-    //       name: "api-key",
-    //       description:
-    //         "JWT 토큰을 `api-key` 헤더를 통해 전송합니다. 토큰 형식은 JWT입니다.\n\nExample: `your_jwt_token`",
-    //     },
-    //   },
-    // },
+     components: {
+       securitySchemes: {
+         "api-key": {
+           type: "apiKey",
+           in: "header",
+           name: "api-key",
+           description:
+             "JWT 토큰을 `api-key` 헤더를 통해 전송합니다. 토큰 형식은 JWT입니다.\n\nExample: `your_jwt_token`",
+         },
+       },
+     },
   },
   apis: ["./src/routes/*.js", "./swagger/*"],
 };

@@ -1,159 +1,321 @@
 paths:
-  # 게시판 검색 
   /search/board:
     post:
+  # 게시판 검색 
       tags:
         - Search
+      security:
+        - api-key: []
       summary: 검색 - 게시판
       parameters:
-      - name: SearchBoard
-        in: body
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: page number(1이면, 1~10페이지/ 2이면 20-30페이지 load)
+      requestBody:
         required: true
-        schema:
-          properties: 
-            search: 
-              type: string
-              description: 검색어
-              example: "세 번째"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+                  description: 검색어
+                  example: "게시글"
       responses:
-        200:
+        "200":
           description: 검색 성공
-          schema:
-            type: object
-            properties:
-              isSuccess:
-                type: boolean
-                example: true
-              code:
-                type: integer
-                example: 200
-              message:
-                type: string
-                example: "success to connect"
-              result:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      user_nickname:
-                        type: string
-                      board_id:
-                        type: integer
-                      board_type:
-                        type: string
-                      user_id:
-                        type: integer
-                      title:
-                        type: string
-                      content:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type:string
-                  example: {
-                    "user_nickname": "지은이",
-                    "board_id": 3,
-                    "board_type": "유방암",
-                    "user_id": 13,
-                    "title": "세 번째 게시물",
-                    "content": "이것은 세 번째 게시물입니다.",
-                    "created_at": "2024-01-23T16:54:15.000Z",
-                    "updated_at": "2024-01-24 01:54:15.000Z",
-                  }
-        404:
-          description: 검색 결과 없음
-          schema:
-            type: object
-            properties:
-              isSuccess:
-                type: boolean
-                example: false
-              code:
-                type: string
-                example: "ARTICLE4001"
-              message:
-                type: string
-                example: "게시글이 없습니다."
-              result:
+          content:
+            application/json:
+              schema:
                 type: object
-        
-# 일기장 검색 
-  /search/diary:
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        user_nickname:
+                          type: string
+                          example: "길동"
+                        board_id:
+                          type: integer
+                          example: 9
+                        board_type:
+                          type: string
+                          example: "notice"
+                        user_id:
+                          type: integer
+                          example: 1
+                        title:
+                          type: string
+                          example: "게시글 제목"
+                        content:
+                          type: string
+                          example:  "게시글 내용"
+                        created_at:
+                          type: string
+                          example: "2024-02-08T12:52:34.000Z"
+                        updated_at:
+                          type: string
+                          example: "2024-02-08T12:52:34.000Z"
+                        image_url:
+                          type: string
+                          example: "https://daon-bucket.s3.ap-northeast-2.amazonaws.com/board/27_1707400760538.jpg"
+                        likecount:
+                          type: integer
+                          example: 1
+                        commentcount:
+                          type: integer
+                          example:  1    
+                        scrapecount:
+                          type: integer
+                          example: 2
+        "404":
+          description: 검색 결과 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+  /search/diary/private:
     post:
+  # 게시판 검색 
       tags:
         - Search
-      summary: 검색 - 다이어리
+      security:
+        - api-key: []
+      summary: 검색 - 개인 일기장
       parameters:
-      - name: SearchDiary
-        in: body
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: page number(1이면, 1~10페이지/ 2이면 20-30페이지 load)
+      requestBody:
         required: true
-        schema:
-          properties: 
-            search: 
-              type: string
-              description: 검색어
-              example: "피곤"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+                  description: 검색어
+                  example: "일기"
       responses:
-        200:
+        "200":
           description: 검색 성공
-          schema:
-            type: object
-            properties:
-              isSuccess:
-                type: boolean
-                example: true
-              code:
-                type: integer
-                example: 200
-              message:
-                type: string
-                example: "success to connect"
-              result:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      user_nickname:
-                        type: string
-                      diary_id:
-                        type: integer
-                      user_id:
-                        type: integer
-                      is_private:
-                        type: integer
-                      title:
-                        type: string
-                      content:
-                        type: string
-                      created_at:
-                        type: string
-                      updated_at:
-                        type:string
-                  example: {
-                    "user_nickname": "하늘강",
-                    "diary_id": 9,
-                    "user_id": 12,
-                    "is_private": 0,
-                    "title": "두 번째 일기",
-                    "content": "하루가 너무 피곤하네요.",
-                    "created_at": "2024-01-22T01:32:26.000Z",
-                    "updated_at": "2024-01-22T01:32:26.000Z",
-                  }
-        404:
-          description: 검색 결과 없음
-          schema:
-            type: object
-            properties:
-              isSuccess:
-                type: boolean
-                example: false
-              code:
-                type: string
-                example: "ARTICLE4001"
-              message:
-                type: string
-                example: "게시글이 없습니다."
-              result:
+          content:
+            application/json:
+              schema:
                 type: object
-        
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        diary_id:
+                          type: integer
+                          example: 1
+                        user_id:
+                          type: integer
+                          example: 1
+                        is_private:
+                          type: integer
+                          example: 1
+                        diary_date:
+                          type: string
+                          example: "2024-02-12"
+                        title:
+                          type: string
+                          example: "세 번째 일기"
+                        content:
+                          type: string
+                          example: "오늘의 기분은 행복해요!"
+                        created_at:
+                          type: string
+                          example: "2024-02-12T14:01:21.000Z"
+                        updated_at:
+                          type: string
+                          example: "2024-02-12T14:01:21.000Z"
+                        image_url:
+                          type: string
+                          example: "https://daon-bucket.s3.ap-northeast-2.amazonaws.com/board/27_1707400760538.jpg"
+                        likecount:
+                          type: integer
+                          example: 0
+        "404":
+          description: 검색 결과 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+  /search/diary/public:
+    post:
+  # 게시판 검색 
+      tags:
+        - Search
+      security:
+        - api-key: []
+      summary: 검색 - 공유 일기장
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: page number(1이면, 1~10페이지/ 2이면 20-30페이지 load)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search:
+                  type: string
+                  description: 검색어
+                  example: "일기"
+      responses:
+        "200":
+          description: 검색 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        user_nickname:
+                          type: string
+                          example: "길동"
+                        diary_id:
+                          type: integer
+                          example: 1
+                        user_id:
+                          type: integer
+                          example: 1
+                        is_private:
+                          type: integer
+                          example: 0
+                        diary_date:
+                          type: string
+                          example: "2024-02-12"
+                        title:
+                          type: string
+                          example: "네 번째 일기"
+                        content:
+                          type: string
+                          example: "오늘의 기분은 행복해요!"
+                        created_at:
+                          type: string
+                          example: "2024-02-12T14:01:21.000Z"
+                        updated_at:
+                          type: string
+                          example: "2024-02-12T14:01:21.000Z"
+                        image_url:
+                          type: string
+                          example: "https://daon-bucket.s3.ap-northeast-2.amazonaws.com/board/27_1707400760538.jpg"
+                        likecount:
+                          type: integer
+                          example: 1
+        "404":
+          description: 검색 결과 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: string
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object

@@ -8,8 +8,10 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
-const memoryStore = require("memorystore")(expressSession);
+//const memoryStore = require("memorystore")(expressSession);
 const bodyParser = require("body-parser");
+const fileStore = require('session-file-store')(expressSession);
+
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -50,7 +52,7 @@ app.use(
     },
     resave: false,
     saveUninitialized: true,
-    store: new memoryStore(),
+    store: new fileStore(),
   })
 );
 app.use(

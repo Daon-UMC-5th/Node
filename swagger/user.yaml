@@ -51,6 +51,12 @@ paths:
                 agree:
                   type: boolean
                   example: "0(비동의), 1(동의)"
+                profile_url:
+                  type: string
+                  example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
+                doctor_url:
+                  type: string
+                  example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
 
       responses:
         "200":

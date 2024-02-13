@@ -59,7 +59,21 @@ const userController = {
 
       // 최종 회원가입
       else {
-        const reulst = await userService.signup(req.body);
+        // 이미지 제외 회원가입
+        const result = await userService.signup(req.body);
+        // 회원가입한 계정 user_id 구하기
+        const user_id = await userProvider.user_id(req.body);
+        console.log(user_id);
+
+        // 프로필 사진(이미지 있을 때만 db에 저장)
+        if (req.body.profile_url != "") {
+          const profile = await userService.profileImg(req.body, user_id);
+        }
+        // 의사면허 사진(이미지 있을 때만 db에 저장)
+        if (req.body.doctor_url != "") {
+          const doctor = await userService.doctorImg(req.body, user_id);
+        }
+
         return res.send(response(status.SUCCESS, {}));
       }
     } catch (err) {
