@@ -10,8 +10,7 @@ const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
 //const memoryStore = require("memorystore")(expressSession);
 const bodyParser = require("body-parser");
-const fileStore = require('session-file-store')(expressSession);
-
+const mysqlStore = require("express-mysql-session")(expressSession);
 //# 라이브러리 import
 
 //@  폴더 파일 import
@@ -52,9 +51,15 @@ app.use(
     },
     resave: false,
     saveUninitialized: true,
-    store: new fileStore(),
+    store: new mysqlStore({
+      host: process.env.DB_HOST, // mysql의 hostname
+      user: process.env.DB_USER, // user 이름
+      // user: "root",
+      port: process.env.DB_PORT || 3306, // 포트 번호
+      database: process.env.DB_DATABASE, // 데이터베이스 이름
+      password: process.env.DB_PASSWORD, // 비밀번호
   })
-);
+  }));
 app.use(
   express.urlencoded({
     extended: true,

@@ -14,7 +14,7 @@ module.exports = {
       let result = await searchService.getPrivateDiaries(userId, search, pageNum);
 
       if(result == undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
-      else if(result.length!=0) res.send(response(status.SUCCESS, JSON.stringify(result)));
+      else if(result.length!=0) res.send(response(status.SUCCESS, result));
       // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
       else res.send(response(status.ARTICLE_NOT_FOUND,{}));
     },
@@ -30,7 +30,7 @@ module.exports = {
       //  console.log(search);
         let result = await searchService.getPublicDiaries(userId, search, pageNum);
         console.log(`result: ${result}`);
-        if(result.length!=0) res.send(response(status.SUCCESS, JSON.stringify(result)));
+        if(result.length!=0) res.send(response(status.SUCCESS, result));
       // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
         else res.send(response(status.ARTICLE_NOT_FOUND,{}));
 
@@ -43,7 +43,7 @@ module.exports = {
       let pageNum = req.query.page;
       let result = await searchService.getBoard(search, pageNum);
         if(result == undefined) res.send(response(status.ARTICLE_NOT_FOUND,{}));
-        else if(result.length!=0) res.send(response(status.SUCCESS, JSON.stringify(result)));
+        else if(result.length!=0) res.send(response(status.SUCCESS, result));
         // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
         else res.send(response(status.ARTICLE_NOT_FOUND,{}));
 
