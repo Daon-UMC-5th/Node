@@ -13,15 +13,15 @@ router.route("/profile/initial").post(uploadController.uploadUserInitial);
 router.route("/doctor/initial").post(uploadController.uploadDoctorInitial);
 
 // jwt 토큰에서 user_id 가져오는 미들웨어
-router.use(jwtMiddleware, (req, res, next) => {
-  req.user_id = req.verifiedToken.user_id;
-  next();
-});
-
-// router.use((req, res, next) => {
-//   req.user_id = 5;
+// router.use(jwtMiddleware, (req, res, next) => {
+//   req.user_id = req.verifiedToken.user_id;
 //   next();
 // });
+
+router.use((req, res, next) => {
+  req.user_id = 5;
+  next();
+});
 
 // 사진 업로드
 

@@ -1,4 +1,4 @@
-const { s3Uploadv2 } = require("./../config/s3Service.js");
+const { s3Uploadv2, s3Uploadv3 } = require("./../config/s3Service.js");
 const UploadModel = require("../models/uploadDAO");
 const { CustomError } = require("../config/response.js");
 
@@ -6,7 +6,8 @@ class UploadService {
   // s3로 바로 업로드 후 url 반환
   async initialUpload(uploadDto) {
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    // const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     return result.Location;
   }
@@ -33,7 +34,7 @@ class UploadService {
     }
 
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     // image_url, image_type에 저장
 
@@ -88,7 +89,7 @@ class UploadService {
     // }
 
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     // image_url, image_type에 저장
 
