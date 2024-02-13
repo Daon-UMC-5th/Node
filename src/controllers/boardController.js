@@ -1,15 +1,10 @@
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
-const { getAllBoardType, getBoardType, getBoardId, countLike, countAllLike, getAllComment} = require('../providers/boardProvider.js');
+const { getBoardType, getBoardId, countLike, countAllLike, getAllComment} = require('../providers/boardProvider.js');
 const { writeBoard, modifyBoard, eraseBoard, postLikeUp, deleteLike, addScrape, subScrape, writeComment, modifyComment, eraseComment, postLikeComment, deleteLikeComment } = require('../services/boardService.js')
 
 
 //게시판
-const getAllType = async(req,res) => {
-    try{
-    res.send(response(status.SUCCESS, await getAllBoardType(req.query.offset)))
-    }catch (error) {res.send(response(status.INTERNAL_SERVER_ERROR,{}))}
-}
 const getBoard = async(req,res) => {
     try{
     const boardTypeData = await getBoardType(req.params.boardType, req.query.offset);
@@ -113,4 +108,4 @@ const likeDownComment = async(req, res) => {
     res.send(response(status.SUCCESS, await deleteLikeComment(req.params.commentId, req.user_id) ))
     }catch (error) {res.send(response(status.INTERNAL_SERVER_ERROR,{}))}
 }
-module.exports = { getAllType, getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, getComment, postComment, putComment, deleteComment, likeUpComment, likeDownComment };
+module.exports = { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, getComment, postComment, putComment, deleteComment, likeUpComment, likeDownComment };

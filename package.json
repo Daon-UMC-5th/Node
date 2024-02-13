@@ -26,7 +26,6 @@
     "mysql2": "^3.7.1",
     "nodemailer": "^6.9.8",
     "path": "^0.12.7",
-    "session-file-store": "^1.5.0",
     "uuid": "^9.0.1",
     "yamljs": "^0.3.0"
   },

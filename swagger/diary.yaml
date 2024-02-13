@@ -87,7 +87,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -183,77 +183,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
-                  message:
-                    type: "string"
-                    example: "일기글이 없습니다."
-                  result:
-                    type: "object"
-                    description: 빈 객체 반환
-
-  /diary/get-image/{year}/{month}:
-    get:
-      summary: 개인 일기 이미지 리스트 가져오기
-      tags:
-        - Diary
-      security:
-        - api_key: []
-      parameters:
-        - name: "year"
-          in: "path"
-          required: true
-          description: "일기 년도"
-          schema:
-            type: "integer"
-        - name: "month"
-          in: "path"
-          required: true
-          description: "일기 월"
-          schema:
-            type: "integer"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  status:
-                    type: "integer"
-                    example: 200
-                  isSuccess:
-                    type: "boolean"
-                    example: true
-                  code:
-                    type: "integer"
-                    example: 200
-                  message:
-                    type: "string"
-                    example: "success!"
-                  result:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        diary_date:
-                          type: "integer"
-                          example: 1
-                          description: "2024-02-10에서 10만 가져옴"
-                        image_url:
-                          type: "string"
-                          example: "http://example.com/image.jpg"
-        "404":
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  isSuccess:
-                    type: "boolean"
-                    example: false
-                  code:
-                    type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -344,7 +274,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -418,7 +348,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -488,7 +418,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -541,7 +471,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -594,7 +524,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."
@@ -647,7 +577,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 404
+                    example: ARTICLE4001
                   message:
                     type: "string"
                     example: "일기글이 없습니다."

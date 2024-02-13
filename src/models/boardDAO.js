@@ -1,26 +1,9 @@
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
+const { getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
 
 //게시판
-const getAllBoardData = async(data) => {
-    try {   
-        const conn = await pool.getConnection();
-        const allData = await pool.query(getNoTypeData, parseInt(data.offset));
-        const allData1 = await pool.query(getAllDataLike);
-        const allData2 = await pool.query(getAllDataComment);
-        const allData3 = await pool.query(getAllDataScrape);
-        const allData4 = await pool.query(getBoardImage);
-        conn.release();
-        
-        resultBoard = [allData[0], allData1[0], allData2[0], allData3[0], allData4[0]];
-
-        return resultBoard;  
-    } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{}); }
-}
-
 const getBoardData = async(data) => {
     try {   
         const conn = await pool.getConnection();
@@ -259,4 +242,4 @@ const countLikeCommentData = async(data) => {
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
-module.exports = { getAllBoardData, getBoardData, getOneBoardData, writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, deleteLikeData, countLikeData, allLikeData, addScrapeData, subScrapeData, allCommentData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData };
+module.exports = { getBoardData, getOneBoardData, writeBoardData, returnWriteBoardData, modifyBoardData, eraseBoardData, postLikeData, deleteLikeData, countLikeData, allLikeData, addScrapeData, subScrapeData, allCommentData, writeCommentData, modifyCommentData, eraseCommentData, postLikeCommentData, deleteLikeCommentData, countLikeCommentData };

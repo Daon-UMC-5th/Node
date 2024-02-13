@@ -97,24 +97,6 @@ class userService {
       throw error;
     }
   }
-  // 프로필 이미지 업로드
-  static async profileImg(body, user_id) {
-    try {
-      const result = await userDAO.uploadProfile(body, user_id);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
-  // 의사면허 이미지 업로드
-  static async doctorImg(body, user_id) {
-    try {
-      const result = await userDAO.uploadDoctor(body, user_id);
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  }
 }
 
 module.exports = userService;

@@ -79,7 +79,7 @@ paths:
                     example: false
                   code:
                     type: string
-                    example: 400
+                    example: "COMMON001"
                   message:
                     type: string
                     example: "잘못된 요청입니다."

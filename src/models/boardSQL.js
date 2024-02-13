@@ -1,5 +1,3 @@
-const getNoTypeData = "SELECT * FROM board ORDER BY created_at DESC LIMIT ?, 10;"
-
 const getAllData = "SELECT * FROM board WHERE board_type = ? ORDER BY created_at DESC LIMIT ?, 10;";
 
 const getBoardImage = "SELECT board_id, image_url FROM image_board ORDER BY board_id;"
@@ -62,4 +60,4 @@ const countCommentLike = "SELECT COUNT(*) FROM like_comment WHERE comment_id = ?
 
 const getAllCommentDataLike = "SELECT comment_id, COUNT(*) AS likecount FROM like_comment GROUP BY comment_id;"
 
-module.exports = {getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment, getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike };
+module.exports = {getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment, getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike };

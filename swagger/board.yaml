@@ -1,91 +1,4 @@
 paths:
-  /board/get-all-allType:
-    get:
-      summary: 게시판 목록 전체 가져오기
-      tags:
-        - Board
-      security:
-        - api_key: []
-      parameters:
-        - name: "offset"
-          in: "query"
-          required: true
-          example: 오프셋
-          schema:
-            type: "integer"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  isSuccess:
-                    type: "boolean"
-                    example: true
-                  code:
-                    type: "integer"
-                    example: 200
-                  message:
-                    type: "string"
-                    example: "success!"
-                  result:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        board_id:
-                          type: integer
-                          example: 1
-                        board_type:
-                          type: string
-                          example: notice
-                        user_id:
-                          type: integer
-                          example: 1
-                        title:
-                          type: string
-                          example: "공지게시글 제목"
-                        content:
-                          type: string
-                          example: "공지게시글 내용"
-                        created_at:
-                          type: string
-                          format: date-time
-                        updated_at:
-                          type: string
-                          format: date-time
-                        image_url:
-                          type: string
-                          example: "http://example.com/image.jpg"
-                        likecount:
-                          type: integer
-                          example: 6
-                        commentcount:
-                          type: integer
-                          example: 6
-                        scrapecount:
-                          type: integer
-                          example: 6
-        "500":
-          content:
-            application/json:
-              schema:
-                type: "object"
-                properties:
-                  isSuccess:
-                    type: "boolean"
-                    example: false
-                  code:
-                    type: "integer"
-                    example: 500
-                  message:
-                    type: "string"
-                    example: "서버 에러, 관리자에게 문의 바랍니다."
-                  result:
-                    type: "object"
-                    description: 빈 객체 반환
-
   /board/get-all/{boardType}:
     get:
       summary: 게시판 목록 가져오기
@@ -171,7 +84,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -259,7 +172,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -361,7 +274,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -462,7 +375,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -513,7 +426,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -567,7 +480,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -621,7 +534,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -675,7 +588,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -732,7 +645,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -783,7 +696,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -834,7 +747,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -925,7 +838,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1015,7 +928,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1095,7 +1008,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1175,7 +1088,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1229,7 +1142,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."
@@ -1283,7 +1196,7 @@ paths:
                     example: false
                   code:
                     type: "integer"
-                    example: 500
+                    example: COMMON000
                   message:
                     type: "string"
                     example: "서버 에러, 관리자에게 문의 바랍니다."

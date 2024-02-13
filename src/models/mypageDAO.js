@@ -1,4 +1,4 @@
-const {response} = require('../config/response.js');
+const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
 const { selectBoard, selectComment, selectScrape, countBoard, countComment, countScrape, changeProfile } = require('../models/mypageSQL.js');

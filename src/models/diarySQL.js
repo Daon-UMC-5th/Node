@@ -9,8 +9,6 @@ const getDiaryLike = "SELECT diary_id, COUNT(*) AS count FROM like_diary GROUP B
 
 const getDiaryImage = "SELECT diary_id, image_url FROM image_diary ORDER BY diary_id;"
 
-const getImageList = "SELECT DAYOFMONTH(d.diary_date) AS diary_date, i.image_url FROM diary d JOIN image_diary i ON d.diary_id = i.diary_id WHERE d.diary_id IN (SELECT diary_id FROM diary WHERE user_id = ? AND YEAR(diary_date)=? AND MONTH(diary_date) = ?);"
-
 const oneDiary = "SELECT * FROM diary WHERE diary_date = ?"
 
 const searchDiaryId = "SELECT diary_id FROM diary WHERE diary_date = ?";
@@ -33,4 +31,4 @@ const insertDiaryLike = "INSERT INTO like_diary (user_id, diary_id, created_at) 
 
 const deleteDiaryLike = "DELETE FROM like_diary WHERE user_id = ? AND diary_id = ? ;"
 
-module.exports = { getPrivate, getPublic, getDiaryLike, getImageList, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}
+module.exports = { getPrivate, getPublic, getDiaryLike, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}

@@ -1,4 +1,4 @@
-const {response} = require('../config/response.js');
+const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const { MyBoard, MyComment, MyScrape, MyPage } = require('../providers/mypageProvider.js');
 const Profile = require('../services/mypageService.js')

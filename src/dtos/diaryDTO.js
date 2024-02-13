@@ -28,25 +28,4 @@ const oneDiaryDTO = (data) => {
     
     return diaries
 }
-
-const imageDTO = (data) => {
-    const lastdate = data[0];
-    const images = data[1];
-  
-    const dates = [];
-    for (let i = 1; i <= lastdate; i++) {
-        dates.push(i);
-    }
-    
-    const mappedObjects = [];
-    dates.forEach(date => {
-        const matchingImage = images.find(image => image.diary_date === date);
-        if (matchingImage) {
-          mappedObjects.push({ diary_date: date, image_url: matchingImage.image_url });
-        } else {
-          mappedObjects.push({ diary_date: date, image_url: null });
-        }
-      });
-    return mappedObjects
-}
-module.exports = {diaryDTO, oneDiaryDTO, imageDTO};
+module.exports = {diaryDTO, oneDiaryDTO};

@@ -1,16 +1,7 @@
-const { getAllBoardData, getBoardData, getOneBoardData, countLikeData, allLikeData, allCommentData } = require('../models/boardDAO.js')
+const { getBoardData, getOneBoardData, countLikeData, allLikeData, allCommentData } = require('../models/boardDAO.js')
 const { boardDTO, oneBoardDTO, boardCommentDTO } = require("../dtos/boardDTO.js");
 
 //게시판 가져오기
-const getAllBoardType = async(query) => {
-    try{
-    allboardresult = await getAllBoardData({
-        "offset" : query
-    })
-        if (allboardresult == -1){throw console.log('error');}
-        else{ return await boardDTO(allboardresult);}
-    }catch (error) { throw error; }};
-
 const getBoardType = async(param, query) => {
     try{
     boardresult = await getBoardData({
@@ -57,4 +48,4 @@ const getAllComment = async(param,query) => {
         else{return await boardCommentDTO(comments);}
     }catch (error) { throw error; }
 };
-module.exports = {getAllBoardType, getBoardType, getBoardId, countLike, countAllLike, getAllComment};
+module.exports = {getBoardType, getBoardId, countLike, countAllLike, getAllComment};

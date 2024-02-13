@@ -12,9 +12,6 @@ calendarRouter.use(jwtMiddleware,(req,res,next) => {
 })
 
 
-calendarRouter.get("/:month", calendarController.viewAllCalendar);
-// 해당 날짜에 모든 복용기록 조회
-calendarRouter.get("/consultation/all/:date", calendarController.viewAllConsultation);
 // 날짜별 진료 목록 조회 
 calendarRouter.get("/consultation/:date", calendarController.viewConsultation);
 // 날짜별 진료 목록 등록
@@ -27,7 +24,7 @@ calendarRouter.put("/consultation/:date", calendarController.updateConsultation)
 
 // 날짜별 복용 목록 조회
 // 해당 날짜에 모든 복용기록 조회
-calendarRouter.get("/medication/all/:date", calendarController.viewAllMedication);
+calendarRouter.get("/medication/:date", calendarController.viewAllMedication);
 // 해당 날짜에 대한 아침/점심/저녁 별 복용기록 조회
 calendarRouter.get("/medication/:when/:date", calendarController.viewMedication);
 // 날짜별 복용 목록 등록

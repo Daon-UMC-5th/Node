@@ -1,5 +1,5 @@
 const express = require('express');
-const {getAllType, getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment, likeUpComment, likeDownComment } = require('../controllers/boardController.js')
+const { getBoard, getOneBoard, postBoard, putBoard, deleteBoard, likeUp, likeDown, getLike, getAllLikeBoard, postScrape, cancelScrape, postComment, putComment, deleteComment, getComment, likeUpComment, likeDownComment } = require('../controllers/boardController.js')
 const boardRouter = express.Router();
 const jwtMiddleware = require("./../config/jwtMiddleware.js");
 const {response} = require('../config/response.js');
@@ -13,7 +13,6 @@ boardRouter.use(jwtMiddleware,(req,res,next) => {
 
 //게시판 글
 //게시판 전체 가져오기
-boardRouter.get('/get-all-allType',getAllType);
 boardRouter.get('/get-all/:boardType',(req, res) => {
     getBoard(req, res);
 });

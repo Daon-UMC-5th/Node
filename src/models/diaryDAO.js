@@ -1,7 +1,7 @@
-const {response} = require('../config/response.js');
+const response = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getPrivate, getPublic, getDiaryImage, getImageList, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
+const { getPrivate, getPublic, getDiaryImage, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
 
 const privateDiaryData = async(data) => {
     try {   
@@ -32,22 +32,6 @@ const publicDiaryData = async(data) => {
     catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
 }
 
-const ImageListData = async(data) => {
-    try {   
-        const conn = await pool.getConnection();
-        const diaryImageList = await pool.query(getImageList, [data.user_id, data.diary_year, data.diary_month]);
-        conn.release();
-       
-        const getDaysInMonth  = (year, month) => { return new Date(year, month, 0).getDate()};
-        year = data.diary_year;
-        month = data.diary_month;
-        const daylist = getDaysInMonth(year,month)
-        return [daylist, diaryImageList[0]]
-        
-    } 
-    catch (err) { throw response(status.INTERNAL_SERVER_ERROR,{});}
-}
-
 const oneDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
@@ -58,13 +42,15 @@ const oneDiaryData = async(data) => {
         const DiaryLike = await pool.query(oneDiaryLike, diaryId.diary_id);
         const DiaryImage = await pool.query(oneDiaryImage, diaryId.diary_id);
         const btnAdd = await pool.query(compareDiaryUser, diaryId.diary_id);
-        //await console.log(btnAdd)
+        await console.log(btnAdd)
         conn.release();
 
         if(btnAdd[0][0].user_id == data.user_id){ //user_id와 작성자가 같으면 true값돌려줘서 버튼 보이게
+           console.log('a')
            return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], true];
         }
         else{
+            console.log('a')
             return [DiaryData[0][0], DiaryLike[0], DiaryImage[0], false];
         }
     } 
@@ -144,4 +130,4 @@ const subLikeData = async(data) => {
 }
 
 
-module.exports = { privateDiaryData, publicDiaryData, ImageListData, oneDiaryData, writeDiaryData, modifyDiaryData, eraseDiaryData, countDiaryLike, addLikeData, subLikeData}
+module.exports = { privateDiaryData, publicDiaryData, oneDiaryData, writeDiaryData, modifyDiaryData, eraseDiaryData, countDiaryLike, addLikeData, subLikeData}
