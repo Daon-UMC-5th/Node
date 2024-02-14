@@ -5,7 +5,7 @@ paths:
       tags:
         - Board
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "offset"
           in: "query"
