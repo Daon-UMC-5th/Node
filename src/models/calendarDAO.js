@@ -321,13 +321,16 @@ const getAllPhysicalRecordMonthlyInDB = async(userId, month) => {
 
     const startDate = `${month}-01`;
     const endDate = `${month}-31`;
+    console.log(startDate);
+    console.log(endDate);
+    console.log(userId);
 
     const dbConnection = await db.getConnection();
 
     try{
         const result = await db.query(getAllPhysicalRecordMonthlySQL, [userId, startDate, endDate]);
         dbConnection.release();
-
+       // console.log(result);
         return result[0];
     }catch(err){
         const result = [];

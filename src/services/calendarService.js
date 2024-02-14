@@ -74,21 +74,23 @@ const updateDate = async(date) => {
  };
  
 const makeObject = async(month) => {
-    let result = {};
+    let result = [];
 
     let count = 1;
-
+    let index = 0;
     while(count<=31){
         let date;
         if(count<10) date = `${month}-0${count}`;
         else date = `${month}-${count}`;
 
-        result[date] = {
+        result[index] = {
+            "date": date,
             "physical_record": 0,
             "consultation": 0,
             "medication": 0
         };
         count++;
+        index++;
     }
 
     return result;
@@ -100,7 +102,10 @@ const checkPhysicalRecordMonthly = async(result, resultPhysicalRecord) => {
         console.log(record.alarmed_date);
         const alarmed_date = await updateDate(record.alarmed_date);
 
-        result[alarmed_date].physical_record = 1;
+        //result[alarmed_date].physical_record = 1;
+
+        for(let i=0;i<result.length;i++)
+            if(result[i].date == alarmed_date) result[i].physical_record = 1;
     });
 
     return result;
@@ -111,7 +116,9 @@ const  checkConsultationMonthly = async(result,resultConsultation) => {
     resultConsultation.forEach(async(con) => {
         const alarmed_date = await updateDate(con.alarmed_date);
 
-        result[alarmed_date].consultation = 1;
+       // result[alarmed_date].consultation = 1;
+       for(let i=0;i<result.length;i++)
+       if(result[i].date == alarmed_date) result[i].consultation = 1;
     });
     return result;
 
@@ -122,7 +129,9 @@ const checkMedicationMonthly = async(result, resultMedication) => {
 
         const alarmed_date = await updateDate(med.alarmed_date);
 
-        result[alarmed_date].medication = 1;
+        //result[alarmed_date].medication = 1;
+        for(let i=0;i<result.length;i++)
+        if(result[i].date == alarmed_date) result[i].medication = 1;
     });
     return result;
 }
@@ -330,9 +339,9 @@ module.exports={
         const resultConsultation = await getAllConsultationMonthlyInDB(userId, month);
         const resultMedication = await getAllMedicationMonthlyInDB(userId, month);
 
-        console.log(resultPhysicalRecord);
-        console.log(resultConsultation);
-        console.log(resultMedication);
+        //console.log(resultPhysicalRecord);
+      //  console.log(resultConsultation);
+        //console.log(resultMedication);
 
         let result = await makeObject(month);
         //console.log(result);
@@ -348,7 +357,7 @@ module.exports={
         
         const result = await getAllConsultationInDB(userId, date);
 
-//        console.log(result);
+        console.log(result);
 
         // 서버 에러
         if(result == "error") return result;

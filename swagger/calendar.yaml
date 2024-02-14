@@ -1433,11 +1433,25 @@ paths:
                     type: string
                     example: "접근에 성공했습니다."
                   result:
-                    type: object
-                    properties:
-                      2024-01-01:
-                        type: object
-                        example: "physical_record :0, consultation:0, medication:0"
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2024-01-01"
+                        physical_record:
+                          type: integer
+                          example: 0
+                          description: 신체 기록이 있으면 1, 없으면 0
+                        consultation: 
+                          type: integer
+                          example: 1
+                          description: 진료 기록이 있으면 1, 없으면 0
+                        medication:
+                          type: integer
+                          example: 1
+                          description: 복용 기록이 있으면 1, 없으면 0
         "500":
           description: 서버 에러
           content:

@@ -370,8 +370,8 @@ module.exports = {
     },
     viewAllCalendar: async(req,res,next) => {
 
-        const userId = req.uesr_id;
-
+        const userId = req.user_id;
+        console.log(userId);
         const month = req.params.month;
 
         const result = await calendarService.getAllCalendar(userId, month);
