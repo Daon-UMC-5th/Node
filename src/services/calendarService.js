@@ -72,13 +72,34 @@ const updateDate = async(date) => {
     
      return modifyDate;
  };
- 
+ const getLastDay= async(date) => {
+    // console.log(date);
+     
+  
+     const year = date.substr(0,4);
+     const month =date.substr(6,2);
+    
+     console.log(year);
+     console.log(month);
+
+     let lastDate = new Date(year,month,0);
+     
+     let lastDay = lastDate.getDate();
+     console.log(lastDay);
+    
+     return lastDay;
+    
+ };
+
 const makeObject = async(month) => {
     let result = [];
 
     let count = 1;
     let index = 0;
-    while(count<=31){
+
+    const last = await getLastDay(month);
+    console.log(last)
+    while(count<=last){
         let date;
         if(count<10) date = `${month}-0${count}`;
         else date = `${month}-${count}`;
@@ -220,7 +241,8 @@ module.exports={
     getConsultation: async(userId, consultationId) => {
         console.log(consultationId);
         const result = await checkConsultationInDB(userId,consultationId);
-        //sconsole.log(result);
+        //console.log(result);
+        //console.log(result.length);
          // 서버 에러
          if(result == "error") return result;
          else if(result.length != 0) return getConsultationDTO(result);
@@ -342,10 +364,11 @@ module.exports={
         
         const result = await getAllConsultationInDB(userId, date);
 
-        console.log(result);
+        //console.log(result.length);
 
         // 서버 에러
         if(result == "error") return result;
+        
          else if(result.length != 0) return  getAllConsultationDTO(result);
          else return undefined;
     }
