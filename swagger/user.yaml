@@ -26,36 +26,47 @@ paths:
                   example: "홍길동"
                 email:
                   type: string
+                  description: 이메일 주소
                   example: "abc123@naver.com"
                 password:
                   type: string
+                  description: 비밀번호
                   example: "abc123"
                 phone_number:
                   type: string
+                  description: 전화번호
                   example: "010-1234-5678"
                 birth_date:
                   type: string
+                  description: 주민등록번호 앞자리 생년월일 6글자
                   example: "011010"
                 gender:
                   type: int
+                  description: 주민등록번호 뒷자리 성별
                   example: 3
                 user_nickname:
                   type: string
+                  description: 닉네임
                   example: "길동"
                 introduction:
                   type: string
+                  description: 한줄소개
                   example: "안녕하세요. 잘부탁드려요."
                 role:
                   type: string
+                  description: 일반회원이면 user, 의료인회원이면 doctor 입력
                   example: "user"
                 agree:
                   type: boolean
-                  example: "0(비동의), 1(동의)"
+                  description: 선택약관, 0 - 비동의 1 - 동의
+                  example: "0"
                 profile_url:
                   type: string
+                  description: 프로필사진 이미지 주소(null 가능)
                   example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
                 doctor_url:
                   type: string
+                  description: 의사면허 이미지 주소(의료인회원일 때만, null 가능ㄴ)
                   example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
 
       responses:
@@ -268,9 +279,10 @@ paths:
                   type: string
                   format: date
                   example: "010606"
-                  description: "생년월일"
+                  description: "주민등록번호 앞자리 생년월일 6글자"
                 gender:
                   type: integer
+                  description: "주민등록번호 뒷자리 성별"
                   example: 3
                 phone_number:
                   type: string
@@ -286,6 +298,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
@@ -356,6 +369,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
@@ -414,6 +428,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
@@ -432,6 +447,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: false
                   code:
                     type: integer
                     example: 409
