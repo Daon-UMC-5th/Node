@@ -129,9 +129,9 @@ module.exports = {
           };
           //console.log(userInformation.alarmed_at);
           const result = await calendarService.insertConsultation(userInformation);
-        
          
         if(result) res.send(response(status.SUCCESS,{}));
+        else if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
         else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
 
 
@@ -141,13 +141,13 @@ module.exports = {
 
            // 사용자의 userid 받아옴
            const userId = req.user_id;
-
            // 사용자가 진료를 기록한 날짜
-           const date = req.params.date;
-           console.log(date);
-           const consultationId = req.query.id;
+          // const date = req.params.date;
+           //console.log(date);
+           if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
+           const consultationId = req.params.id;
            console.log(consultationId);
-           const result = await calendarService.getConsultation(date, userId,consultationId);
+           const result = await calendarService.getConsultation(userId,consultationId);
 
         // 해당 날짜에 진료 기록이 있는 경우
         if(result) res.send(response(status.SUCCESS, result));
@@ -167,14 +167,14 @@ module.exports = {
 
         
         // 사용자가 진료를 기록한 날짜
-        const date = req.params.date;
-        console.log(date);
-
+        //const date = req.params.date;
+       // console.log(date);
+       if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
         // 사용자가 삭제를 원하는 진료 id
-        const consultationId = req.query.id;
+        const consultationId = req.params.id;
         console.log(consultationId);
 
-        const result = await calendarService.removeConsultation(date, userId, consultationId);
+        const result = await calendarService.removeConsultation(userId, consultationId);
 
         // 서버 에러로 삭제 실패 
         if(result=="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
@@ -191,11 +191,11 @@ module.exports = {
         const userId =  req.user_id;
 
         // 사용자가 진료기록을 수정하고자 하는 날짜
-        const date = req.params.date;
-        console.log(date);
-        
+       // const date = req.params.date;
+        //console.log(date);
+        if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
         // 사용자가 수정을 원하는 진료 id
-        const consultationId = req.query.id;
+        const consultationId = req.params.id;
         console.log(consultationId);
     
         // 사용자로부터 수정된 값을 받아옴
@@ -203,10 +203,9 @@ module.exports = {
             userId : userId,
             hospital: req.body.hospital,
             content: req.body.content,
-            alarmed_date: date,
             alarmed_at: req.body.alarmed_at
         };
-        const result = await calendarService.modifyConsultation(date,modification,consultationId);
+        const result = await calendarService.modifyConsultation(modification,consultationId);
 
         // 서버 에러로 수정 실패
         if(result =="error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
@@ -245,14 +244,14 @@ module.exports = {
 
 
         //아침, 점심, 저녁
-        const when = req.params.when;
+        //const when = req.params.when;
         // 사용자가 복용기록을 조회하고자 하는 날짜
-        const date = req.params.date;
-
-        const medicationId = req.query.id;
+        //const date = req.params.date;
+        if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
+        const medicationId = req.params.id;
         console.log(medicationId);
 
-        const result = await calendarService.getMedication(when,date,userId, medicationId);
+        const result = await calendarService.getMedication(userId, medicationId);
         
         console.log(result);
         // 서버 에러로 조회 실패
@@ -293,10 +292,8 @@ module.exports = {
 
     const result = await calendarService.insertMedication(userInformation);
 
-    
-    
-    
     if(result) res.send(response(status.SUCCESS,{}));
+    else if(result == "error") res.send(response(status.INTERNAL_SERVER_ERROR,{}));
     else res.send(response(status.INTERNAL_SERVER_ERROR,{}));
     
     },
@@ -309,14 +306,14 @@ module.exports = {
 
 
         // 사용자가 복용기록을 삭제하고자 하는 부분과 날짜
-        const  when = req.params.when;
-        const date = req.params.date;
-
+      //  const  when = req.params.when;
+       // const date = req.params.date;
+       if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
         // 사용자가 삭제하고자하는 복용 기록 id
-        const medicationId = req.query.id;
+        const medicationId = req.params.id;
         console.log(medicationId);
 
-        const result = await calendarService.removeMedication(date,when,userId, medicationId);
+        const result = await calendarService.removeMedication(userId, medicationId);
 
 
         // 서버 에러로 삭제 실패 
@@ -337,13 +334,14 @@ module.exports = {
 
 
         // 사용자가 신체기록을 수정하고자 하는 부분과 날짜
-        const when = req.params.when;
-        const date = req.params.date;
+       // const when = req.params.when;
+        //const date = req.params.date;
 
         // 사용자가 수정정하고자하는 복용 기록 id
-        const medicationId = req.query.id;
-        console.log(medicationId);
+        if(req.params.id==undefined) res.send(response(status.ID_EMPTY),{});
 
+        const medicationId = req.params.id;
+        console.log(medicationId);
         //repeat_status 판단
         let isRepeat;
         if(req.body.alarm_days) isRepeat = true;
@@ -351,8 +349,6 @@ module.exports = {
     
     const userInformation = {
         userId: userId,
-        alarmed_date: date,
-        time_of_day: when,
         medicine: req.body.medicine,
         alarmed_at: req.body.alarmed_at,
         alarm_days: req.body.alarm_days,
