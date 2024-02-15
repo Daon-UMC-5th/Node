@@ -197,7 +197,7 @@ paths:
       tags:
         - Diary
       security:
-        - api_key: []
+        - api-key: []
       parameters:
         - name: "year"
           in: "path"
