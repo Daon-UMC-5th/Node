@@ -23,6 +23,8 @@ const oneDiaryLike = "SELECT COUNT(*) AS likes_count FROM like_diary WHERE diary
 
 const insertDiary = "INSERT INTO diary (user_id, is_private, title, content, created_at, updated_at, diary_date) VALUES (?,?,?,?,NOW(), NOW(), ?);"
 
+const insertUrlDiary = "INSERT INTO image_diary (diary_id, image_url) VALUES (?,?);"
+
 const changeDiary = "UPDATE diary SET is_private = ?, title = ?, content = ? WHERE diary_date = ?;" 
 
 const deleteDiaryData = "DELETE FROM diary WHERE diary_date = ?;"
@@ -33,4 +35,4 @@ const insertDiaryLike = "INSERT INTO like_diary (user_id, diary_id, created_at) 
 
 const deleteDiaryLike = "DELETE FROM like_diary WHERE user_id = ? AND diary_id = ? ;"
 
-module.exports = { getPrivate, getPublic, getDiaryLike, getImageList, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}
+module.exports = { getPrivate, getPublic, getDiaryLike, getImageList, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, insertUrlDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}

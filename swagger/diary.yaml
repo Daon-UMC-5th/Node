@@ -20,9 +20,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -116,9 +113,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -218,9 +212,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -282,9 +273,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true
@@ -295,43 +283,41 @@ paths:
                     type: "string"
                     example: "success!"
                   result:
-                    type: "array"
-                    items:
-                      type: "object"
-                      properties:
-                        diary_id:
-                          type: "integer"
-                          example: 1
-                        user_id:
-                          type: "integer"
-                          example: 1
-                        user_nickname:
-                          type: "string"
-                          example: 닉네임
-                        is_private:
-                          type: "boolean"
-                          example: true
-                        title:
-                          type: "string"
-                          example: "일기 제목"
-                        content:
-                          type: "string"
-                          example: "일기 내용"
-                        created_at:
-                          type: "string"
-                          format: "date-time"
-                        updated_at:
-                          type: "string"
-                          format: "date-time"
-                        image_url:
-                          type: "string"
-                          example: "http://example.com/image.jpg"
-                        likes_count:
-                          type: "int"
-                          example: 7
-                        access:
-                          type: "boolean"
-                          example : true
+                    type: "object"
+                    properties:
+                      diary_id:
+                        type: "integer"
+                        example: 1
+                      user_id:
+                        type: "integer"
+                        example: 1
+                      user_nickname:
+                        type: "string"
+                        example: 닉네임
+                      is_private:
+                        type: "boolean"
+                        example: true
+                      title:
+                        type: "string"
+                        example: "일기 제목"
+                      content:
+                        type: "string"
+                        example: "일기 내용"
+                      created_at:
+                        type: "string"
+                        format: "date-time"
+                      updated_at:
+                        type: "string"
+                        format: "date-time"
+                      image_url:
+                        type: "string"
+                        example: "http://example.com/image.jpg"
+                      likes_count:
+                        type: "int"
+                        example: 7
+                      access:
+                        type: "boolean"
+                        example : true
 
         "404":
           content:
@@ -384,6 +370,9 @@ paths:
                 content:
                   type: "string"
                   example: "일기 내용"
+                image_url:
+                  type: "string"
+                  example: "http://example.com/image.jpg"
       responses:
         "200":
           content:
@@ -391,9 +380,6 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  status:
-                    type: "integer"
-                    example: 200
                   isSuccess:
                     type: "boolean"
                     example: true

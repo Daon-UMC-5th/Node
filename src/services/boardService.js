@@ -10,6 +10,7 @@ const writeBoard = async(param, body, user) => {
         "user_id" : user,
         "title" : body.title,
 	    "content" : body.content,  
+        "image_url" : body.image_url
     }); 
         if (returnData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await oneBoardDTO(await returnWriteBoardData (returnData));}

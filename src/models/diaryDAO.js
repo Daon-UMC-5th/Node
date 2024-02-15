@@ -1,7 +1,7 @@
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getPrivate, getPublic, getDiaryImage, getImageList, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
+const { getPrivate, getPublic, getDiaryImage, getImageList, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, insertUrlDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
 
 const privateDiaryData = async(data) => {
     try {   
@@ -76,6 +76,9 @@ const writeDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
         const DiaryData = await pool.query(insertDiary, [data.user_id, data.is_private, data.title, data.content ,data.diary_date]);
+        const searchId = DiaryData[0].insertId
+        const DiaryImageData = await pool.query(insertUrlDiary, [searchId, data.image_url])
+        DiaryImageData;
         conn.release();
         return DiaryData[0].insertId; // insertId값으로 date찾는 sql에 넣고 date를 리턴값으로
     } 

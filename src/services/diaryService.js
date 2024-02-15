@@ -9,7 +9,8 @@ const writeDiary = async(param, user, body) => {
         "user_id" : user,
         "is_private" : body.is_private,
         "title" : body.title,
-	    "content" : body.content,  
+	    "content" : body.content, 
+        "image_url" : body.image_url 
     });}catch (error) { throw error;}
 };
 
