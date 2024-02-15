@@ -57,7 +57,7 @@ const checkDuplicationDateInMedication = async(date, timeOfDay, userId) =>{
 const updateDate = async(date) => {
     // console.log(date);
      
-     let modifyDate = date.setDate(date.getDate()+1);
+     let modifyDate = date.setDate(date.getDate());
      modifyDate = date.toISOString();
     // console.log(modifyDate);
      modifyDate = modifyDate.substr(0,10);
@@ -150,12 +150,18 @@ module.exports={
         }
     // 중복 체크
    
-    const result = await insertPhysicalRecordInDB(data);
+    let isDuplication = await checkDuplicationDateInPhysical(data.alarmed_date, data.user_id);
+    console.log(`isDuplication: ${isDuplication}`);
+    if(isDuplication){
+        const result = "duplication";
+        return result;
+    }else{
+        const result = await insertPhysicalRecordInDB(data);
 
-    if(result) return result;
-    else return undefined;
-
-        
+        if(result) return result;
+        else return undefined;
+    }
+   
     },
     getPhysicalRecord: async(date,userId) => {
 
@@ -211,34 +217,33 @@ module.exports={
         
     },
     // 진료기록 개별 조회
-    getConsultation: async(date, userId, consultationId) => {
-
-        const result = await checkConsultationInDB(date,userId,consultationId);
+    getConsultation: async(userId, consultationId) => {
+        console.log(consultationId);
+        const result = await checkConsultationInDB(userId,consultationId);
         //sconsole.log(result);
          // 서버 에러
          if(result == "error") return result;
          else if(result.length != 0) return getConsultationDTO(result);
          else return undefined;
     },
-    removeConsultation: async(date, userId,  consultationId) => {
+    removeConsultation: async( userId,  consultationId) => {
 
-        const result = await deleteConsultationInDB(date,userId,consultationId);
+        const result = await deleteConsultationInDB(userId,consultationId);
 
         // 해당 사용자, 날짜에 존재하는 진료기록이 없는 경우(영향을 받은 row가 0)
         if(result.affectedRows==0) return undefined;
         else return result;
     },
-    modifyConsultation: async(date, modification, consultationId) => {
+    modifyConsultation: async(modification, consultationId) => {
 
         const data = {
             user_id: modification.userId,
             hospital: modification.hospital,
             content: modification.content,
-            alarmed_date: modification.date,
             alarmed_at: modification.alarmed_at
         }
         //console.log(data.hospital);
-        const result = await updateConsultationInDB(date,data, consultationId);
+        const result = await updateConsultationInDB(data, consultationId);
 
         // 수정할 게시글이 존재하지 않는 경우(update에 영향받는 row가 0)
         if(result.affectedRows ==0) return undefined;
@@ -254,16 +259,9 @@ module.exports={
           else if(result.length != 0) return getAllMedicationDTO(result);
           else return undefined;
     },
-    getMedication: async(when, date, userId, medicationId) => {
+    getMedication: async(userId, medicationId) => {
 
-        let timeOfDay;
-
-        if(when == "morning") timeOfDay = "아침";
-        else if(when == "noon") timeOfDay = "점심";
-        else if(when == "evening") timeOfDay ="저녁";
-      
-
-        const result = await checkMedicationInDB(timeOfDay,date,userId, medicationId);
+        const result = await checkMedicationInDB(userId, medicationId);
 
           // 서버 에러
           if(result == "error") return result;
@@ -295,32 +293,19 @@ module.exports={
         else return undefined;
         
     },
-    removeMedication: async(date, when, userId, medicationId) => {
+    removeMedication: async(userId, medicationId) => {
 
-        let timeOfDay;
-
-        if(when == "morning") timeOfDay = "아침";
-        else if(when == "noon") timeOfDay = "점심";
-        else if(when == "evening") timeOfDay ="저녁";
-
-        const result = await deleteMedicationInDB(date, timeOfDay, userId, medicationId);
+        const result = await deleteMedicationInDB(userId, medicationId);
         console.log(result);
         if(result.affectedRows == 0) return undefined;
         else return result;
     },
     modifyMedication: async(modification, medicationId) =>{
 
-        let timeOfday;
-
-        if(modification.time_of_day == "morning") timeOfday = "아침";
-        else if(modification.time_of_day == "noon") timeOfday = "점심";
-        else if(modification.time_of_day == "evening") timeOfday = "저녁";
         
         const data = {
 
             user_id : modification.userId,
-            alarmed_date: modification.alarmed_date,
-            time_of_day: timeOfday,
             medicine: modification.medicine,
             alarmed_at: modification.alarmed_at,
             alarm_days: modification.alarm_days,
@@ -350,7 +335,7 @@ module.exports={
         result = await checkConsultationMonthly(result,resultConsultation);
         result = await checkMedicationMonthly(result, resultMedication);
 
-        console.log(result);
+        //console.log(result);
         return result;
     },
     getAllConsultation: async(userId, date) =>{

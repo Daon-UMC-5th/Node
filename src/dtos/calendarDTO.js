@@ -3,7 +3,7 @@ const { getMedicationSQL } = require("../models/calendarSQL");
 const updateDate = async(date) => {
    // console.log(date);
     
-    let modifyDate = date.setDate(date.getDate()+1);
+    let modifyDate = date.setDate(date.getDate());
     modifyDate = date.toISOString();
    // console.log(modifyDate);
     modifyDate = modifyDate.substr(0,10);

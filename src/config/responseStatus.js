@@ -143,6 +143,13 @@ const status = {
     isSuccess: false,
     code: 400,
     message: "요청한 게시글이 이미 존재합니다."
-  }
+  },
+  ID_EMPTY:{
+    status: StatusCodes.NOT_FOUND,
+    isSuccess: false,
+    code: 404,
+    message: "id를 입력하세요."
+  },
+
 };
 module.exports = status;
