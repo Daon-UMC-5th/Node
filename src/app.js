@@ -27,7 +27,7 @@ const boardRouter = require("./routes/boardRoute.js");
 const reportRouter = require("./routes/reportRoute");
 const calendarRouter = require("./routes/calendarRoute.js");
 const diaryRouter = require("./routes/diaryRoute.js");
-//const uploadRouter = require("./routes/uploadRoute.js");
+const uploadRouter = require("./routes/uploadRoute.js");
 const loginRouter = require("./routes/loginRoute.js");
 //# 라우터
 
@@ -87,7 +87,7 @@ app.use("/board", boardRouter);
 app.use("/report", reportRouter);
 app.use("/calendar", calendarRouter);
 app.use("/diary", diaryRouter);
-//app.use("/upload", uploadRouter);
+app.use("/upload", uploadRouter);
 app.use("/login", loginRouter);
 
 //# 라우트
