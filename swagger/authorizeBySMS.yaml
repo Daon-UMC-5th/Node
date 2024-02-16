@@ -100,6 +100,10 @@ paths:
                   type: string
                   description: 인증코드 
                   example: "961881"
+                queryPhone:
+                  type: string
+                  description: 사용자 전화번호
+                  example: "01012345678"
       responses:
         '200':
           description: 문자 인증 성공

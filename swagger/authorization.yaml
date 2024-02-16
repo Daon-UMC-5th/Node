@@ -101,8 +101,12 @@ paths:
               properties:
                 inputCode:
                   type: string
-                  description: 인증콛,
+                  description: 인증코드,
                   example: "OnrqEs"
+                queryEmail:
+                  type: string
+                  description: 사용자 이메일
+                  example: "a@gmail.com"
       responses:  
         '200':
           description: 이메일 전송 성공

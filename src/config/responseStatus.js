@@ -150,6 +150,12 @@ const status = {
     code: 404,
     message: "id를 입력하세요."
   },
+  SEND_FIRST: {
+    status: StatusCodes.BAD_REQUEST,
+    isSuccess: false,
+    code: 400,
+    message: "인증 요청을 먼저 해주세요."
+  },
 
 };
 module.exports = status;
