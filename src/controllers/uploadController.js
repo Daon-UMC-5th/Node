@@ -29,9 +29,17 @@ exports.uploadDoctorInitial = async (req, res) => {
 
 // 일기장 사진 업로드
 exports.uploadDiary = async (req, res) => {
+  // try {
+  //   const uploadDto = new UploadDto("diary", req.params.diaryId, req.files[0]);
+  //   const resultUrl = await UploadService.createUpload(uploadDto);
+  //   return res.send(response(status.SUCCESS, { img_url: resultUrl }));
+  // } catch (error) {
+  //   console.log("error:", error);
+  //   return handleErrorResponse(error, res);
+  // }
   try {
-    const uploadDto = new UploadDto("diary", req.params.diaryId, req.files[0]);
-    const resultUrl = await UploadService.createUpload(uploadDto);
+    const uploadDto = new UploadDto("diary", null, req.files[0]);
+    const resultUrl = await UploadService.initialUpload(uploadDto);
     return res.send(response(status.SUCCESS, { img_url: resultUrl }));
   } catch (error) {
     console.log("error:", error);
@@ -65,9 +73,17 @@ exports.updateDiary = async (req, res) => {
 
 // 게시판 사진 업로드
 exports.uploadBoard = async (req, res) => {
+  // try {
+  //   const uploadDto = new UploadDto("board", req.params.boardId, req.files[0]);
+  //   const resultUrl = await UploadService.createUpload(uploadDto);
+  //   return res.send(response(status.SUCCESS, { img_url: resultUrl }));
+  // } catch (error) {
+  //   console.log("error:", error);
+  //   return handleErrorResponse(error, res);
+  // }
   try {
-    const uploadDto = new UploadDto("board", req.params.boardId, req.files[0]);
-    const resultUrl = await UploadService.createUpload(uploadDto);
+    const uploadDto = new UploadDto("board", null, req.files[0]);
+    const resultUrl = await UploadService.initialUpload(uploadDto);
     return res.send(response(status.SUCCESS, { img_url: resultUrl }));
   } catch (error) {
     console.log("error:", error);
