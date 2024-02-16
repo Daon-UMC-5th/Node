@@ -124,22 +124,22 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
-  /upload/diary/{diaryId}:
+  /upload/diary:
     post:
       tags:
         - Upload
       security:
         - api-key: []
       summary: 일기 사진 업로드
-      description: 일기 ID에 대한 사진을 업로드합니다.
+      description: 일기 사진을 업로드합니다.
       operationId: uploadDiary
-      parameters:
-        - name: diaryId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: 업로드할 일기의 ID
+      # parameters:
+      #   - name: diaryId
+      #     in: path
+      #     required: true
+      #     schema:
+      #       type: integer
+      #     description: 업로드할 일기의 ID
       requestBody:
         content:
           multipart/form-data:
@@ -155,12 +155,10 @@ paths:
           $ref: "#/components/responses/SuccessResponseImage"
         "400":
           $ref: "#/components/responses/MulterErrorResponse"
-        "404":
-          $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
+
+  /upload/diary/{diaryId}:
     delete:
       tags:
         - Upload
@@ -220,22 +218,22 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
-  /upload/board/{boardId}:
+  /upload/board:
     post:
       tags:
         - Upload
       security:
         - api-key: []
       summary: 게시판 사진 업로드
-      description: 게시판 ID에 대한 사진을 업로드합니다.
+      description: 게시판 사진을 업로드합니다.
       operationId: uploadBoard
-      parameters:
-        - name: boardId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: 업로드할 게시판의 ID
+      # parameters:
+      #   - name: boardId
+      #     in: path
+      #     required: true
+      #     schema:
+      #       type: integer
+      #     description: 업로드할 게시판의 ID
       requestBody:
         content:
           multipart/form-data:
@@ -251,12 +249,10 @@ paths:
           $ref: "#/components/responses/SuccessResponseImage"
         "400":
           $ref: "#/components/responses/MulterErrorResponse"
-        "404":
-          $ref: "#/components/responses/NotFound404"
-        "409":
-          $ref: "#/components/responses/Conflict409"
         "500":
           $ref: "#/components/responses/InternalServerError500"
+
+  /upload/board/{boardId}:
     delete:
       tags:
         - Upload
@@ -382,7 +378,7 @@ components:
                 example: {}
 
     NotFound404:
-      description: "ID가 존재하지 않습니다."
+      description: "ID가 존재하지 않습니다. / 수정 할 이미지가 존재하지 않습니다."
       content:
         application/json:
           schema:

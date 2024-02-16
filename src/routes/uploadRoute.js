@@ -24,18 +24,20 @@ router.use(jwtMiddleware, (req, res, next) => {
 // });
 
 // 사진 업로드
-
 router
   .route("/profile")
   .post(uploadController.uploadProfile)
   .delete(uploadController.deleteProfile)
   .put(uploadController.updateProfile);
 
+router.route("/diary").post(uploadController.uploadDiary);
+
 router
   .route("/diary/:diaryId")
-  .post(uploadController.uploadDiary)
   .delete(uploadController.deleteDiary)
   .put(uploadController.updateDiary);
+
+router.route("/board").post(uploadController.uploadBoard);
 
 router
   .route("/board/:boardId")

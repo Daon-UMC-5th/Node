@@ -59,7 +59,7 @@ exports.updateDiary = async (req, res) => {
     return res.send(response(status.SUCCESS, { img_url: resultUrl }));
   } catch (error) {
     console.log("error:", error);
-    res.json({ status: "error", result: error.message });
+    return handleErrorResponse(error, res);
   }
 };
 
@@ -95,7 +95,7 @@ exports.updateBoard = async (req, res) => {
     return res.send(response(status.SUCCESS, { img_url: resultUrl }));
   } catch (error) {
     console.log("error:", error);
-    res.json({ status: "error", result: error.message });
+    return handleErrorResponse(error, res);
   }
 };
 
@@ -131,7 +131,7 @@ exports.updateProfile = async (req, res) => {
     return res.send(response(status.SUCCESS, { img_url: resultUrl }));
   } catch (error) {
     console.log("error:", error);
-    res.json({ status: "error", result: error.message });
+    return handleErrorResponse(error, res);
   }
 };
 

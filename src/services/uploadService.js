@@ -1,4 +1,4 @@
-const { s3Uploadv2 } = require("./../config/s3Service.js");
+const { s3Uploadv2, s3Uploadv3 } = require("./../config/s3Service.js");
 const UploadModel = require("../models/uploadDAO");
 const { CustomError } = require("../config/response.js");
 
@@ -6,7 +6,8 @@ class UploadService {
   // s3로 바로 업로드 후 url 반환
   async initialUpload(uploadDto) {
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    // const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     return result.Location;
   }
@@ -33,7 +34,7 @@ class UploadService {
     }
 
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     // image_url, image_type에 저장
 
@@ -44,6 +45,8 @@ class UploadService {
       result.Location
     );
     //img url 반환
+
+    console.log("이미지 생성: ", uploadDto.type, uploadDto.typeId);
 
     return result.Location;
   }
@@ -64,6 +67,8 @@ class UploadService {
       uploadDto.typeId
     );
 
+    console.log("이미지 제거: ", uploadDto.type, uploadDto.typeId);
+
     return result;
   }
 
@@ -78,17 +83,17 @@ class UploadService {
       throw new CustomError(404, "해당 id를 찾을 수 없습니다");
     }
 
-    // // profile, diary, board  이미지 테이블에 하나의 이미지만 저장하게 하기
-    // const imageExists = await UploadModel.checkImageExists(
-    //   uploadDto.type,
-    //   uploadDto.typeId
-    // );
-    // if (imageExists) {
-    //   throw new CustomError(409, "이미지가 이미 존재합니다.");
-    // }
+    // profile, diary, board  이미지 테이블에 하나의 이미지만 저장하게 하기
+    const imageExists = await UploadModel.checkImageExists(
+      uploadDto.type,
+      uploadDto.typeId
+    );
+    if (!imageExists) {
+      throw new CustomError(404, "수정 할 이미지가 없습니다.");
+    }
 
     //사진 s3 업로드
-    const result = await s3Uploadv2(uploadDto.type, uploadDto.file);
+    const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
     // image_url, image_type에 저장
 
@@ -104,6 +109,8 @@ class UploadService {
     // } else {
     //   console.log("업데이트할 이미지가 없습니다.");
     // }
+
+    console.log("이미지 업데이트: ", uploadDto.type, uploadDto.typeId);
 
     //img url 반환
     return result.Location;

@@ -59,8 +59,9 @@ app.use(
       port: process.env.DB_PORT || 3306, // 포트 번호
       database: process.env.DB_DATABASE, // 데이터베이스 이름
       password: process.env.DB_PASSWORD, // 비밀번호
+    }),
   })
-  }));
+);
 app.use(
   express.urlencoded({
     extended: true,
