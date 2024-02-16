@@ -5,13 +5,23 @@ const { oneBoardDTO } = require('../dtos/boardDTO.js');
 
 const writeBoard = async(param, body, user) => {
     try{
-    returnData = await writeBoardData({
-        "board_type" : param,
-        "user_id" : user,
-        "title" : body.title,
-	    "content" : body.content,  
-        "image_url" : body.image_url
-    }); 
+        if(body.image_url !== undefined){
+            returnData = await writeBoardData({
+                "board_type" : param,
+                "user_id" : user,
+                "title" : body.title,
+                "content" : body.content,
+                "image_url" : body.image_url
+            }); 
+        }
+        else{
+            returnData = await writeBoardData({
+                "board_type" : param,
+                "user_id" : user,
+                "title" : body.title,
+                "content" : body.content 
+        })
+    }
         if (returnData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await oneBoardDTO(await returnWriteBoardData (returnData));}
     }catch (error) { throw error;}

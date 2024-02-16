@@ -77,8 +77,10 @@ const writeDiaryData = async(data) => {
         const conn = await pool.getConnection();
         const DiaryData = await pool.query(insertDiary, [data.user_id, data.is_private, data.title, data.content ,data.diary_date]);
         const searchId = DiaryData[0].insertId
-        const DiaryImageData = await pool.query(insertUrlDiary, [searchId, data.image_url])
-        DiaryImageData;
+        if(data.image_url !== undefined){
+            const DiaryImageData = await pool.query(insertUrlDiary, [searchId, data.image_url])
+            DiaryImageData;
+        }
         conn.release();
         return DiaryData[0].insertId; // insertId값으로 date찾는 sql에 넣고 date를 리턴값으로
     } 

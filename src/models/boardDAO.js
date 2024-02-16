@@ -64,8 +64,10 @@ const writeBoardData = async(data) => {
         const conn = await pool.getConnection();
         const writeAllData = await pool.query(insertData, [data.board_type, data.user_id, data.title, data.content]);
         const searchId = writeAllData[0].insertId
-        const BoardImageData = await pool.query(insertUrlBoard, [searchId, data.image_url])
-        BoardImageData;
+        if(data.image_url !== undefined){
+            const BoardImageData = await pool.query(insertUrlBoard, [searchId, data.image_url])
+            BoardImageData;
+        }
         conn.release();
         return writeAllData[0].insertId;
         

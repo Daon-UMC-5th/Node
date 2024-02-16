@@ -4,14 +4,23 @@ const status = require('../config/responseStatus.js');
 
 const writeDiary = async(param, user, body) => {
     try{
-    return await writeDiaryData({
-        "diary_date" : param,
-        "user_id" : user,
-        "is_private" : body.is_private,
-        "title" : body.title,
-	    "content" : body.content, 
-        "image_url" : body.image_url 
-    });}catch (error) { throw error;}
+        if(body.image_url !== undefined){
+            return await writeDiaryData({
+                "diary_date" : param,
+                "user_id" : user,
+                "is_private" : body.is_private,
+                "title" : body.title,
+	            "content" : body.content,
+                "image_url" : body.image_url 
+    });}
+        else{
+            return await writeDiaryData({
+                "diary_date" : param,
+                "user_id" : user,
+                "is_private" : body.is_private,
+                "title" : body.title,
+	            "content" : body.content
+    })}}catch (error) { throw error;}
 };
 
 const modifyDiary = async(param, body) => {
