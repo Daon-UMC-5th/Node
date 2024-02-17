@@ -88,21 +88,25 @@ class UploadService {
       uploadDto.type,
       uploadDto.typeId
     );
-    if (!imageExists) {
-      throw new CustomError(404, "수정 할 이미지가 없습니다.");
-    }
 
     //사진 s3 업로드
     const result = await s3Uploadv3(uploadDto.type, uploadDto.file);
 
-    // image_url, image_type에 저장
-
-    // 데이터베이스에 이미지 정보 수정
-    const updatedRows = await UploadModel.updateImageInfo(
-      uploadDto.type,
-      uploadDto.typeId,
-      result.Location
-    );
+    // 이미지가 존재하지 않을 때 새로 db에 저장
+    if (!imageExists) {
+      const imageDiaryId = await UploadModel.saveImageInfo(
+        uploadDto.type,
+        uploadDto.typeId,
+        result.Location
+      );
+    } else {
+      // 이미지 업데이트
+      const updatedRows = await UploadModel.updateImageInfo(
+        uploadDto.type,
+        uploadDto.typeId,
+        result.Location
+      );
+    }
 
     // if (updatedRows > 0) {
     //   console.log("이미지 정보가 성공적으로 업데이트되었습니다.");
