@@ -1,7 +1,7 @@
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getPrivate, getPublic, getDiaryImage, getImageList, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, insertUrlDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
+const { getPrivate, getPublic, getDiaryImage, getImageList, oneDiary,searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, getDiaryLike, insertDiary, insertUrlDiary, changeDiary, changeUrlDiary, selectUrlDiary, selectId, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike } = require('../models/diarySQL.js');
 
 const privateDiaryData = async(data) => {
     try {   
@@ -91,8 +91,21 @@ const modifyDiaryData = async(data) => {
     try {
         const conn = await pool.getConnection();
         const changeData = await pool.query(changeDiary, [data.is_private, data.title, data.content, data.diary_date]);
-        conn.release();
         changeData;
+        const searchImage = await pool.query(selectUrlDiary, data.diary_date)
+        const Image = searchImage[0]
+        const id = await pool.query(selectId, data.diary_date)
+        if(data.image_url !== undefined){
+            if(Image.length === 0){
+                const BoardImageData = await pool.query(insertUrlDiary, [id[0][0].diary_id, data.image_url])
+                BoardImageData;
+            }
+            else {
+                const BoardImageData = await pool.query(changeUrlDiary, [data.image_url, id[0][0].diary_id])
+                BoardImageData;
+            } 
+        }
+        conn.release();
         if(changeData[0].affectedRows == 0){
             throw error;
         }

@@ -27,6 +27,12 @@ const insertUrlDiary = "INSERT INTO image_diary (diary_id, image_url) VALUES (?,
 
 const changeDiary = "UPDATE diary SET is_private = ?, title = ?, content = ? WHERE diary_date = ?;" 
 
+const changeUrlDiary = "UPDATE image_diary SET image_url = ? WHERE board_id = ?;"
+
+const selectUrlDiary = "SELECT image_url FROM diary d JOIN image_diary i ON d.diary_id = i.diary_id WHERE d.diary_id IN (SELECT diary_id FROM diary WHERE diary_date = ?);"
+
+const selectId = "SELECT diary_id FROM diary WHERE diary_date = ?"
+
 const deleteDiaryData = "DELETE FROM diary WHERE diary_date = ?;"
 
 const countDiary = "SELECT COUNT(*) FROM like_diary WHERE diary_id = ? "
@@ -35,4 +41,4 @@ const insertDiaryLike = "INSERT INTO like_diary (user_id, diary_id, created_at) 
 
 const deleteDiaryLike = "DELETE FROM like_diary WHERE user_id = ? AND diary_id = ? ;"
 
-module.exports = { getPrivate, getPublic, getDiaryLike, getImageList, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, insertUrlDiary, changeDiary, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}
+module.exports = { getPrivate, getPublic, getDiaryLike, getImageList, getDiaryImage, oneDiary, searchDiaryId, oneDiaryImage, compareDiaryUser, oneDiaryLike, insertDiary, insertUrlDiary, changeDiary, changeUrlDiary, selectUrlDiary, selectId, deleteDiaryData, countDiary, insertDiaryLike, deleteDiaryLike}

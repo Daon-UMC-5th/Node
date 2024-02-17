@@ -398,6 +398,9 @@ paths:
                 content:
                   type: "string"
                   example: "게시글 내용"
+                image_url:
+                  type: "string"
+                  example: "http://example.com/image.jpg"
       responses:
         "200":
           content:

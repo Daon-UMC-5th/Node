@@ -1,7 +1,7 @@
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
 const pool = require('../config/database.js');
-const { getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, insertUrlBoard, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
+const { getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment ,getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, insertUrlBoard, searchData, changeData, changeUrlBoard, selectUrlBoard, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike } = require('./boardSQL.js');
 
 //게시판
 const getAllBoardData = async(data) => {
@@ -94,6 +94,18 @@ const modifyBoardData = async(data) => {
         const conn = await pool.getConnection();
         const modifyData = await pool.query(changeData, [data.title, data.content, data.board_id]);
         modifyData;
+        const searchImage = await pool.query(selectUrlBoard, data.board_id)
+        const Image = searchImage[0]
+        if(data.image_url !== undefined){
+            if(Image.length === 0){
+                const BoardImageData = await pool.query(insertUrlBoard, [data.board_id, data.image_url])
+                BoardImageData;
+            }
+            else {
+                const BoardImageData = await pool.query(changeUrlBoard, [data.image_url, data.board_id])
+                BoardImageData;
+            }    
+        }
         conn.release();
         return data.board_id;
     } 

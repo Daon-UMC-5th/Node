@@ -30,6 +30,10 @@ const searchData = "SELECT * FROM board WHERE board_id = ?;"
 
 const changeData = "UPDATE board SET title = ?, content = ? WHERE board_id = ? ;" 
 
+const changeUrlBoard = "UPDATE image_board SET image_url = ? WHERE board_id = ?;"
+
+const selectUrlBoard = "SELECT image_url FROM image_board WHERE board_id = ?;"
+
 const deleteData = "DELETE FROM board WHERE board_id =?;"
 
 const existBoard = "SELECT user_id FROM board WHERE board_id = ? "
@@ -64,4 +68,4 @@ const countCommentLike = "SELECT COUNT(*) FROM like_comment WHERE comment_id = ?
 
 const getAllCommentDataLike = "SELECT comment_id, COUNT(*) AS likecount FROM like_comment GROUP BY comment_id;"
 
-module.exports = {getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment, getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, insertUrlBoard, searchData, changeData, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike };
+module.exports = {getNoTypeData, getAllData, getOneData, getBoardImage, getAllDataLike, getAllDataComment, getAllDataScrape, oneBoardImage, getOneDataLike, getOneDataComment, getOneDataScrape, compareUser, insertData, insertUrlBoard, searchData, changeData, changeUrlBoard, selectUrlBoard, deleteData, existBoard, insertLike, deleteLike, countLike, getAllLike, insertScrape, deleteScrape, getCommentData, insertComment, changeComment, deleteCommentData, boardComment, insertCommentLike, deleteCommentLike, countCommentLike, getAllCommentDataLike };

@@ -25,12 +25,21 @@ const writeDiary = async(param, user, body) => {
 
 const modifyDiary = async(param, body) => {
     try{
-    return await modifyDiaryData({
-        "diary_date" : param,
-        "is_private" : body.is_private,
-        "title" : body.title,
-	    "content" : body.content,  
-    });}catch (error) { throw error;}
+        if(body.image_url !== undefined){
+            return await modifyDiaryData({
+                "diary_date" : param,
+                "is_private" : body.is_private,
+                "title" : body.title,
+                "content" : body.content,
+                "image_url" : body.image_url 
+    });}
+        else{
+            return await modifyDiaryData({
+                "diary_date" : param,
+                "is_private" : body.is_private,
+                "title" : body.title,
+                "content" : body.content
+    })}}catch (error) { throw error;}
 };
 
 const eraseDiary = async(param) => {

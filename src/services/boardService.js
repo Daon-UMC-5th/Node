@@ -29,11 +29,21 @@ const writeBoard = async(param, body, user) => {
 
 const modifyBoard = async(param, body) => {
     try{
-    returnModifyData = await modifyBoardData({
-        "board_id" : param,
-        "title" : body.title,
-	    "content" : body.content,  
-    }); 
+        if(body.image_url !== undefined){
+            returnModifyData = await modifyBoardData({
+                "board_id" : param,
+                "title" : body.title,
+                "content" : body.content,
+                "image_url" : body.image_url
+            }); 
+        }
+        else{
+            returnModifyData = await modifyBoardData({
+                "board_id" : param,
+                "title" : body.title,
+                "content" : body.content 
+            })
+        }
         if (returnModifyData == -1){throw response(status.INTERNAL_SERVER_ERROR,{});}
         else{return await oneBoardDTO(await returnWriteBoardData (returnModifyData));}
     }catch (error) { throw error;}
