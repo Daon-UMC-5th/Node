@@ -158,7 +158,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError500"
 
-  /upload/diary{diaryId}:
+  /upload/diary/{diaryId}:
     delete:
       tags:
         - Upload
@@ -378,7 +378,7 @@ components:
                 example: {}
 
     NotFound404:
-      description: "ID가 존재하지 않습니다."
+      description: "ID가 존재하지 않습니다. / 수정 할 이미지가 존재하지 않습니다."
       content:
         application/json:
           schema:
