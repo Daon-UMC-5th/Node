@@ -89,7 +89,8 @@ loginRouter.get("/naver",passport.authenticate('naver',{authType: 'reprompt'}));
 loginRouter.get("/naver/auth", passport.authenticate('naver',{failureRedirect:'/naver'}),
 (req,res,next) => {
     //console.log(req.user);
-	res.redirect("/");
+    const profile= req.user;
+	loginController.naverLogin(req,res,next,profile);
 },
 );
 loginRouter.get("/kakao", passport.authenticate('kakao'));

@@ -4,6 +4,7 @@ const {registerKakaoUserInSocialLoginSQL,registerKakaoProfileSQL, checkKakaoUser
 const {checkGoogleUserSQL, registerGoogleUserSQL, registerGoogleUserInSocialLoginSQL, registerGoogleProfileSQL} = require("./loginSQL.js");
 const {response} = require('../config/response.js');
 const status = require('../config/responseStatus.js');
+const {registerNaverProfileSQL,checkNaverUserSQL,registerNaverUserSQL,registerNaverUserInSocialLoginSQL}= require("./loginSQL.js");
 const registerKakaoUserinDB = async(info)  => {
 
     console.log(info);
@@ -14,7 +15,7 @@ const registerKakaoUserinDB = async(info)  => {
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.registerKakaoUserinDB = registerKakaoUserinDB;
@@ -27,7 +28,7 @@ const registerKakaoUserInSocialLogin = async(userId, provider, providerId) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
     
 
@@ -42,7 +43,7 @@ const registerKakaoProfile = async(userId, profileImg) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.registerKakaoProfile= registerKakaoProfile;
@@ -56,7 +57,7 @@ const checkKakaoUserInDB = async(provider_user_id) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.checkKakaoUserInDB = checkKakaoUserInDB;
@@ -70,7 +71,7 @@ const checkGoogleUserInDB = async(provider_user_id) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.checkGoogleUserInDB = checkGoogleUserInDB;
@@ -84,7 +85,7 @@ const registerGoogleUserInDB = async(info) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.registerGoogleUserInDB= registerGoogleUserInDB;
@@ -97,7 +98,7 @@ const registerGoogleUserInSocialLogin = async(userId, provider, providerId) =>{
 
         return result[0];
     }catch(err){
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 }
 module.exports.registerGoogleUserInSocialLogin = registerGoogleUserInSocialLogin;
@@ -111,8 +112,62 @@ const registerGoogleProfile = async(userId, profileImg) =>{
         return result[0];
     }catch(err){
 
-        res.send(response(status.INTERNAL_SERVER_ERROR,{}));
+        return "error";
     }
 
 }
 module.exports.registerGoogleProfile = registerGoogleProfile;
+
+const checkNaverUserInDB = async(provider_user_id) => {
+    const dbConnection = await db.getConnection();
+    try{
+        const result = await db.query(checkNaverUserSQL, [provider_user_id]);
+        console.log(result[0]);
+        dbConnection.release();
+        return result[0];
+    }catch(err){
+        return "error";
+    }
+}
+module.exports.checkNaverUserInDB = checkNaverUserInDB;
+
+const registerNaverUserinDB = async(info) =>{
+    console.log(info);
+    const dbConnection = await db.getConnection();
+    try{
+        const result = await db.query(registerNaverUserSQL,[info.user_name, info.email, info.phone_number, info.birth_date, info.gender, info.user_nickname, info.role, info.agree]);
+        console.log(result[0]);
+        dbConnection.release();
+        return result[0];
+    }catch(err){
+        return "error";
+    }
+    
+}
+module.exports.registerNaverUserinDB = registerNaverUserinDB;
+
+const registerNaverUserInSocialLogin = async(userId, provider, providerId) => {
+    const dbConnection = await db.getConnection();
+    try{
+        const result = await db.query(registerNaverUserInSocialLoginSQL,[userId, provider, providerId]);
+        console.log(result[0]);
+        dbConnection.release();
+        return result[0];
+    }catch(err){
+        return "error";
+    }
+}
+module.exports.registerNaverUserInSocialLogin = registerNaverUserInSocialLogin;
+
+const registerNaverProfile = async(userId, profileImg) =>{
+    const dbConnection = await db.getConnection();
+    try{
+        const result = await db.query(registerNaverProfileSQL, [userId, profileImg]);
+        console.log(result[0]);
+        dbConnection.release();
+        return result[0];
+    }catch(err){
+        return "error";
+    }
+}
+module.exports.registerNaverProfile = registerNaverProfile;
