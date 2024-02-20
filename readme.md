@@ -89,30 +89,15 @@
 - 기본 라우트 및 API 문서 라우트를 설정합니다.
 - 예: `app.get("/", (req, res) => res.send("<h1>Hello, Daon!</h1>"));`
 
+### 에러 핸들러 정의
+
+- 에러 핸들러를 설정합니다.
+- 예: `app.use(multerErrorHandler);`
+
 ### 서버 실행
 
 - 환경 변수에서 포트 번호를 가져와서 서버를 실행합니다.
 - 사용 예시: `const server = app.listen(port, () => { console.log(`App running on port ${port}...`); });`
-
----
-
-# 시작하기
-
-## 로컬에서 실행 방법
-
-1. npm install 로 라이브러리 설치
-
-2. 터미널에서 npm start로 서버 실행 (nodemon으로 실행)
-
-## 주의점
-
-### 환경 변수
-
-nodemon은 root에서 실행되기에 환경 변수 경로 반드시 root로 설정
-
-예: `dotenv.config({ path: "./config.env" });`
-
-현재 환경 변수 경로로 node app.js 실행 시 오류 발생!
 
 ```
 

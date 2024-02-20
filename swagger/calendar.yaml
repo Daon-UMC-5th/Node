@@ -1,0 +1,1415 @@
+openapi: 3.0.0
+paths:
+  # 신체
+  # 날짜별 신체 기록 조회
+  /calendar/physical-record/{date}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 신체 기록 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 신체 기록 조회 날짜
+      responses:
+        "200":
+          description: 날짜별 신체 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+                    properties:
+                      physical_record_id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 1
+                      alarmed_date:
+                        type: string
+                        example: "2024-01-20"
+                      temperture:
+                        type: string
+                        example: "36.5"
+                      weight:
+                        type: string
+                        example: "60.00"
+                      fasting_blood_sugar:
+                        type: integer
+                        example: 100
+                      special_note:
+                        type: string
+                        example: "좋은 기분"
+                      created_at:
+                        type: string
+                        example: "2024-02-02T07:43:33.000Z"
+                        description: 해당 신체 기록을 기입한 실제 날짜
+                      updated_at:
+                        type: string
+                        example: "2024-02-02T07:43:33.000Z"
+                        description: 해당 신체 기록을 수정한 실제 날짜
+        "404":
+          description: 조회 에러 - 해당 날짜에 신체 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccesss:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+    # 날짜별 신체 기록 삽입
+    #/calendar/physical-record/{date}:
+    post:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 닐짜별 신체 기록 삽입
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 신체 기록 삽입 날짜
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                temperature:
+                  type: number
+                  description: 체온
+                  example: 36.5
+                weight:
+                  type: number
+                  description: 체중
+                  example: 60.0
+                fastingBloodSugar:
+                  type: integer
+                  description: 공복혈당
+                  example: 10
+                note:
+                  type: string
+                  description: 특이사항
+                  example: "상쾌한 하루"
+      responses:
+        "200":
+          description: 날짜별 신체 기록 삽입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "400":
+          description: 중복 에러 - 이미 해당 날짜에 신체 기록이 존재
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: "요청한 게시글이 이미 존재합니다."
+                  result:
+                    type: object
+
+    # 날짜별 신체 기록 삭제
+    #/calendar/physical-record/{date}:
+    delete:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 신체 기록 삭제
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 신체 기록 삭제 날짜
+      responses:
+        "200":
+          description: 날짜별 신체 기록 삭제 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 삭제 에러 - 해당 날짜에 신체 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+    # 날짜별 신체 기록 수정
+    #/calendar/physical-record/{date}:
+    put:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 신체 기록 수정
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 신체 기록 수정 날짜
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                temperature:
+                  type: number
+                  description: 체온
+                  example: 36.5
+                weight:
+                  type: number
+                  description: 체중
+                  example: 60.0
+                fastingBloodSugar:
+                  type: integer
+                  description: 공복혈당
+                  example: 10
+                note:
+                  type: string
+                  description: 특이사항
+                  example: "수정했습니다."
+      responses:
+        "200":
+          description: 날짜별 신체 기록 수정 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 수정 에러 - 해당 날짜에 신체 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+  # 진료
+  # 날짜별 진료 목록 전체 조회
+  /calendar/consultation/all/{date}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 전체 진료 목록 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-02-01"
+          required: true
+      responses:
+        "200":
+          description: 날짜별 진료 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        consultation_id:
+                          type: integer
+                          example: 16
+                        user_id:
+                          type: integer
+                          example: 3
+                        hospital:
+                          type: string
+                          example: "삼성 병원"
+                        content:
+                          type: string
+                          example: "피부과 방문"
+                        alarmed_date:
+                          type: string
+                          example: "2024-01-20"
+                        alarmed_at:
+                          type: string
+                          example: "10:30:00"
+                        created_at:
+                          type: string
+                          example: "2024-02-02T07:43:33.000Z"
+                          description: 해당 진료 기록을 기입한 실제 날짜
+                        updated_at:
+                          type: string
+                          example: "2024-02-02T07:43:33.000Z"
+                          description: 해당 진료 기록을 수정한 실제 날짜          
+        "404":
+          description: 조회 에러 - 해당 날짜에 진료 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccesss:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+  # 날짜별 진료 기록 삽입
+  /calendar/consultation/{date}:
+    post:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 진료 기록 삽입
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 진료 기록 삽입 날짜
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hospital:
+                  type: string
+                  example: "삼성 병원"
+                content:
+                  type: string
+                  example: "피부과 방문"
+                alarmed_at:
+                  type: string
+                  format: date-time
+                  example: "10:30:00"
+      responses:
+        "200":
+          description: 날짜별 진료 기록 삽입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+  # 날짜별 진료 기록 조회
+  /calendar/consultation/{id}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 진료 기록 개별 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          required: true
+      responses:
+        "200":
+          description: 날짜별 진료 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+                    properties:
+                      consultation_id:
+                        type: integer
+                        example: 16
+                      user_id:
+                        type: integer
+                        example: 3
+                      hospital:
+                        type: string
+                        example: "삼성 병원"
+                      content:
+                        type: string
+                        example: "피부과 방문"
+                      alarmed_date:
+                        type: string
+                        example: "2024-01-20"
+                      alarmed_at:
+                        type: string
+                        example: "10:30:00"
+                      created_at:
+                        type: string
+                        example: "2024-02-02T07:43:33.000Z"
+                        description: 해당 진료 기록을 기입한 실제 날짜
+                      updated_at:
+                        type: string
+                        example: "2024-02-02T07:43:33.000Z"
+                        description: 해당 진료 기록을 수정한 실제 날짜
+        "404":
+          description: 조회 에러 - 해당 날짜에 진료 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccesss:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+
+    # 날짜별 진료 기록 삭제
+    #  /calendar/consultation/{id}:
+    delete:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 진료 기록 삭제
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: 삭제하고자 하는 진료 id
+      responses:
+        "200":
+          description: 날짜별 진료 기록 삭제 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 삭제 에러 - 해당 날짜에 진료 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+    # 날짜별 진료 기록 수정
+    #/calendar/consultation/{id}:
+    put:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 진료 기록 수정
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: 수정하고자 하는 진료 id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hospital:
+                  type: string
+                  description: 진료 병원
+                  example: "아주대 병원"
+                content:
+                  type: string
+                  description: 진료 목적 등
+                  example: "암 검진"
+                alarmed_at:
+                  type: string
+                  format: date-time
+                  description: 알람 시간
+                  example: "10:30:00"
+      responses:
+        "200":
+          description: 날짜별 진료 기록 수정 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 수정 에러 - 해당 날짜에 진료 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+  #  날짜별 전체 복용기록 조회
+  /calendar/medication/all/{date}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 전체 복용 기록 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-02-01"
+          required: true
+      responses:
+        "200":
+          description: 날짜별 전체 복용 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        medication_id:
+                          type: integer
+                          example: 3
+                        user_id:
+                          type: integer
+                          example: 3
+                        alarmed_date:
+                          type: string
+                          example: "2024-02-01"
+                        time_of_day:
+                          type: string
+                          example: "저녁"
+                        medicine:
+                          type: string
+                          example: "약 A"
+                        alarmed_at:
+                          type: string
+                          example: "20:00:00"
+                        alarm_days:
+                          type: string
+                          example: "화, 목"
+                        repeat_status:
+                          type: integer
+                          example: 1
+                        created_at:
+                          type: string
+                          example: "2024-02-06T10:02:28.000Z"
+                        updated_at:
+                          type: string
+                          example: "2024-02-06T12:15:38.000Z"
+        "404":
+          description: 조회 에러 - 해당 날짜에 복용 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccesss:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+  # 날짜별,부문(morning,noon, evening)별 복용기록 삽입
+  /calendar/medication/{when}/{date}:
+    post:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별, 부문(아침/점심/저녁)별 복용 기록 삽입
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: when
+          schema:
+            type: string
+            default: "morning"
+          required: true
+          description: 아침/점심/저녁 구분(morning/noon/evening)
+        - in: path
+          name: date
+          schema:
+            type: string
+            default: "2024-01-20"
+          required: true
+          description: 사용자가 원하는 진료 기록 수정 날짜
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medicine:
+                  type: string
+                  description: "약 이름"
+                  example: "약 A"
+                alarmed_at:
+                  type: string
+                  description: "복용 알람 시간"
+                  example: "12:00"
+                alarm_days:
+                  type: string
+                  description: "복용 반복 요일"
+                  required: false
+                  example: "월,수"
+      responses:
+        "200":
+          description: 날짜별 복용 기록 삽입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+  #  날짜별,부문(morning,noon, evening)별 개별 복용기록 조회
+  /calendar/medication/{id}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별, 부문(아침/점심/저녁)별 개별 복용 기록 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in : path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          required: true
+      responses:
+        "200":
+          description: 날짜별 복용 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+                    properties:
+                      medication_id:
+                        type: integer
+                        example: 1
+                      user_id:
+                        type: integer
+                        example: 3
+                      alarmed_date:
+                        type: string
+                        example: "2024-01-30"
+                      time_of_day:
+                        type: string
+                        example: "아침"
+                      medicine:
+                        type: string
+                        example: "약 A"
+                      alarmed_at:
+                        type: string
+                        example: "12:00:00"
+                      alarm_days:
+                        type: string
+                        example: "화, 목"
+                      repeat_status:
+                        type: integer
+                        example: 1
+                      created_at:
+                        type: string
+                        example: "2024-02-06T10:02:28.000Z"
+                      updated_at:
+                        type: string
+                        example: "2024-02-06T12:15:38.000Z"
+        "404":
+          description: 조회 에러 - 해당 날짜에 복용 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccesss:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+
+    # 날짜별,부문(morning,noon, evening)별 복용기록 삭제
+    #/calendar/medication/{id}:
+    delete:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별, 부문(아침/점심/저녁)별 복용 기록 삭제
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: 삭제하고자 하는 복용 id
+      responses:
+        "200":
+          description: 날짜별 복용 기록 삭제 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 삭제 에러 - 해당 날짜, 해당 부분에 복용 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+    # 날짜별,부문(morning,noon, evening)별 복용기록 수정
+    # /calendar/medication/{id}:
+    put:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별, 부문(아침/점심/저녁)별 복용 기록 수정
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: id
+          schema:
+            type: integer
+            default: 1
+          require: true
+          description: 수정하고자 하는 복용 id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                medicine:
+                  type: string
+                  description: "약 이름"
+                  example: "약 A"
+                alarmed_at:
+                  type: string
+                  description: "복용 알람 시간"
+                  example: "12:00"
+                alarm_days:
+                  type: string
+                  description: "복용 반복 요일"
+                  required: false
+                  example: ""
+      responses:
+        "200":
+          description: 날짜별 복용 기록 수정 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: object
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object
+        "404":
+          description: 수정 에러 - 해당 날짜에 복용 기록이 없는 경우
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "게시글이 없습니다."
+                  result:
+                    type: object
+
+# 날짜별 진료,복용,신체 기록 유무 조회
+  /calendar/{month}:
+    get:
+      tags:
+        - Calendar
+      security:
+        - api-key: []
+      summary: 캘린더 - 날짜별 진료,복용,신체 기록 유무 조회
+      parameters:
+        # - in: "header"
+        #   name: "Authorization"
+        #   schema:
+        #     type: "string"
+        #   required: true
+        #   description: "JWT 토큰이 필요합니다"
+        - in: path
+          name: month
+          schema:
+            type: string
+            default: "2024-01"
+          required: true
+          description: 프론트에서 정보를 얻고자 하는 "년도-달"
+      responses:
+        "200":
+          description: 날짜별 신체 기록 조회 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          example: "2024-01-01"
+                        physical_record:
+                          type: integer
+                          example: 0
+                          description: 신체 기록이 있으면 1, 없으면 0
+                        consultation: 
+                          type: integer
+                          example: 1
+                          description: 진료 기록이 있으면 1, 없으면 0
+                        medication:
+                          type: integer
+                          example: 1
+                          description: 복용 기록이 있으면 1, 없으면 0
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 에러, 관리자에게 문의 바랍니다."
+                  result:
+                    type: object                      
+                      
+                  

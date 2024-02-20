@@ -12,48 +12,48 @@ const status = {
   INTERNAL_SERVER_ERROR: {
     status: StatusCodes.INTERNAL_SERVER_ERROR,
     isSuccess: false,
-    code: "COMMON000",
+    code: 500,
     message: "서버 에러, 관리자에게 문의 바랍니다.",
   },
 
   BAD_REQUEST: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,
-    code: "COMMON001",
+    code: 400,
     message: "잘못된 요청입니다.",
   },
 
   UNAUTHORIZED: {
     status: StatusCodes.UNAUTHORIZED,
     isSuccess: false,
-    code: "COMMON002",
+    code: 401,
     message: "권한이 잘못되었습니다.",
   },
 
   METHOD_NOT_ALLOWED: {
     status: StatusCodes.METHOD_NOT_ALLOWED,
     isSuccess: false,
-    code: "COMMON003",
+    code: 405,
     message: "지원하지 않는 Http Method 입니다.",
   },
 
   FORBIDDEN: {
     status: StatusCodes.FORBIDDEN,
     isSuccess: false,
-    code: "COMMON004",
+    code: 403,
     message: "금지된 요청입니다.",
   },
 
   NOT_FOUND: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: "COMMON005",
+    code: 404,
     message: "요청한 페이지를 찾을 수 없습니다. 관리자에게 문의 바랍니다.",
   },
   PARAMETER_IS_WRONG: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: "ARTICLE4001",
+    code: 404,
     message: "파라미터 오류",
   },
 
@@ -61,27 +61,27 @@ const status = {
   MEMBER_NOT_FOUND: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,
-    code: "MEMBER4001",
+    code: 400,
     message: "사용자가 없습니다.",
   },
 
   NICKNAME_NOT_EXIST: {
     status: StatusCodes.BAD_REQUEST,
     isSuccess: false,
-    code: "MEMBER4002",
+    code: 400,
     message: "닉네임은 필수입니다.",
   },
 
   ARTICLE_NOT_FOUND: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: "ARTICLE4001",
+    code: 404,
     message: "게시글이 없습니다.",
   },
   CODE_NOT_MATCH: {
     status: StatusCodes.NOT_ACCEPTABLE,
     isSuccess: false,
-    code: "MAMBER4003",
+    code: 406,
     message: "인증코드가 일치하지 않습니다.",
   },
   NICKNAME_REPEAT: {
@@ -129,14 +129,33 @@ const status = {
   TOKEN_EMPTY: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: 401,
+    code: 404,
     message: "jwt token을 입력해주세요",
   },
   TOKEN_VERIFICATION_FAILURE: {
     status: StatusCodes.NOT_FOUND,
     isSuccess: false,
-    code: 401,
+    code: 404,
     message: "JWT 토큰 검증 실패",
   },
+  ARTICLE_DUPLICATION: {
+    status: StatusCodes.BAD_REQUEST,
+    isSuccess: false,
+    code: 400,
+    message: "요청한 게시글이 이미 존재합니다."
+  },
+  ID_EMPTY:{
+    status: StatusCodes.NOT_FOUND,
+    isSuccess: false,
+    code: 404,
+    message: "id를 입력하세요."
+  },
+  SEND_FIRST: {
+    status: StatusCodes.BAD_REQUEST,
+    isSuccess: false,
+    code: 400,
+    message: "인증 요청을 먼저 해주세요."
+  },
+
 };
 module.exports = status;

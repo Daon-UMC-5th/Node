@@ -1,0 +1,645 @@
+paths:
+  /diary/get-private:
+    get:
+      summary: 개인 일기 목록 가져오기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "offset"
+          in: "query"
+          required: true
+          example: 오프셋
+          schema:
+            type: "integer"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        diary_id:
+                          type: "integer"
+                          example: 1
+                        user_id:
+                          type: "integer"
+                          example: 1
+                        user_nickname:
+                          type: "string"
+                          example: 닉네임
+                        is_private:
+                          type: "boolean"
+                          example: true
+                        title:
+                          type: "string"
+                          example: "일기 제목"
+                        content:
+                          type: "string"
+                          example: "일기 내용"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+                        itemCount:
+                          type: "integer"
+                          description: 현재 offset 일기장 개수
+                          example: 10
+                        totalResults:
+                          type: "integer"
+                          description: 일기장 전체 개수
+                          example: 32
+                        image_url:
+                          type: "string"
+                          example: "http://example.com/image.jpg"
+                        likes_count:
+                          type: "int"
+                          example: 7
+
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/get-public:
+    get:
+      summary: 공유 일기 목록 가져오기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "offset"
+          in: "query"
+          required: true
+          example: 오프셋
+          schema:
+            type: "integer"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        diary_id:
+                          type: "integer"
+                          example: 1
+                        user_id:
+                          type: "integer"
+                          example: 1
+                        user_nickname:
+                          type: "string"
+                          example: 닉네임
+                        is_private:
+                          type: "boolean"
+                          example: true
+                        title:
+                          type: "string"
+                          example: "일기 제목"
+                        content:
+                          type: "string"
+                          example: "일기 내용"
+                        created_at:
+                          type: "string"
+                          format: "date-time"
+                        updated_at:
+                          type: "string"
+                          format: "date-time"
+                        itemCount:
+                          type: "integer"
+                          description: 현재 offset 일기장 개수
+                          example: 10
+                        totalResults:
+                          type: "integer"
+                          description: 일기장 전체 개수
+                          example: 32
+                        image_url:
+                          type: "string"
+                          example: "http://example.com/image.jpg"
+                        likes_count:
+                          type: "int"
+                          example: 7
+
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/get-image/{year}/{month}:
+    get:
+      summary: 개인 일기 이미지 리스트 가져오기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "year"
+          in: "path"
+          required: true
+          description: "일기 년도"
+          schema:
+            type: "integer"
+        - name: "month"
+          in: "path"
+          required: true
+          description: "일기 월"
+          schema:
+            type: "integer"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "array"
+                    items:
+                      type: "object"
+                      properties:
+                        diary_date:
+                          type: "integer"
+                          example: 1
+                          description: "2024-02-10에서 10만 가져옴"
+                        image_url:
+                          type: "string"
+                          example: "http://example.com/image.jpg"
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/get-one-diary/{diaryDate}:
+    get:
+      summary: 특정 일기 가져오기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryDate"
+          in: "path"
+          required: true
+          description: "일기 날짜"
+          schema:
+            type: "string"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      diary_id:
+                        type: "integer"
+                        example: 1
+                      user_id:
+                        type: "integer"
+                        example: 1
+                      user_nickname:
+                        type: "string"
+                        example: 닉네임
+                      is_private:
+                        type: "boolean"
+                        example: true
+                      title:
+                        type: "string"
+                        example: "일기 제목"
+                      content:
+                        type: "string"
+                        example: "일기 내용"
+                      created_at:
+                        type: "string"
+                        format: "date-time"
+                      updated_at:
+                        type: "string"
+                        format: "date-time"
+                      image_url:
+                        type: "string"
+                        example: "http://example.com/image.jpg"
+                      likes_count:
+                        type: "int"
+                        example: 7
+                      access:
+                        type: "boolean"
+                        example : true
+
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+
+  /diary/write/post/{diaryDate}:
+    post:
+      summary: 일기 작성하기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryDate"
+          in: "path"
+          required: true
+          description: "일기 날짜"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                is_private:
+                  type: "boolean"
+                  description: "0: 공용, 1: 비밀"
+                  example: 0
+                title:
+                  type: "string"
+                  example: "일기 제목"
+                content:
+                  type: "string"
+                  example: "일기 내용"
+                image_url:
+                  type: "string"
+                  example: "http://example.com/image.jpg"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "integer"
+                    example: 1
+                    description: board_id를 integer로 반환함
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/write/put/{diaryDate}:
+    put:
+      summary: 일기 수정하기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryDate"
+          in: "path"
+          required: true
+          description: "일기 날짜"
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                is_private:
+                  type: "boolean"
+                  description: "0: 공용, 1: 비밀"
+                  example: 0
+                title:
+                  type: "string"
+                  example: "일기 제목"
+                content:
+                  type: "string"
+                  example: "일기 내용"
+                image_url:
+                  type: "string"
+                  example: "http://example.com/image.jpg"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "string"
+                    example: "1"
+                    description: board_id를 string으로 반환함
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/write/delete/{diaryDate}:
+    delete:
+      summary: 일기 삭제하기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryDate"
+          in: "path"
+          required: true
+          description: "일기 날짜"
+          schema:
+            type: "string"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "string"
+                    example: "1"
+                    description: board_id를 string으로 반환함
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/like-up/{diaryId}:
+    post:
+      summary: 좋아요 추가하기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryId"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "일기 id"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환
+
+  /diary/like-down/{diaryId}:
+    delete:
+      summary: 좋아요 삭제하기
+      tags:
+        - Diary
+      security:
+        - api-key: []
+      parameters:
+        - name: "diaryId"
+          in: "path"
+          required: true
+          type: "integer"
+          description: "일기 id"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: true
+                  code:
+                    type: "integer"
+                    example: 200
+                  message:
+                    type: "string"
+                    example: "success!"
+                  result:
+                    type: "object"
+                    properties:
+                      COUNT(*):
+                        type: "integer"
+        "404":
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  isSuccess:
+                    type: "boolean"
+                    example: false
+                  code:
+                    type: "integer"
+                    example: 404
+                  message:
+                    type: "string"
+                    example: "일기글이 없습니다."
+                  result:
+                    type: "object"
+                    description: 빈 객체 반환

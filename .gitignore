@@ -2,3 +2,5 @@
 node_modules
 .vscode
 secret.js
+s3.js
+sessions/

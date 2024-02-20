@@ -8,19 +8,27 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const SwaggerUi = require("swagger-ui-express");
 const expressSession = require("express-session");
-const memoryStore = require("memorystore")(expressSession);
+//const memoryStore = require("memorystore")(expressSession);
+const bodyParser = require("body-parser");
+const mysqlStore = require("express-mysql-session")(expressSession);
 //# 라이브러리 import
 
 //@  폴더 파일 import
 const { specs } = require("./config/swaggerConfig.js");
+const { multerErrorHandler } = require("./config/errorHandlers.js");
 //# 폴더 파일 import
 
 //@ 라우터
-const tempRouter = require("./routes/tempRoute");
 const searchRouter = require("./routes/searchRoute.js");
 const authRouter = require("./routes/authRoute.js");
 const userRouter = require("./routes/userRoute");
-
+const mypageRouter = require("./routes/mypageRoute.js");
+const boardRouter = require("./routes/boardRoute.js");
+const reportRouter = require("./routes/reportRoute");
+const calendarRouter = require("./routes/calendarRoute.js");
+const diaryRouter = require("./routes/diaryRoute.js");
+const uploadRouter = require("./routes/uploadRoute.js");
+const loginRouter = require("./routes/loginRoute.js");
 //# 라우터
 
 //@ app 설정 공간
@@ -36,21 +44,31 @@ app.use(cors());
 app.use(express.json());
 
 app.use(cookieParser("secret_password"));
-app.use(expressSession({
-	secret: "secret_password",
-	cookie:{
-		maxAge:4000000
-	},
-	resave:false,
-	saveUninitialized:true,
-	store: new memoryStore()
-}));
 app.use(
-	express.urlencoded({
-	  extended: true
-	})
+  expressSession({
+    secret: "secret_password",
+    cookie: {
+      maxAge: 4000000,
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: new mysqlStore({
+      host: process.env.DB_HOST, // mysql의 hostname
+      user: process.env.DB_USER, // user 이름
+      // user: "root",
+      port: process.env.DB_PORT || 3306, // 포트 번호
+      database: process.env.DB_DATABASE, // 데이터베이스 이름
+      password: process.env.DB_PASSWORD, // 비밀번호
+    }),
+  })
 );
-
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+app.use(cookieParser());
+app.use(bodyParser.json());
 //# app 설정 공간
 
 //@ 라우트
@@ -62,14 +80,22 @@ app.get("/", (req, res) => {
 
 app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(specs));
 
-// 실제로 작동,  테스트 한 후 지우기
-app.use("/temp", tempRouter);
 app.use("/search", searchRouter);
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/mypage", mypageRouter);
+app.use("/board", boardRouter);
+app.use("/report", reportRouter);
+app.use("/calendar", calendarRouter);
+app.use("/diary", diaryRouter);
+app.use("/upload", uploadRouter);
+app.use("/login", loginRouter);
 
-//#
+//# 라우트
 
+// @에러 핸들
+app.use(multerErrorHandler);
+//# 에러 핸들
 
 //@ 서버 실행
 const port = process.env.PORT || 3000;

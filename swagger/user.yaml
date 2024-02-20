@@ -26,28 +26,48 @@ paths:
                   example: "홍길동"
                 email:
                   type: string
+                  description: 이메일 주소
                   example: "abc123@naver.com"
                 password:
                   type: string
+                  description: 비밀번호
                   example: "abc123"
                 phone_number:
                   type: string
+                  description: 전화번호
                   example: "010-1234-5678"
                 birth_date:
                   type: string
+                  description: 주민등록번호 앞자리 생년월일 6글자
                   example: "011010"
                 gender:
                   type: int
+                  description: 주민등록번호 뒷자리 성별
                   example: 3
                 user_nickname:
                   type: string
+                  description: 닉네임
                   example: "길동"
                 introduction:
                   type: string
+                  description: 한줄소개
                   example: "안녕하세요. 잘부탁드려요."
                 role:
                   type: string
+                  description: 일반회원이면 user, 의료인회원이면 doctor 입력
                   example: "user"
+                agree:
+                  type: boolean
+                  description: 선택약관, 0 - 비동의 1 - 동의
+                  example: "0"
+                profile_url:
+                  type: string
+                  description: 프로필사진 이미지 주소(null 가능)
+                  example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
+                doctor_url:
+                  type: string
+                  description: 의사면허 이미지 주소(의료인회원일 때만, null 가능ㄴ)
+                  example: "https://example.s3.ap-northeast-2.amazonaws.com/example.jpg"
 
       responses:
         "200":
@@ -66,6 +86,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409_1":
           description: 이미 존재하는 이메일
           content:
@@ -132,7 +155,7 @@ paths:
       tags:
         - user
       security:
-        - api_key: []
+        - api-key: []
       description: 모든 사용자 정보를 받아옵니다. jwt token 필요.
       responses:
         "200":
@@ -192,8 +215,11 @@ paths:
                         updated_at:
                           type: timestamp
                           example: "2024-01-30T14:49:51.000Z"
-        "401":
-          description: jwt token 입력 X
+                        agree:
+                          type: boolean
+                          example: "0(비동의), 1(동의)"
+        "404_1":
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
           content:
             application/json:
               schema:
@@ -204,10 +230,32 @@ paths:
                     example: false
                   code:
                     type: integer
-                    example: 401
+                    example: 404
                   message:
                     type: string
-                    example: "jwt token을 입력해주세요"
+                    example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
+        "404_2":
+          description: JWT token 검증 실패(swagger에서 로그아웃 후 user 전체 조회시 jwt 필요한 상태)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT 토큰 검증 실패."
+                  result:
+                    type: string
+                    example: {}
 
   # 아이디 찾기
   /user/find-id:
@@ -231,9 +279,10 @@ paths:
                   type: string
                   format: date
                   example: "010606"
-                  description: "생년월일"
+                  description: "주민등록번호 앞자리 생년월일 6글자"
                 gender:
                   type: integer
+                  description: "주민등록번호 뒷자리 성별"
                   example: 3
                 phone_number:
                   type: string
@@ -249,6 +298,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
@@ -283,6 +333,9 @@ paths:
                   message:
                     type: string
                     example: "일치하는 유저가 존재하지 않습니다."
+                  result:
+                    type: string
+                    example: {}
 
   # 비밀번호 변경
   /user/find-pw:
@@ -316,12 +369,16 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "404":
           description: 존재하지 않는 이메일
           content:
@@ -338,6 +395,9 @@ paths:
                   message:
                     type: "string"
                     example: "존재하지 않는 email입니다."
+                  result:
+                    type: string
+                    example: {}
 
   # 닉네임 중복
   /user/overlap-nickname:
@@ -346,14 +406,7 @@ paths:
       tags:
         - user
       description: 중복된 닉네임인지 확인합니다.
-      parameters:
-        - name: user_nickname
-          in: query
-          required: true
-          description: 닉네임
-          schema:
-            type: string
-            example: "길동"
+
       requestBody:
         required: true
         content:
@@ -375,12 +428,16 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: true
                   code:
                     type: "integer"
                     example: 200
                   message:
                     type: "string"
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409":
           description: 닉네임 중복
           content:
@@ -390,6 +447,7 @@ paths:
                 properties:
                   isSuccess:
                     type: "boolean"
+                    example: false
                   code:
                     type: integer
                     example: 409
@@ -459,6 +517,9 @@ paths:
                   message:
                     type: string
                     example: "user_id null"
+                  result:
+                    type: string
+                    example: {}
         "404_2":
           description: password 틀림
           content:
@@ -475,6 +536,9 @@ paths:
                   message:
                     type: string
                     example: "password null"
+                  result:
+                    type: string
+                    example: {}
 
   # email 존재 확인
   /user/email-check:
@@ -511,6 +575,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
 
         "409":
           description: 이미 존재하는 이메일
@@ -567,6 +634,9 @@ paths:
                   message:
                     type: string
                     example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
         "409":
           description: 이미 존재하는 전화번호
           content:
@@ -586,3 +656,121 @@ paths:
                   result:
                     type: string
                     example: "010-1111-1111"
+  # 로그아웃
+  /user/logout:
+    get:
+      summary: logout
+      tags:
+        - user
+      security:
+        - api-key: []
+      description: 로그아웃(jwt token 삭제)
+
+      responses:
+        "200":
+          description: 로그아웃(jwt token 삭제), 200 출력시 로그아웃 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
+        "404_1":
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
+
+  # 회원 탈퇴
+  /user/user-delete:
+    delete:
+      summary: 회원 탈퇴
+      tags:
+        - user
+      security:
+        - api-key: []
+      description: 회원 탈퇴
+
+      responses:
+        "200":
+          description: 회원 탈퇴 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "접근에 성공했습니다."
+                  result:
+                    type: string
+                    example: {}
+        "404_1":
+          description: JWT token 입력 필요(로그인 전 jwt 필요한 상태)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT token을 입력해주세요"
+                  result:
+                    type: string
+                    example: {}
+        "404_2":
+          description: JWT token 검증 실패(swagger에서 로그아웃 후 회원 탈퇴 실행할 때)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "JWT 토큰 검증 실패."
+                  result:
+                    type: string
+                    example: {}
