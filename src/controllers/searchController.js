@@ -18,7 +18,7 @@ module.exports = {
       // 해당 검색 내용에 일치하는 결과가 없는 경우(result: 0)
       else res.send(response(status.ARTICLE_NOT_FOUND,{}));
     },
-
+    // 공유 일기장 검색
     searchPublicInDiary: async(req,res,next) => {
        
         // 사용자에게 검색내용 입력받음
@@ -35,7 +35,7 @@ module.exports = {
         else res.send(response(status.ARTICLE_NOT_FOUND,{}));
 
     },
-  
+  // 게시판 검색
     searchInBoard: async(req,res,next) => {
         let search = req.body.search;
        
